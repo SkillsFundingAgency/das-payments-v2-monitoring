@@ -1,6 +1,6 @@
-parameters:
-# TODO: Add all addtiional proejcts in as references become available.
-  TargetProjects: 'src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj'
+# parameters:
+  # TODO: Add all addtiional proejcts in as references become available.
+  # TargetProjects: 'src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj'
 jobs:
 - job: CodeBuild
   pool:
@@ -22,7 +22,30 @@ jobs:
     displayName: Restore
     inputs:
       command: restore
-      projects: ${{ parameters.TargetProjects }}
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+    #  vstsFeed: '1d5deb2d-cf8b-4bb1-b147-d13bc246e3f4'
+
+  - task: DotNetCoreCLI@2
+  # task: NuGetCommand@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+    #  vstsFeed: '1d5deb2d-cf8b-4bb1-b147-d13bc246e3f4'
+
+
+  # task: DotNetCoreCLI@2
+  - task: NuGetCommand@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
@@ -33,17 +56,26 @@ jobs:
     displayName: Restore
     inputs:
       command: restore
-      projects: ${{ parameters.TargetProjects }}
+      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
     #  vstsFeed: '1d5deb2d-cf8b-4bb1-b147-d13bc246e3f4'
+
+
     
   - task: DotNetCoreCLI@2
   #- task: NuGetCommand@2
     displayName: Build
     inputs:
-      projects:  ${{ parameters.TargetProjects }}
+      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      arguments: '--configuration $(buildConfiguration) --no-restore'
+
+  - task: DotNetCoreCLI@2
+  #- task: NuGetCommand@2
+    displayName: Build
+    inputs:
+      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
       arguments: '--configuration $(buildConfiguration) --no-restore'
 
   - task: DotNetCoreCLI@2
@@ -51,18 +83,18 @@ jobs:
     inputs:
       command: publish
       publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
       arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
       modifyOutputPath: true
 
-  # - task: DotNetCoreCLI@2
-  #   displayName: "Publish SFA.DAS.Payments.Core"
-  #   inputs:
-  #     command: publish
-  #     publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-  #     projects: src/SFA.DAS.Payments.Core/SFA.DAS.Payments.Core.csproj
-  #     arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-  #     modifyOutputPath: true
+  - task: DotNetCoreCLI@2
+    displayName: "Publish $(SolutionBaseName)"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
 
   # - task: DotNetCoreCLI@2
   #   displayName: "Publish SFA.DAS.Payments.Messages.Common"
@@ -108,4 +140,5 @@ jobs:
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
     parameters:
       DotNetStandardPackagesToPack: |
-        src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj;
+        src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;
+        src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;

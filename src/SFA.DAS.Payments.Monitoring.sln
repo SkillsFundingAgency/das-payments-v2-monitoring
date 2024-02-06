@@ -5,63 +5,64 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.AcceptanceTests", "SFA.DAS.Payments.Monitoring.AcceptanceTests\SFA.DAS.Payments.Monitoring.AcceptanceTests.csproj", "{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.csproj", "{73ECC5B8-AABB-49D2-B040-464F6492F427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.csproj", "{73ECC5B8-AABB-49D2-B040-464F6492F427}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Application", "SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj", "{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Application", "SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj", "{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests.csproj", "{CCC78A7E-3775-4C4E-B450-C87896BB654F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests.csproj", "{CCC78A7E-3775-4C4E-B450-C87896BB654F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Client", "SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj", "{F4AA79A9-18F7-4826-AF0A-FD156F875F22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Client", "SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj", "{F4AA79A9-18F7-4826-AF0A-FD156F875F22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Data", "SFA.DAS.Payments.Monitoring.Jobs.Data\SFA.DAS.Payments.Monitoring.Jobs.Data.csproj", "{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Data", "SFA.DAS.Payments.Monitoring.Jobs.Data\SFA.DAS.Payments.Monitoring.Jobs.Data.csproj", "{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces", "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces.csproj", "{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces", "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces.csproj", "{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService", "SFA.DAS.Payments.Monitoring.Jobs.JobService\SFA.DAS.Payments.Monitoring.Jobs.JobService.csproj", "{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService", "SFA.DAS.Payments.Monitoring.Jobs.JobService\SFA.DAS.Payments.Monitoring.Jobs.JobService.csproj", "{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService", "SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService\SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService.csproj", "{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Messages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{5F69B94B-9889-4476-8705-6730414171B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces", "SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces.csproj", "{434C9163-099E-4CD9-ADBD-7458469DD626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Model", "SFA.DAS.Payments.Monitoring.Jobs.Model\SFA.DAS.Payments.Monitoring.Jobs.Model.csproj", "{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsService", "SFA.DAS.Payments.Monitoring.Jobs.JobsService\SFA.DAS.Payments.Monitoring.Jobs.JobsService.csproj", "{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.csproj", "{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Messages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{5F69B94B-9889-4476-8705-6730414171B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Application", "SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj", "{886BBF75-E223-4757-A1FB-D6D22CA7D806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Model", "SFA.DAS.Payments.Monitoring.Jobs.Model\SFA.DAS.Payments.Monitoring.Jobs.Model.csproj", "{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper", "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper\SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper.csproj", "{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.JobsProxyService", "SFA.DAS.Payments.Monitoring.JobsProxyService\SFA.DAS.Payments.Monitoring.JobsProxyService.csproj", "{F5CC9FED-726D-4123-8841-6FE0EC690859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.csproj", "{F325FBA6-A037-4509-92FE-407E5251A9CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.csproj", "{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Data", "SFA.DAS.Payments.Monitoring.Metrics.Data\SFA.DAS.Payments.Monitoring.Metrics.Data.csproj", "{677C1BAC-904C-475A-A235-47E610665D63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Application", "SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj", "{886BBF75-E223-4757-A1FB-D6D22CA7D806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.csproj", "{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper", "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper\SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper.csproj", "{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.csproj", "{F325FBA6-A037-4509-92FE-407E5251A9CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Data", "SFA.DAS.Payments.Monitoring.Metrics.Data\SFA.DAS.Payments.Monitoring.Metrics.Data.csproj", "{677C1BAC-904C-475A-A235-47E610665D63}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.csproj", "{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain", "SFA.DAS.Payments.Monitoring.Metrics.Domain\SFA.DAS.Payments.Monitoring.Metrics.Domain.csproj", "{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain", "SFA.DAS.Payments.Monitoring.Metrics.Domain\SFA.DAS.Payments.Monitoring.Metrics.Domain.csproj", "{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests", "SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests\SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests.csproj", "{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Function", "SFA.DAS.Payments.Monitoring.Metrics.Function\SFA.DAS.Payments.Monitoring.Metrics.Function.csproj", "{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Function", "SFA.DAS.Payments.Monitoring.Metrics.Function\SFA.DAS.Payments.Monitoring.Metrics.Function.csproj", "{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Messages", "SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj", "{D8434230-5B0F-462C-AD12-A53168D2E668}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Messages", "SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj", "{D8434230-5B0F-462C-AD12-A53168D2E668}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Model", "SFA.DAS.Payments.Monitoring.Metrics.Model\SFA.DAS.Payments.Monitoring.Metrics.Model.csproj", "{088D5E97-1851-4725-AD99-EBB99DEBE295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.Model", "SFA.DAS.Payments.Monitoring.Metrics.Model\SFA.DAS.Payments.Monitoring.Metrics.Model.csproj", "{088D5E97-1851-4725-AD99-EBB99DEBE295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService", "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService\SFA.DAS.Payments.Monitoring.Metrics.SubmissionService.csproj", "{CE1510E0-790D-458B-AF09-4891F9D0A592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService", "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService\SFA.DAS.Payments.Monitoring.Metrics.SubmissionService.csproj", "{CE1510E0-790D-458B-AF09-4891F9D0A592}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{3D4F5383-FE38-41FE-9A7D-C002800CEE11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metrics", "Metrics", "{40B19AB4-075D-4BC0-9C16-AA87C84D4640}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{47771BA3-1DE3-46D4-8FCF-9CE5EC9916EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A250162A-B77F-4BC4-B998-EE8B4C1988BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submissions", "Submissions", "{263CC69F-6A15-440A-9714-62EAF2B96B51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{187A6DD7-7655-476D-A007-A162BDBF8C42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -96,18 +97,6 @@ Global
 		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{434C9163-099E-4CD9-ADBD-7458469DD626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{434C9163-099E-4CD9-ADBD-7458469DD626}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{434C9163-099E-4CD9-ADBD-7458469DD626}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{434C9163-099E-4CD9-ADBD-7458469DD626}.Release|Any CPU.Build.0 = Release|Any CPU
-		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F69B94B-9889-4476-8705-6730414171B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F69B94B-9889-4476-8705-6730414171B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F69B94B-9889-4476-8705-6730414171B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -116,10 +105,6 @@ Global
 		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -168,5 +153,38 @@ Global
 		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91} = {47771BA3-1DE3-46D4-8FCF-9CE5EC9916EF}
+		{73ECC5B8-AABB-49D2-B040-464F6492F427} = {A250162A-B77F-4BC4-B998-EE8B4C1988BA}
+		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{CCC78A7E-3775-4C4E-B450-C87896BB654F} = {A250162A-B77F-4BC4-B998-EE8B4C1988BA}
+		{F4AA79A9-18F7-4826-AF0A-FD156F875F22} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{C0D610F9-20D7-4498-8AB8-FAFF0E17B743} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{5F69B94B-9889-4476-8705-6730414171B6} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F} = {187A6DD7-7655-476D-A007-A162BDBF8C42}
+		{886BBF75-E223-4757-A1FB-D6D22CA7D806} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2} = {47771BA3-1DE3-46D4-8FCF-9CE5EC9916EF}
+		{F325FBA6-A037-4509-92FE-407E5251A9CE} = {187A6DD7-7655-476D-A007-A162BDBF8C42}
+		{677C1BAC-904C-475A-A235-47E610665D63} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB} = {187A6DD7-7655-476D-A007-A162BDBF8C42}
+		{03B9FE1D-701A-4E8C-91C7-A107F5CD589E} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA} = {187A6DD7-7655-476D-A007-A162BDBF8C42}
+		{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{D8434230-5B0F-462C-AD12-A53168D2E668} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{088D5E97-1851-4725-AD99-EBB99DEBE295} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{CE1510E0-790D-458B-AF09-4891F9D0A592} = {263CC69F-6A15-440A-9714-62EAF2B96B51}
+		{A250162A-B77F-4BC4-B998-EE8B4C1988BA} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{263CC69F-6A15-440A-9714-62EAF2B96B51} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+		{187A6DD7-7655-476D-A007-A162BDBF8C42} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C30FFC58-B562-43C6-9B29-DDCB7800FC2F}
 	EndGlobalSection
 EndGlobal
