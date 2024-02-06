@@ -1,0 +1,27 @@
+parameters:
+  EnvironmentName:
+  ServiceConnection:
+  SourcePath:
+  StorageAccountName:
+  StorageAccountResourceGroup:
+  TargetFileName: '*.schema.json'
+  ConfigurationSecrets: {}
+  TableName: 'Configuration'
+
+steps:
+- checkout: das-platform-automation
+- task: AzurePowerShell@5
+  displayName: 'Generate Configuration'
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    scriptPath: das-platform-automation/Infrastructure-Scripts/New-ConfigurationTableEntry/New-ConfigurationTableEntry.ps1
+    scriptArguments:
+      -SourcePath ${{ parameters.SourcePath }}
+      -TargetFilename ${{ parameters.TargetFileName }}
+      -StorageAccountName ${{ parameters.StorageAccountName }}
+      -StorageAccountResourceGroup ${{ parameters.StorageAccountResourceGroup }}
+      -EnvironmentName ${{ parameters.EnvironmentName }}
+      -TableName ${{ parameters.TableName }}
+    azurePowerShellVersion: LatestVersion
+    pwsh: true
+  env: ${{ parameters.ConfigurationSecrets }}

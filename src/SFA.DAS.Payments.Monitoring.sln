@@ -1,0 +1,172 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.AcceptanceTests", "SFA.DAS.Payments.Monitoring.AcceptanceTests\SFA.DAS.Payments.Monitoring.AcceptanceTests.csproj", "{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.csproj", "{73ECC5B8-AABB-49D2-B040-464F6492F427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Application", "SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj", "{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests.csproj", "{CCC78A7E-3775-4C4E-B450-C87896BB654F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Client", "SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj", "{F4AA79A9-18F7-4826-AF0A-FD156F875F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Data", "SFA.DAS.Payments.Monitoring.Jobs.Data\SFA.DAS.Payments.Monitoring.Jobs.Data.csproj", "{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces", "SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces.csproj", "{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService", "SFA.DAS.Payments.Monitoring.Jobs.JobService\SFA.DAS.Payments.Monitoring.Jobs.JobService.csproj", "{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService", "SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService\SFA.DAS.Payments.Monitoring.Jobs.JobsProxyService.csproj", "{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces", "SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobsService.Interfaces.csproj", "{434C9163-099E-4CD9-ADBD-7458469DD626}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.JobsService", "SFA.DAS.Payments.Monitoring.Jobs.JobsService\SFA.DAS.Payments.Monitoring.Jobs.JobsService.csproj", "{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Messages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{5F69B94B-9889-4476-8705-6730414171B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Jobs.Model", "SFA.DAS.Payments.Monitoring.Jobs.Model\SFA.DAS.Payments.Monitoring.Jobs.Model.csproj", "{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.JobsProxyService", "SFA.DAS.Payments.Monitoring.JobsProxyService\SFA.DAS.Payments.Monitoring.JobsProxyService.csproj", "{F5CC9FED-726D-4123-8841-6FE0EC690859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.csproj", "{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Application", "SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj", "{886BBF75-E223-4757-A1FB-D6D22CA7D806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper", "SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper\SFA.DAS.Payments.Monitoring.Metrics.CustomEventsDataHelper.csproj", "{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.csproj", "{F325FBA6-A037-4509-92FE-407E5251A9CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Data", "SFA.DAS.Payments.Monitoring.Metrics.Data\SFA.DAS.Payments.Monitoring.Metrics.Data.csproj", "{677C1BAC-904C-475A-A235-47E610665D63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests\SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.csproj", "{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Domain", "SFA.DAS.Payments.Monitoring.Metrics.Domain\SFA.DAS.Payments.Monitoring.Metrics.Domain.csproj", "{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests", "SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests\SFA.DAS.Payments.Monitoring.Metrics.Function.AcceptanceTests.csproj", "{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Function", "SFA.DAS.Payments.Monitoring.Metrics.Function\SFA.DAS.Payments.Monitoring.Metrics.Function.csproj", "{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Messages", "SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj", "{D8434230-5B0F-462C-AD12-A53168D2E668}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Model", "SFA.DAS.Payments.Monitoring.Metrics.Model\SFA.DAS.Payments.Monitoring.Metrics.Model.csproj", "{088D5E97-1851-4725-AD99-EBB99DEBE295}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService", "SFA.DAS.Payments.Monitoring.Metrics.SubmissionService\SFA.DAS.Payments.Monitoring.Metrics.SubmissionService.csproj", "{CE1510E0-790D-458B-AF09-4891F9D0A592}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCC78A7E-3775-4C4E-B450-C87896BB654F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC78A7E-3775-4C4E-B450-C87896BB654F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC78A7E-3775-4C4E-B450-C87896BB654F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC78A7E-3775-4C4E-B450-C87896BB654F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4AA79A9-18F7-4826-AF0A-FD156F875F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4AA79A9-18F7-4826-AF0A-FD156F875F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4AA79A9-18F7-4826-AF0A-FD156F875F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4AA79A9-18F7-4826-AF0A-FD156F875F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0FD52A0-E04A-474E-BA3C-B294B0B81ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D610F9-20D7-4498-8AB8-FAFF0E17B743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1C3F23B-6991-4CDC-A902-15E7C6D26D56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{434C9163-099E-4CD9-ADBD-7458469DD626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{434C9163-099E-4CD9-ADBD-7458469DD626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{434C9163-099E-4CD9-ADBD-7458469DD626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{434C9163-099E-4CD9-ADBD-7458469DD626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247B8F78-43A9-4FC6-9D43-73A847C9FAE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F69B94B-9889-4476-8705-6730414171B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F69B94B-9889-4476-8705-6730414171B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F69B94B-9889-4476-8705-6730414171B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F69B94B-9889-4476-8705-6730414171B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5CC9FED-726D-4123-8841-6FE0EC690859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BEE3C71-3AFD-4575-9C01-AE5BDC2E483F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{886BBF75-E223-4757-A1FB-D6D22CA7D806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886BBF75-E223-4757-A1FB-D6D22CA7D806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886BBF75-E223-4757-A1FB-D6D22CA7D806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886BBF75-E223-4757-A1FB-D6D22CA7D806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F26CAC-0CF3-4D0B-AAD2-DAFACC42D2F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F325FBA6-A037-4509-92FE-407E5251A9CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F325FBA6-A037-4509-92FE-407E5251A9CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F325FBA6-A037-4509-92FE-407E5251A9CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F325FBA6-A037-4509-92FE-407E5251A9CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{677C1BAC-904C-475A-A235-47E610665D63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{677C1BAC-904C-475A-A235-47E610665D63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{677C1BAC-904C-475A-A235-47E610665D63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{677C1BAC-904C-475A-A235-47E610665D63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFBE621E-2C76-4E10-B754-DCCE5D2BC5BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B9FE1D-701A-4E8C-91C7-A107F5CD589E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820B9CE6-ED12-4AD6-9B13-0E5CE0D656DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3A15D1-982B-4CDC-839A-A4C7D6FE1C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8434230-5B0F-462C-AD12-A53168D2E668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8434230-5B0F-462C-AD12-A53168D2E668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8434230-5B0F-462C-AD12-A53168D2E668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8434230-5B0F-462C-AD12-A53168D2E668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{088D5E97-1851-4725-AD99-EBB99DEBE295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{088D5E97-1851-4725-AD99-EBB99DEBE295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{088D5E97-1851-4725-AD99-EBB99DEBE295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{088D5E97-1851-4725-AD99-EBB99DEBE295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1510E0-790D-458B-AF09-4891F9D0A592}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

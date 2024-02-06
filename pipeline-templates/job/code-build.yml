@@ -1,40 +1,116 @@
 parameters:
-  SolutionBaseName:
-  BuildConfiguration:
-
+# TODO: Add all addtiional proejcts in as references become available.
+  TargetProjects: 'src/SFA.DAS.Payments.Monitoring.Messages/SFA.DAS.Payments.EarningEvents.Messages.csproj'
 jobs:
 - job: CodeBuild
   pool:
-    name: DAS - Continuous Integration Agents
-    workspace:
-      clean: all
+    name: SLD Build pool
+    #demands: LATEST_DOTNET_VERSION
   variables:
   - group: BUILD Management Resources
+  - name: SolutionBaseName
+    value: SFA.DAS.Payments.Application
   steps:
-  - template: azure-pipelines-templates/build/step/gitversion.yml@das-platform-building-blocks
+  - template: /azure-pipelines-templates/build/step/gitversion.yml
 
-  - template: azure-pipelines-templates/build/step/app-build.yml@das-platform-building-blocks
+  #- template: /azure-pipelines-templates/build/step/app-build.yml
+  #  parameters:
+  #    SonarCloudProjectKey: SkillsFundingAgency_das-shared-packages_SFA.DAS.Payments.Application
 
   - task: DotNetCoreCLI@2
-    displayName: Publish - dotnet publish ${{ parameters.SolutionBaseName }}
+  # task: NuGetCommand@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: ${{ parameters.TargetProjects }}
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+    #  vstsFeed: '1d5deb2d-cf8b-4bb1-b147-d13bc246e3f4'
+
+  # task: DotNetCoreCLI@2
+  - task: NuGetCommand@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: ${{ parameters.TargetProjects }}
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+    #  vstsFeed: '1d5deb2d-cf8b-4bb1-b147-d13bc246e3f4'
+    
+  - task: DotNetCoreCLI@2
+  #- task: NuGetCommand@2
+    displayName: Build
+    inputs:
+      projects:  ${{ parameters.TargetProjects }}
+      arguments: '--configuration $(buildConfiguration) --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish $(SolutionBaseName)"
     inputs:
       command: publish
       publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/${{ parameters.SolutionBaseName }}/${{ parameters.SolutionBaseName }}.csproj
-      arguments: -o $(build.artifactstagingdirectory)/publish -c ${{ parameters.BuildConfiguration }} --no-build
+      projects: src/SFA.DAS.Payments.Application/SFA.DAS.Payments.Application.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
       modifyOutputPath: true
-      zipAfterPublish: true
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish SFA.DAS.Payments.Core"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.Core/SFA.DAS.Payments.Core.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish SFA.DAS.Payments.Messages.Common"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.Messages.Common/SFA.DAS.Payments.Messages.Common.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish SFA.DAS.Payments.Messaging"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.Messaging/SFA.DAS.Payments.Messaging.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish SFA.DAS.Payments.Model.Core"
+    inputs:
+      command: publish
+      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
+      projects: src/SFA.DAS.Payments.Model.Core/SFA.DAS.Payments.Model.Core.csproj
+      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
+      modifyOutputPath: true
 
   - task: CopyFiles@2
-    displayName: Copy Files to $(build.artifactstagingdirectory)/publish
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/publish'
     inputs:
       Contents: |
-        azure/**
-      TargetFolder: $(build.artifactstagingdirectory)/publish
+       /**
+      TargetFolder: '$(build.artifactstagingdirectory)/publish'
       OverWrite: true
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish Build Artifact
+    displayName: 'Publish Artifact: drop'
     inputs:
       targetPath: $(build.artifactstagingdirectory)/publish
-      artifactName: ${{ parameters.SolutionBaseName }}
+      artifactName: drop
+
+  - template: /azure-pipelines-templates/build/step/nuget-pack.yml
+    parameters:
+      DotNetStandardPackagesToPack: |
+         src/SFA.DAS.Payments.Messages.Common/SFA.DAS.Payments.Messages.Common.csproj;
+         src/SFA.DAS.Payments.Application/SFA.DAS.Payments.Application.csproj;
+         src/SFA.DAS.Payments.Core/SFA.DAS.Payments.Core.csproj;
+         src/SFA.DAS.Payments.Messaging/SFA.DAS.Payments.Messaging.csproj;
+         src/SFA.DAS.Payments.Model.Core/SFA.DAS.Payments.Model.Core.csproj;
+        

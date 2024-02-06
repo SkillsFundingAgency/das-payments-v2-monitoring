@@ -1,9 +1,5 @@
 ﻿using System.Linq;
-using System.Text;
 using Autofac;
-using Microsoft.ApplicationInsights.Channel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NServiceBus;
 using NServiceBus.Features;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;

@@ -1,0 +1,37 @@
+parameters:
+- name: ContainerRegistryName
+- name: ImageName
+- name: ServiceConnection
+- name: AdditionalArgs
+  default: ''
+- name: BranchToCreateLatestTag
+  default: main
+- name: Platform
+  type: string
+  default: linux
+  values:
+  - linux
+  - windows
+- name: WorkingDirectory
+  default: $(Build.SourcesDirectory)
+- name: timeoutInMinutes
+  default: 60
+
+steps:
+- task: AzureCLI@2
+  timeoutInMinutes: ${{ parameters.timeoutInMinutes }}
+  displayName: 'Build Image with build number tag'
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: 'az acr build --registry ${{ parameters.ContainerRegistryName }} --image ${{ parameters.ImageName }}:$(build.buildnumber) --platform ${{ parameters.Platform }} --timeout $(${{parameters.timeoutInMinutes}} * 60) ${{ parameters.AdditionalArgs }} .'
+    workingDirectory: ${{ parameters.WorkingDirectory }}
+- task: AzureCLI@2
+  displayName: 'Import Image with latest tag if branch matches BranchToCreateLatestTag parameter'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/${{ parameters.BranchToCreateLatestTag }}'))
+  inputs:
+    azureSubscription: ${{ parameters.ServiceConnection }}
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: 'az acr import --name ${{ parameters.ContainerRegistryName }} --source ${{ parameters.ContainerRegistryName }}.azurecr.io/${{ parameters.ImageName }}:$(build.buildnumber) --image ${{ parameters.ImageName }}:latest --force'
