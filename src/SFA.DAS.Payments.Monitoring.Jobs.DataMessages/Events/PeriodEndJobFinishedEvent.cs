@@ -1,9 +1,9 @@
 ﻿using System;
 using SFA.DAS.Payments.Messages.Common.Events;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Events
+namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events
 {
-    public class PeriodEndJobFinishedEvent :IEvent
+    public class PeriodEndJobFinishedEvent : IEvent
     {
         public Guid EventId { get; set; }
         public DateTimeOffset EventTime { get; set; }

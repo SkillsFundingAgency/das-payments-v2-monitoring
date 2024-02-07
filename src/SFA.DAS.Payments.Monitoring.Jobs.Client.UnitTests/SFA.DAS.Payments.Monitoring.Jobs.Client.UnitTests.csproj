@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.PeriodEnd.Model\SFA.DAS.Payments.PeriodEnd.Model.csproj" />
   </ItemGroup>
 

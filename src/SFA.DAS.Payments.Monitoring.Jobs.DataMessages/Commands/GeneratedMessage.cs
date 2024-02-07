@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands
+namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands
 {
     public class GeneratedMessage
     {

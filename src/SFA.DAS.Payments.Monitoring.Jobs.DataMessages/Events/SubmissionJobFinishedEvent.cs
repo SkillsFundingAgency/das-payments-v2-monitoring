@@ -1,9 +1,9 @@
 ﻿using System;
 using SFA.DAS.Payments.Messages.Common.Events;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Events
+namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events
 {
-    public abstract class SubmissionJobFinishedEvent: IEvent
+    public abstract class SubmissionJobFinishedEvent : IEvent
     {
         public Guid EventId { get; set; }
         public DateTimeOffset EventTime { get; set; }
