@@ -22,7 +22,7 @@ jobs:
     displayName: Restore
     inputs:
       command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
@@ -45,7 +45,7 @@ jobs:
     displayName: Restore
     inputs:
       command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
@@ -68,7 +68,7 @@ jobs:
   #- task: NuGetCommand@2
     displayName: Build
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
       arguments: '--configuration $(buildConfiguration) --no-restore'
 
   - task: DotNetCoreCLI@2
@@ -83,7 +83,7 @@ jobs:
     inputs:
       command: publish
       publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj
+      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
       arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
       modifyOutputPath: true
 
@@ -140,5 +140,5 @@ jobs:
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
     parameters:
       DotNetStandardPackagesToPack: |
-        src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;
-        src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;
+        src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj;
+        src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj;
