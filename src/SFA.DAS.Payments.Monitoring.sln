@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.JobService", "SFA.DAS.Payments.Monitoring.Jobs.JobService\SFA.DAS.Payments.Monitoring.Jobs.JobService.csproj", "{50FA062D-3E8B-46BD-AFE8-B1DFC3D6C404}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Messages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{5F69B94B-9889-4476-8705-6730414171B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.DataMessages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj", "{5F69B94B-9889-4476-8705-6730414171B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Model", "SFA.DAS.Payments.Monitoring.Jobs.Model\SFA.DAS.Payments.Monitoring.Jobs.Model.csproj", "{1968ECD9-BF29-41C5-88B2-92BBBAAD4427}"
 EndProject
