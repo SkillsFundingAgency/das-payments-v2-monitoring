@@ -2,9 +2,9 @@
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
 using System;
 using System.Threading.Tasks;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Client
 {
