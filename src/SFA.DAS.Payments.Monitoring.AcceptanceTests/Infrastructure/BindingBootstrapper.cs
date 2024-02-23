@@ -5,9 +5,9 @@ using SFA.DAS.Payments.AcceptanceTests.Core.Infrastructure;
 using SFA.DAS.Payments.EarningEvents.Messages.Events;
 using SFA.DAS.Payments.Messages.Core;
 using SFA.DAS.Payments.Monitoring.Jobs.Data;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Events;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events;
 using TechTalk.SpecFlow;
 
 namespace SFA.DAS.Payments.Monitoring.AcceptanceTests.Infrastructure

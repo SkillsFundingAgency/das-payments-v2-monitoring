@@ -6,7 +6,7 @@ using Autofac;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.Payments.AcceptanceTests.Core;
 using SFA.DAS.Payments.Core;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using TechTalk.SpecFlow;
 using NServiceBus;
 using NUnit.Framework;
