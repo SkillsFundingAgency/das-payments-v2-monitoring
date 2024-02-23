@@ -13,10 +13,19 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="1.1.0" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="1.1.0" />
+    <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="1.0.0" />
+    <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages.Internal" Version="1.0.0" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.DataMessages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Data\SFA.DAS.Payments.Monitoring.Jobs.Data.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Model\SFA.DAS.Payments.Monitoring.Jobs.Model.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Model\SFA.DAS.Payments.Monitoring.Metrics.Model.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using NServiceBus;
 using NUnit.Framework;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Events;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
 {
