@@ -1,6 +1,5 @@
-# parameters:
-  # TODO: Add all addtiional proejcts in as references become available.
-  # TargetProjects: 'src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj'
+parameters:
+  TargetProjects: 'src/**/*.csproj'
 jobs:
 - job: CodeBuild
   pool:
