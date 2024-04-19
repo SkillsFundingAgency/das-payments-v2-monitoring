@@ -91,6 +91,17 @@ jobs:
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
 
+  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.ServiceFabric
+  - task: DotNetCoreCLI@2
+    displayName: Restore - src/SFA.DAS.Payments.Monitoring.ServiceFabric
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.Monitoring.ServiceFabric/SFA.DAS.Payments.Monitoring.ServiceFabric.sfproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+
+
   # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
   - task: NuGetCommand@2  
     displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
@@ -147,6 +158,15 @@ jobs:
     inputs:
       command: restore
       projects: src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj
+      noCache: true
+      feedsToUse: 'select'
+      vstsFeed: 'dct-pkg'
+
+  - task: NuGetCommand@2
+    displayName: Restore - src/SFA.DAS.Payments.Monitoring.ServiceFabric
+    inputs:
+      command: restore
+      projects: src/SFA.DAS.Payments.Monitoring.ServiceFabric/SFA.DAS.Payments.Monitoring.ServiceFabric.sfproj
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
