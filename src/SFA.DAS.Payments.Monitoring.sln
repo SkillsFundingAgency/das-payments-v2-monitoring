@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.AcceptanceTests", "SFA.DAS.Payments.Monitoring.AcceptanceTests\SFA.DAS.Payments.Monitoring.AcceptanceTests.csproj", "{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests", "SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests\SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.csproj", "{73ECC5B8-AABB-49D2-B040-464F6492F427}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Application", "SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj", "{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78}"
@@ -69,14 +67,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Debug|x64.Build.0 = Debug|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|x64.ActiveCfg = Release|Any CPU
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91}.Release|x64.Build.0 = Release|Any CPU
 		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73ECC5B8-AABB-49D2-B040-464F6492F427}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -262,7 +252,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{11EC28D1-25B0-4A02-AD91-3AAD5F664E91} = {47771BA3-1DE3-46D4-8FCF-9CE5EC9916EF}
 		{73ECC5B8-AABB-49D2-B040-464F6492F427} = {A250162A-B77F-4BC4-B998-EE8B4C1988BA}
 		{AD08EA60-5E3A-411E-BB4B-A7D2BFD4CF78} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
 		{CCC78A7E-3775-4C4E-B450-C87896BB654F} = {A250162A-B77F-4BC4-B998-EE8B4C1988BA}
