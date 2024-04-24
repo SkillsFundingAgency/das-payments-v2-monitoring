@@ -131,7 +131,7 @@ jobs:
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Pipeline Artifact - Monitoring'
     inputs:
-      targetPath: $(build.artifactstagingdirectory)\Monitoring
+      targetPath: $(build.artifactstagingdirectory)
       artifact: monitoring-drop
       continueOnError: true
 
