@@ -58,6 +58,18 @@ jobs:
       projects: '**/*unittest*.csproj'
       arguments: '--filter FullyQualifiedName~UnitTests'
 
+  - task: MSBuild@1
+    displayName: 'Build solution'
+    inputs:
+      solution: 'src/SFA.DAS.Payments.Monitoring.ServiceFabric/SFA.DAS.Payments.Monitoring.ServiceFabric.sfproj'
+      msbuildArchitecture: x64
+      configuration: '$(BuildConfiguration)'
+      msbuildArguments: '/p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /t:Package /p:PackageLocation="$(build.artifactstagingdirectory)\ApplicationPackage" /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+      maximumCpuCount: true
+      logProjectEvents: true
+      createLogFile: true
+      continueOnError: true
+
   - task: DeleteFiles@1
     displayName: 'Delete Symbols files from Artifact Folder '
     inputs:
