@@ -1,6 +1,5 @@
-# parameters:
-  # TODO: Add all addtiional proejcts in as references become available.
-  # TargetProjects: 'src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj'
+parameters:
+  TargetProjects: 'src/**/*.csproj'
 jobs:
 - job: CodeBuild
   pool:
@@ -13,248 +12,128 @@ jobs:
   steps:
   - template: /azure-pipelines-templates/build/step/gitversion.yml
 
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
-  - task: DotNetCoreCLI@2  
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Client
-  - task: DotNetCoreCLI@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Client
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Data
-  - task: DotNetCoreCLI@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Data
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Data/SFA.DAS.Payments.Monitoring.Jobs.Data.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Model
-  - task: DotNetCoreCLI@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Model
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Metrics.Data
-  - task: DotNetCoreCLI@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Metrics.Data
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: DotNetCoreCLI@2 - src/SFA.DAS.Payments.Monitoring.Metrics.Model
-  - task: DotNetCoreCLI@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Metrics.Model
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-
-
-
-
-
-
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
-  - task: NuGetCommand@2  
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Client
   - task: NuGetCommand@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Client
+    displayName: Nuget Restore
     inputs:
       command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
+      projects: ${{ parameters.TargetProjects }}
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
+      includeNuGetOrg: true
 
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Data
-  - task: NuGetCommand@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Data
+  - task: DotNetCoreCLI@2
+    displayName: Dotnet Restore
     inputs:
       command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Data/SFA.DAS.Payments.Monitoring.Jobs.Data.csproj
+      projects: ${{ parameters.TargetProjects }}
       noCache: true
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
-
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Jobs.Model
-  - task: NuGetCommand@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Jobs.Model
+      includeNuGetOrg: true
+  
+  - task: MSBuild@1
+    displayName: 'Build solution'
     inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Metrics.Data
-  - task: NuGetCommand@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Metrics.Data
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-  # task: NuGetCommand@2 - src/SFA.DAS.Payments.Monitoring.Metrics.Model
-  - task: NuGetCommand@2
-    displayName: Restore - src/SFA.DAS.Payments.Monitoring.Metrics.Model
-    inputs:
-      command: restore
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj
-      noCache: true
-      feedsToUse: 'select'
-      vstsFeed: 'dct-pkg'
-
-   
-
-
-
+      solution: '**/*.sln'
+      msbuildArchitecture: x64
+      configuration: '$(BuildConfiguration)'
+      msbuildArguments: '/p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+      maximumCpuCount: true
+      logProjectEvents: true
+      createLogFile: true
+      continueOnError: true
+      clean: true
 
   - task: DotNetCoreCLI@2
-    displayName: Build
+    displayName: 'dotnet build UnitTest Projects'
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      command: build
+      projects: '**/*unittest*.csproj'
 
   - task: DotNetCoreCLI@2
-    displayName: Build
+    displayName: 'dotnet test UnitTest Projects'
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      command: test
+      projects: '**/*unittest*.csproj'
+      arguments: '--filter FullyQualifiedName~UnitTests'
 
-  - task: DotNetCoreCLI@2
-    displayName: Build
+  - task: MSBuild@1
+    displayName: 'Build solution'
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Data/SFA.DAS.Payments.Monitoring.Jobs.Data.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      solution: 'src/SFA.DAS.Payments.Monitoring.ServiceFabric/SFA.DAS.Payments.Monitoring.ServiceFabric.sfproj'
+      msbuildArchitecture: x64
+      configuration: '$(BuildConfiguration)'
+      msbuildArguments: '/p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /t:Package /p:PackageLocation="$(build.artifactstagingdirectory)\ApplicationPackage" /p:version=$(Build.BuildNumber) /p:FileVersion=$(Build.BuildNumber)'
+      maximumCpuCount: true
+      logProjectEvents: true
+      createLogFile: true
+      continueOnError: true
 
-  - task: DotNetCoreCLI@2
-    displayName: Build
+  - task: DeleteFiles@1
+    displayName: 'Delete Symbols files from Artifact Folder '
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
+      SourceFolder: '$(build.artifactstagingdirectory)/ApplicationPackage/'
+      Contents: '**/*ApplicationPackage*/*.pdb'
+      continueOnError: true
 
-  - task: DotNetCoreCLI@2
-    displayName: Build
+  - task: ServiceFabricUpdateManifests@2
+    displayName: 'Update Service Fabric Manifests (Manifest versions)'
     inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
-
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects:  src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj
-      arguments: '--configuration $(buildConfiguration) --no-restore'
-
-
-
-
-
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.DataMessages/SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Data/SFA.DAS.Payments.Monitoring.Jobs.Data.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-  - task: DotNetCoreCLI@2
-    displayName: "Publish $(SolutionBaseName)"
-    inputs:
-      command: publish
-      publishWebProjects: false #set to false as this setting (which defaults to true) will parse the entire repo for web projects
-      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj
-      arguments: "-o $(build.artifactstagingdirectory)/publish -c $(BuildConfiguration) --no-restore --no-build"
-      modifyOutputPath: true
-
-
+      applicationPackagePath: '$(build.artifactstagingdirectory)/ApplicationPackage'
+      versionBehavior: Replace
+      continueOnError: true
 
   - task: CopyFiles@2
-    displayName: 'Copy Files to: $(build.artifactstagingdirectory)/publish'
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       Contents: |
-        /**
+        pipeline-templates/scripts/**    
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
       OverWrite: true
+      CleanTargetFolder: true
+      flattenFolders: true  
+      continueOnError: true
+
+  - task: CopyFiles@2 
+    displayName: 'Copy Nuget Files to: Artifact Nuget Directory'
+    inputs:
+     Contents: |
+       **\*.nupkg
+       !**\packages\**
+       !**\bin\x64\**
+     TargetFolder: '$(build.artifactstagingdirectory)/NugetPackages'
+     OverWrite: true
+     CleanTargetFolder: true
+     flattenFolders: true
+     continueOnError: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy ApplicationParameters Files to: Artifact ApplicationParameters Directory'
+    inputs:
+      Contents: 'src/SFA.DAS.Payments.Monitoring.ServiceFabric/ApplicationParameters/*.xml'
+      TargetFolder: '$(build.artifactstagingdirectory)/ApplicationParameters'
+      OverWrite: true
+      CleanTargetFolder: true
+      flattenFolders: true
+      continueOnError: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy PublishProfiles Files to: Artifact PublishProfiles Directory'
+    inputs:
+      Contents: 'src/SFA.DAS.Payments.Monitoring.ServiceFabric/PublishProfiles/*.xml'
+      TargetFolder: '$(build.artifactstagingdirectory)/PublishProfiles'
+      OverWrite: true
+      CleanTargetFolder: true
+      flattenFolders: true
+      continueOnError: true
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: drop'
+    displayName: 'Publish Pipeline Artifact - Monitoring'
     inputs:
-      targetPath: $(build.artifactstagingdirectory)/publish
-      artifactName: drop
+      targetPath: $(build.artifactstagingdirectory)
+      artifact: monitoring-drop
+      continueOnError: true
 
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
     parameters:
