@@ -242,7 +242,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
 
             result.IsComplete.Should().BeTrue();
             result.OverriddenJobStatus.Should().Be(null);
-            result.completionTime.Should().BeCloseTo(expectedEndTime, 500);
+            result.completionTime.Should().BeCloseTo(expectedEndTime, new TimeSpan(0,0,500));
 
             mocker.Mock<ITelemetry>().Verify(t => 
                 t.TrackEvent("PeriodEndStart Job Status Update", It.IsAny<Dictionary<string, string>>(), It.IsAny<Dictionary<string, double>>()), 

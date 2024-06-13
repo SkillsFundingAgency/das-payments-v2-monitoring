@@ -245,16 +245,16 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         public DcMetricsDataContext(DbContextOptions contextOptions) : base(contextOptions)
         { }
 
-        public DbQuery<TransactionTypeAmounts> Earnings { get; set; }
+        public DbSet<TransactionTypeAmounts> Earnings { get; set; }
 
-        public DbQuery<ProviderTransactionTypeAmounts> AllProviderEarnings { get; set; }
-        public DbQuery<ProviderNegativeEarningsLearnerDcEarningAmounts> AllNegativeEarnings { get; set; }
+        public DbSet<ProviderTransactionTypeAmounts> AllProviderEarnings { get; set; }
+        public DbSet<ProviderNegativeEarningsLearnerDcEarningAmounts> AllNegativeEarnings { get; set; }
 
         public async Task<List<TransactionTypeAmounts>> GetEarnings(long ukprn, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
             using (await BeginTransaction(cancellationToken))
             {
-                return await Earnings.FromSql(BaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                return await Earnings.FromSqlRaw(BaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
             }
         }
 
@@ -262,7 +262,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             using (await BeginTransaction(cancellationToken))
             {
-                return await AllProviderEarnings.FromSql(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                return await AllProviderEarnings.FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
             }
         }
 
@@ -270,7 +270,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             using (await BeginTransaction(cancellationToken))
             {
-                var result = await AllNegativeEarnings.FromSql(BaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                var result = await AllNegativeEarnings.FromSqlRaw(BaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
 
                 result.ForEach(x => x.NegativeEarningsTotal = Math.Abs(x.NegativeEarningsTotal));
 

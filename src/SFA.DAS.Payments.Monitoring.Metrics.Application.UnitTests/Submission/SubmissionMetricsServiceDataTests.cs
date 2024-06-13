@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core.Activators.Reflection;
 using Autofac.Extras.Moq;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.WindowsAzure.Storage.File.Protocol;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.Payments.Model.Core;
@@ -113,6 +111,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 Amount = 11000,
                 TransactionType = TransactionType.Learning,
                 ContractType = ContractType.Act1,
+                LearningAimFundingLineType = "Abc",
+                LearningAimReference = "lar",
+                PriceEpisodeIdentifier = "some-price-episode-identifier",
+                LearnerReferenceNumber = "123"
+
             });
 
             await inMemoryMetricsQueryDataContext.RequiredPaymentEvents.AddAsync(new RequiredPaymentEventModel
@@ -124,7 +127,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 CollectionPeriod = new CollectionPeriod { AcademicYear = 1920, Period = 1 },
                 Amount = 15000,
                 TransactionType = TransactionType.Learning,
-                ContractType = ContractType.Act2
+                ContractType = ContractType.Act2,
+                LearningAimFundingLineType = "Abc",
+                LearningAimReference = "lar",
+                PriceEpisodeIdentifier = "some-price-episode-identifier",
+                LearnerReferenceNumber = "123"
             });
 
             await inMemoryMetricsQueryDataContext.Payments.AddAsync(new PaymentModel
@@ -138,6 +145,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 FundingSource = FundingSourceType.CoInvestedSfa,
                 TransactionType = TransactionType.Learning,
                 ContractType = ContractType.Act1,
+                LearningAimFundingLineType = "Abc",
+                LearningAimReference = "lar",
+                PriceEpisodeIdentifier = "some-price-episode-identifier",
+                LearnerReferenceNumber = "123",
+                ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
             });
 
@@ -152,6 +164,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 FundingSource = FundingSourceType.FullyFundedSfa,
                 TransactionType = TransactionType.Learning,
                 ContractType = ContractType.Act2,
+                LearningAimFundingLineType = "Abc",
+                LearningAimReference = "lar",
+                PriceEpisodeIdentifier = "some-price-episode-identifier",
+                LearnerReferenceNumber = "123",
+                ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
             });
 
@@ -166,6 +183,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 FundingSource = FundingSourceType.Levy,
                 TransactionType = TransactionType.Learning,
                 ContractType = ContractType.Act1,
+                LearningAimFundingLineType = "Abc",
+                LearningAimReference = "lar",
+                PriceEpisodeIdentifier = "some-price-episode-identifier",
+                LearnerReferenceNumber = "123",
+                ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
             });
 
