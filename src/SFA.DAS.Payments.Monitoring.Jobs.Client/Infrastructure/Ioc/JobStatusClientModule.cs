@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using NServiceBus;
+using NServiceBus.Faults;
 using NServiceBus.Features;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
@@ -78,12 +81,15 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
                     "Job Status Incoming message behaviour");
                 endpointConfig.Pipeline.Register(typeof(JobStatusOutgoingMessageBehaviour),
                     "Job Status Outgoing message behaviour");
-                endpointConfig.Notifications.Errors.MessageSentToErrorQueue += (sender, failedMessage) =>
+                endpointConfig.Recoverability().Failed(settings => settings.OnMessageSentToErrorQueue((failedMessage,ct) =>
                 {
                     var factory = c.Resolve<IJobMessageClientFactory>();
-                    var client = factory.Create();
-                    client.ProcessingFailedForJobMessage(failedMessage.Body).Wait(2000);
-                };
+                    var client = factory.Create(); 
+                    client.ProcessingFailedForJobMessage(failedMessage.Body.ToArray()).Wait(2000);
+                    return Task.CompletedTask;
+
+                }));
+
             });
         }
 
@@ -98,19 +104,19 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
             conventions
                 .DefiningCommandsAs(t => t.IsAssignableTo<JobsCommand>());
 
+
             var persistence = endpointConfiguration.UsePersistence<AzureStoragePersistence>();
             persistence.ConnectionString(config.StorageConnectionString);
 
-            endpointConfiguration.DisableFeature<TimeoutManager>();
             var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
             transport
                 .ConnectionString(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"))
                 .Transactions(TransportTransactionMode.ReceiveOnly)
-                .RuleNameShortener(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
+                .SubscriptionNamingConvention(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
 
             transport.Routing().RouteToEndpoint(typeof(RecordEarningsJob).Assembly, jobsEndpointName);
             endpointConfiguration.SendFailedMessagesTo(config.FailedMessagesQueue);
-            endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+            endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             endpointConfiguration.EnableInstallers();
 
             endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(logger));

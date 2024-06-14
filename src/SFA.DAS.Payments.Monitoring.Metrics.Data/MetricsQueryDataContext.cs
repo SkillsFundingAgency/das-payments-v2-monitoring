@@ -35,24 +35,25 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
     public class MetricsQueryDataContext : DbContext, IMetricsQueryDataContext
     {
+        [Keyless]
         public class DataLockCount
         {
             public int Count { get; set; }
             public byte DataLockType { get; set; }
         }
-
+        [Keyless]
         public class PeriodEndDataLockCount
         {
             public long Ukprn { get; set; }
             public int Count { get; set; }
             public byte DataLockType { get; set; }
         }
-
-        public virtual DbQuery<DataLockCount> DataLockCounts { get; set; }
-        public virtual DbQuery<PeriodEndDataLockCount> PeriodEndDataLockCounts { get; set; }
-        public virtual DbQuery<ProviderFundingLineTypeAmounts> AlreadyPaidDataLockProviderTotals { get; set; }
-        public virtual DbQuery<ProviderFundingLineTypeAmounts> DataLockedEarningsTotals { get; set; }
-        public virtual DbQuery<ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmounts> DataLockedEarningsForLearnersWithNegativeDcEarnings { get; set; }
+        
+        public virtual DbSet<DataLockCount> DataLockCounts { get; set; }
+        public virtual DbSet<PeriodEndDataLockCount> PeriodEndDataLockCounts { get; set; }
+        public virtual DbSet<ProviderFundingLineTypeAmounts> AlreadyPaidDataLockProviderTotals { get; set; }
+        public virtual DbSet<ProviderFundingLineTypeAmounts> DataLockedEarningsTotals { get; set; }
+        public virtual DbSet<ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmounts> DataLockedEarningsForLearnersWithNegativeDcEarnings { get; set; }
         public virtual DbSet<LatestSuccessfulJobModel> LatestSuccessfulJobs { get; set; }
         public virtual DbSet<EarningEventModel> EarningEvent { get; protected set; }
         public virtual DbSet<EarningEventPeriodModel> EarningEventPeriods { get; protected set; }
@@ -150,7 +151,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 					FROM unGroupedAmounts
 					GROUP BY unGroupedAmounts.Ukprn";
 
-            return await AlreadyPaidDataLockProviderTotals.FromSql(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
+            return await AlreadyPaidDataLockProviderTotals.FromSqlRaw(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
         }
 
         public async Task<List<ProviderContractTypeAmounts>> GetHeldBackCompletionPaymentTotals(short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
@@ -222,7 +223,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     and p.ContractType = 1
 			";
             var result = new SqlParameter("@result", SqlDbType.Decimal) { Direction = ParameterDirection.Output };
-            await Database.ExecuteSqlCommandAsync(sql, new[] { new SqlParameter("@jobid", jobId), new SqlParameter("@ukprn", ukprn), result }, cancellationToken);
+            await Database.ExecuteSqlRawAsync(sql, new[] { new SqlParameter("@jobid", jobId), new SqlParameter("@ukprn", ukprn), result }, cancellationToken);
             return result.Value as decimal? ?? 0;
         }
 
@@ -248,7 +249,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 			    group by
                     a.DataLockFailureId
                 ";
-            var dataLockCounts = await DataLockCounts.FromSql(sql, new SqlParameter("@jobId", jobId), new SqlParameter("@ukprn", ukprn))
+            var dataLockCounts = await DataLockCounts.FromSqlRaw(sql, new SqlParameter("@jobId", jobId), new SqlParameter("@ukprn", ukprn))
                 .ToListAsync(cancellationToken);
             return new DataLockTypeCounts
             {
@@ -296,7 +297,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 ";
 
             var providerDataLockCounts = await PeriodEndDataLockCounts
-                .FromSql(dataLockCountByUkprnSql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod))
+                .FromSqlRaw(dataLockCountByUkprnSql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod))
                 .ToListAsync(cancellationToken);
 
             return providerDataLockCounts
@@ -324,7 +325,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             var sql = GetDataLockedEarningsTotalsSqlQuery();
 
-            return await DataLockedEarningsTotals.FromSql(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
+            return await DataLockedEarningsTotals.FromSqlRaw(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
         }
 
         public async Task<List<ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmounts>> GetDataLockedAmountsForForNegativeEarningsLearners(List<long> learnerUlns, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
@@ -345,7 +346,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 var batchSqlQuery = string.Format(sql, sqlParamName);
 
                 var queryResult = await DataLockedEarningsForLearnersWithNegativeDcEarnings
-                    .FromSql(batchSqlQuery, sqlParameters.ToArray())
+                    .FromSqlRaw(batchSqlQuery, sqlParameters.ToArray())
                     .ToListAsync(cancellationToken);
 
                 results.AddRange(queryResult);
