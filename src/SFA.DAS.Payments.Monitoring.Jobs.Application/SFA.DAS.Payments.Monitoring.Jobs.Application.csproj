@@ -15,12 +15,12 @@
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NServiceBus" Version="8.1.1" />
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.0-prerelease-18" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.0-prerelease-18" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.0-prerelease-20" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.0-prerelease-20" />
     <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="1.0.1" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="1.0.3" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="1.0.3" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="1.1.1" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.0-prerelease-6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
   </ItemGroup>
 

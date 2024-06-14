@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.0-prerelease-18" />
-    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.0-prerelease-18" />
+    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.0-prerelease-20" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.0-prerelease-20" />
     <PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

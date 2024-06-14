@@ -18,11 +18,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.0-prerelease-18" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.0-prerelease-18" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.0-prerelease-20" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.0-prerelease-20" />
     <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="1.0.1" />
     <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages.Internal" Version="1.0.1" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="1.1.1" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.0-prerelease-6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
   </ItemGroup>
 
