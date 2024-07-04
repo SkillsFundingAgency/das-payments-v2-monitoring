@@ -55,7 +55,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             var transaction = await Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await Database.ExecuteSqlRawAsync($@"
+                await Database.ExecuteSqlCommandAsync($@"
                     Delete 
                         From [Metrics].[SubmissionSummary] 
                     Where 
@@ -91,7 +91,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
                 await PeriodEndSummaries.AddAsync(overallPeriodEndSummary, cancellationToken);
 
-                await Database.ExecuteSqlRawAsync($@"
+                await Database.ExecuteSqlCommandAsync($@"
                     Delete 
                         From [Metrics].[ProviderPeriodEndSummary] 
                     Where 
@@ -116,7 +116,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             var transaction = await Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await Database.ExecuteSqlRawAsync($@"
+                await Database.ExecuteSqlCommandAsync($@"
                     Delete 
                         From [Metrics].[SubmissionsSummary] 
                     Where 

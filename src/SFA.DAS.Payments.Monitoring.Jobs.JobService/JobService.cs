@@ -40,8 +40,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService
             this.lifetimeScope = lifetimeScope;
             this.periodEndStartJobStatusManager = periodEndStartJobStatusManager ?? throw new ArgumentNullException(nameof(periodEndStartJobStatusManager));
         }
-
-        protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
+        //TODO: Uncomment when ServiceBusBatchCommunicationListener is implemented in Common.Application
+        /*protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
         {
             try
             {
@@ -59,7 +59,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService
                 logger.LogError($"Error: {e.Message}",e);
                 throw;
             }
-        }
+        }*/
 
         protected override Task RunAsync(CancellationToken cancellationToken)
         {

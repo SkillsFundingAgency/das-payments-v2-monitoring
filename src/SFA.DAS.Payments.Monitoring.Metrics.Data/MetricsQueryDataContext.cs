@@ -295,7 +295,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 ";
 
             var providerDataLockCounts = await PeriodEndDataLockCounts
-                .FromSqlRaw(dataLockCountByUkprnSql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod))
+                .FromSql(dataLockCountByUkprnSql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod))
                 .ToListAsync(cancellationToken);
 
             return providerDataLockCounts
@@ -323,7 +323,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             var sql = GetDataLockedEarningsTotalsSqlQuery();
 
-            return await DataLockedEarningsTotals.FromSqlRaw(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
+            return await DataLockedEarningsTotals.FromSql(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
         }
 
         public async Task<List<ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmounts>> GetDataLockedAmountsForForNegativeEarningsLearners(List<long> learnerUlns, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
@@ -344,7 +344,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 var batchSqlQuery = string.Format(sql, sqlParamName);
 
                 var queryResult = await DataLockedEarningsForLearnersWithNegativeDcEarnings
-                    .FromSqlRaw(batchSqlQuery, sqlParameters.ToArray())
+                    .FromSql(batchSqlQuery, sqlParameters.ToArray())
                     .ToListAsync(cancellationToken);
 
                 results.AddRange(queryResult);
