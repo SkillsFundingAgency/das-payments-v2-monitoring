@@ -20,8 +20,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="7.1.1951" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.0-prerelease-20" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.0-prerelease-6" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.2" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
   </ItemGroup>
 

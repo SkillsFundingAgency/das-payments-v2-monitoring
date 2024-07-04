@@ -254,7 +254,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             using (await BeginTransaction(cancellationToken))
             {
-                return await Earnings.FromSqlRaw(BaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                return await Earnings.FromSql(BaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
             }
         }
 

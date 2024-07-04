@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace SFA.DAS.Payments.Monitoring.Metrics.Model
+﻿namespace SFA.DAS.Payments.Monitoring.Metrics.Model
 {
-    [Keyless]
     public class ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmounts
     {
         public long Ukprn { get; set; }

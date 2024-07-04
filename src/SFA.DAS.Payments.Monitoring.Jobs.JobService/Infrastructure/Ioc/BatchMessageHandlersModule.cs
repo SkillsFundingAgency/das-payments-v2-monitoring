@@ -15,7 +15,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c =>
+            //TODO: Uncomment when ServiceBusBatchCommunicationListener is implemented in Common.Application
+            /*builder.Register(c =>
                 {
                     var appConfig = c.Resolve<IApplicationConfiguration>();
                     var configHelper = c.Resolve<IConfigurationHelper>();
@@ -26,7 +27,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
                         c.Resolve<IContainerScopeFactory>());
                 })
                 .As<IServiceBusBatchCommunicationListener>()
-                .SingleInstance();
+                .SingleInstance();*/
 
             builder.RegisterType<RecordJobMessageProcessingStatusBatchHandler>()
                 .As<IHandleMessageBatches<RecordJobMessageProcessingStatus>>()

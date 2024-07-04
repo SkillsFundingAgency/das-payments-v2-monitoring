@@ -80,7 +80,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             var transaction = await Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await Database.ExecuteSqlRawAsync($@"
+                await Database.ExecuteSqlCommandAsync($@"
                     Delete 
                         From [Metrics].[PeriodEndSummary] 
                     Where 
