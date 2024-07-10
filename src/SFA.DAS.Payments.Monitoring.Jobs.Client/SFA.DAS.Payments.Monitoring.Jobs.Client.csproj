@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Compile Remove="Infrastructure\Ioc\JobStatusClientModule.cs" />
-    <Compile Remove="PeriodEndJobClient.cs" />
+    <!--<Compile Remove="PeriodEndJobClient.cs" />-->
   </ItemGroup>
 
   <ItemGroup><!--<PackageReference Include="Autofac" Version="4.8.1" />
@@ -22,7 +22,7 @@
   <ItemGroup>
     <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Messages.Core\SFA.DAS.Payments.Messages.Core.csproj" />-->
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.DataMessages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
   </ItemGroup>
 
 </Project>

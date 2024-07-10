@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing.Earnings;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.Submission
 {

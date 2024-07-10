@@ -1,11 +1,12 @@
-﻿using AutoFixture;
+﻿using System.Threading;
+using AutoFixture;
 using Moq;
 using NServiceBus;
 using NUnit.Framework;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using SFA.DAS.Payments.PeriodEnd.Model;
 using System.Threading.Tasks;
 
@@ -76,7 +77,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests
             await sut.StartPeriodEndJob(periodEndJob);
 
             //Assert
-            messageSessionMock.Verify(x => x.Send(It.Is<RecordPeriodEndJob>(y => y.GetType().Name != nameof(RecordPeriodEndJob)), It.IsAny<SendOptions>()), Times.Once());
+            messageSessionMock.Verify(x => x.Send(It.Is<RecordPeriodEndJob>(y => y.GetType().Name != nameof(RecordPeriodEndJob)), It.IsAny<SendOptions>(), CancellationToken.None), Times.Once());
         }
 
         private void SetRecordPeriodEndJobType(PeriodEndTaskType periodEndTask)

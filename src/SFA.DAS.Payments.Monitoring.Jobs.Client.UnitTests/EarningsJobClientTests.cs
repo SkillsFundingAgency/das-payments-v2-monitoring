@@ -9,7 +9,7 @@ using NServiceBus;
 using NUnit.Framework;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Application.Messaging;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests
 {

@@ -6,7 +6,7 @@ using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.Submission;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using SFA.DAS.Payments.ServiceFabric.Core;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
