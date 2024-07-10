@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.Payments.Monitoring.Jobs.Messages
+﻿namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages
 {
     public abstract class JobsMessage: IJobMessage
     {

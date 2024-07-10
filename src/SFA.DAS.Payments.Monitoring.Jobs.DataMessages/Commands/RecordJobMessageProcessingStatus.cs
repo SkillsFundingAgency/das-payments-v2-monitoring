@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands
+namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands
 {
     public class RecordJobMessageProcessingStatus : JobsCommand, IJobMessageStatus
     {

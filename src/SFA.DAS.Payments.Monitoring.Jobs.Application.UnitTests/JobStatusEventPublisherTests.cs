@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Extras.Moq;
 using Moq;
@@ -6,7 +7,7 @@ using NServiceBus;
 using NUnit.Framework;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Events;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
 {
@@ -38,7 +39,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
                                                                           ev.AcademicYear == 1920 &&
                                                                           ev.CollectionPeriod == 01 &&
                                                                           ev.IlrSubmissionDateTime == submissionTime &&
-                                                                          ev.Ukprn == 1234), It.IsAny<PublishOptions>()), Times.Once);
+                                                                          ev.Ukprn == 1234), It.IsAny<PublishOptions>(), CancellationToken.None), Times.Once);
         }
     
         [Test]
@@ -54,7 +55,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
                                                                                ev.AcademicYear == 1920 &&
                                                                                ev.CollectionPeriod == 01 &&
                                                                                ev.IlrSubmissionDateTime == submissionTime &&
-                                                                               ev.Ukprn == 1234), It.IsAny<PublishOptions>()), Times.Once);
+                                                                               ev.Ukprn == 1234), It.IsAny<PublishOptions>(), CancellationToken.None), Times.Once);
         }
 
     }

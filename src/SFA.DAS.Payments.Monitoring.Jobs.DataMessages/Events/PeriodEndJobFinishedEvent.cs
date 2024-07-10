@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SFA.DAS.Payments.Messages.Common.Events;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Events
+namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events
 {
     public class PeriodEndJobFinishedEvent :IEvent
     {
