@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Remotion.Linq.Utilities;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.PeriodEnd
 {

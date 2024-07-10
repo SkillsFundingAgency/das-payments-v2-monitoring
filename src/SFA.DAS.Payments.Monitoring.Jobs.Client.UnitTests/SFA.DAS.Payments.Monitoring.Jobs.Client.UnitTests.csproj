@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>net472;net6</TargetFrameworks>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <!--<TargetFrameworks>net472;net6</TargetFrameworks>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.11.2" />
-    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="1.1.0" />
+    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="1.1.1-prerelease-3" />
   </ItemGroup>
 
   <ItemGroup>
