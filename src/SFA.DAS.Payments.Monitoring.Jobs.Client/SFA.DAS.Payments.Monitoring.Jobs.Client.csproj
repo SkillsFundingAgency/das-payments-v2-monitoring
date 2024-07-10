@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <!--<TargetFramework>netstandard2.0</TargetFramework>-->
-	  <TargetFrameworks>net472;net6</TargetFrameworks>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <!--<TargetFrameworks>net472;net6</TargetFrameworks>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +16,8 @@
     <Folder Include="Infrastructure\Ioc\" />
   </ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.2" />
-		<PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.2" />
+		<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.3-prerelease-2" />
+		<PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.3-prerelease-2" />
 	</ItemGroup>
   <ItemGroup>
     <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />

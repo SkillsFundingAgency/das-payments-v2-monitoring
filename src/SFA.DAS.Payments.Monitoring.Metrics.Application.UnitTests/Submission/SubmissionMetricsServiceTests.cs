@@ -159,7 +159,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
         [Test]
         public async Task Calculates_RequiredPaymentsDasEarningsComparison_Correctly()
         {
-            moqer.Provide<ISubmissionSummaryFactory>(new SubmissionSummaryFactory());
+            moqer.Mock<ISubmissionSummaryFactory>()
+                .Setup(factory =>
+                    factory.Create(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
+                .Returns(new SubmissionSummary(1234, 123, 1, 1920));
 
             var service = moqer.Create<SubmissionMetricsService>();
             await service.BuildMetrics(1234, 123, 1920, 1, CancellationToken.None).ConfigureAwait(false);
@@ -174,16 +177,18 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
         [Test]
         public async Task Sends_Metrics_Telemetry()
         {
-            moqer.Provide<ISubmissionSummaryFactory>(new SubmissionSummaryFactory());
-
+            moqer.Mock<ISubmissionSummaryFactory>()
+                .Setup(factory =>
+                    factory.Create(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
+                .Returns(new SubmissionSummary(1234, 123, 1, 1920));
             var service = moqer.Create<SubmissionMetricsService>();
             await service.BuildMetrics(1234, 123, 1920, 1, CancellationToken.None).ConfigureAwait(false);
 
             moqer.Mock<ITelemetry>()
-                 .Verify(t => t.TrackEvent(
-                             It.Is<string>(s => s == "Finished Generating Submission Metrics"),
-                             It.IsAny<Dictionary<string, string>>(),
-                             It.Is<Dictionary<string, double>>(dictionary => VerifySubmissionSummaryStats(dictionary))));
+                .Verify(t => t.TrackEvent(
+                    It.Is<string>(s => s == "Finished Generating Submission Metrics"),
+                    It.IsAny<Dictionary<string, string>>(),
+                    It.Is<Dictionary<string, double>>(dictionary => VerifySubmissionSummaryStats(dictionary))));
         }
 
         private static bool VerifySubmissionSummaryStats(IDictionary<string, double> dictionary)
