@@ -1,6 +1,6 @@
 ﻿using NServiceBus.Pipeline;
 using SFA.DAS.Payments.Messages.Common;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
