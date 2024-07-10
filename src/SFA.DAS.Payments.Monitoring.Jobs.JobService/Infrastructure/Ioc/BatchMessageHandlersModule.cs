@@ -8,6 +8,7 @@ using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.Submission;
 using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using SFA.DAS.Payments.ServiceFabric.Core;
+using NServiceBus;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
 {
@@ -67,6 +68,13 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
             builder.RegisterType<RecordPeriodEndRequestReportsJobHandler>()
                 .As<IHandleMessageBatches<RecordPeriodEndRequestReportsJob>>()
                 .InstancePerLifetimeScope();
+
+            builder.Register(c =>
+                {
+                    var appConfig = c.Resolve<IApplicationConfiguration>();
+                    return new EndpointConfiguration(appConfig.EndpointName);
+                }).As<EndpointConfiguration>()
+                .SingleInstance();
         }
     }
 }
