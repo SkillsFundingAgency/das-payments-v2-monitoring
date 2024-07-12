@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 {
@@ -35,14 +36,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
     
     public class MetricsQueryDataContext : DbContext, IMetricsQueryDataContext
     {
-        [Keyless]
         public class DataLockCount
         {
-        
             public int Count { get; set; }
             public byte DataLockType { get; set; }
         }
-        [Keyless]
         public class PeriodEndDataLockCount
         {
             public long Ukprn { get; set; }
@@ -78,6 +76,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             modelBuilder.ApplyConfiguration(new RequiredPaymentEventModelConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentModelConfiguration());
             modelBuilder.ApplyConfiguration(new LatestSuccessfulJobModelConfiguration());
+            modelBuilder.ApplyConfiguration(new DataLockCountConfiguration());
+            modelBuilder.ApplyConfiguration(new PeriodEndDataLockCountConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderFundingLineTypeAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmountsConfiguration());
         }
 
         public string GetDataLockedEarningsTotalsSqlQuery(bool shouldGroupByLearner = false) => $@";WITH unGroupedEarnings AS 
