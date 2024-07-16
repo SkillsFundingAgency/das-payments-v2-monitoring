@@ -16,8 +16,6 @@
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.0.5" />
     <PackageReference Include="Microsoft.ServiceFabric" Version="10.0.1010" />
-    <!--<PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.4.664" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.4.664" />-->
     <PackageReference Include="NServiceBus" Version="8.1.1" />
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="3.0.0" />
     <PackageReference Include="NServiceBus.Transport.AzureServiceBus" Version="3.2.1" />
@@ -29,7 +27,6 @@
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces\SFA.DAS.Payments.Monitoring.Jobs.JobService.Interfaces.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.DataMessages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.ServiceFabric.Core\SFA.DAS.Payments.ServiceFabric.Core.csproj" />-->
   </ItemGroup>
 
 </Project>
