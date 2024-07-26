@@ -9,6 +9,7 @@ using NUnit.Framework;
 using SFA.DAS.Payments.Monitoring.Metrics.Messages.Commands;
 using AutoFixture;
 using Moq;
+using NUnit.Framework.Legacy;
 using SFA.DAS.Payments.Application.Infrastructure.Telemetry;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
@@ -59,10 +60,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
 
         private static bool DictionaryContainsValues(Dictionary<string, string> dictionary, GenerateSubmissionSummary message)
         {
-            Assert.AreEqual(message.AcademicYear.ToString(), dictionary[TelemetryKeys.AcademicYear]);
-            Assert.AreEqual(message.CollectionPeriod.ToString(), dictionary[TelemetryKeys.CollectionPeriod]);
-            Assert.AreEqual(message.Ukprn.ToString(), dictionary[TelemetryKeys.Ukprn]);
-            Assert.AreEqual(message.JobId.ToString(), dictionary[TelemetryKeys.JobId]);
+            ClassicAssert.AreEqual(message.AcademicYear.ToString(), dictionary[TelemetryKeys.AcademicYear]);
+            ClassicAssert.AreEqual(message.CollectionPeriod.ToString(), dictionary[TelemetryKeys.CollectionPeriod]);
+            ClassicAssert.AreEqual(message.Ukprn.ToString(), dictionary[TelemetryKeys.Ukprn]);
+            ClassicAssert.AreEqual(message.JobId.ToString(), dictionary[TelemetryKeys.JobId]);
 
             return true;
         }

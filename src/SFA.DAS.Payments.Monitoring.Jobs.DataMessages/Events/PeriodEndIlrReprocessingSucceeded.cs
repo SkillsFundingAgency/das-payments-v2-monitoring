@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Events
+﻿namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events
 {
     public class PeriodEndIlrReprocessingSucceeded : PeriodEndJobFinishedEvent
     {
