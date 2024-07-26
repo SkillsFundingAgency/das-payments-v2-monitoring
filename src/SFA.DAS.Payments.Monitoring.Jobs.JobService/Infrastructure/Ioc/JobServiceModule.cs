@@ -30,6 +30,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
                 })
                 .As<IPeriodEndRequestReportsClient>()
                 .InstancePerLifetimeScope();
+
         }
     }
 }
