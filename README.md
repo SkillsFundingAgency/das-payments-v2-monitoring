@@ -14,18 +14,15 @@ The Payments V2 Monitoring ServiceFabric application provides functionality for 
 
 This repository contains stateful and stateless ServiceFabric services that monitor the status of jobs that have been initiated by other applications within the Payments V2 system. For example, the services will record information when a job starts, stops, errors, or has timed out.
 
-This repository also contains an Azure Function application that is responsible for generating and recording metrics about the period end run, for example successful submissions for the collection period.
+This repository also contains an Azure Function application that is responsible for generating and recording metrics about the period end run, for example, successful submissions for the collection period.
 
 ## 🚀 Installation
 
 ### Pre-Requisites
 
-* An Azure DevBox configured for Payments V2 development
-
-Setup instructions: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/950927878/Development+Environment+-+Payments+V2+DAS+Space
+Setup instructions can be found at the following link, which will help you set up your environment and access the correct repositories: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/950927878/Development+Environment+-+Payments+V2+DAS+Space
 
 ### Config
-
 
 As detailed in: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/644972941/Developer+Configuration+Settings
 
