@@ -9,7 +9,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />-->
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Data\SFA.DAS.Payments.Monitoring.Metrics.Data.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Domain\SFA.DAS.Payments.Monitoring.Metrics.Domain.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj" />

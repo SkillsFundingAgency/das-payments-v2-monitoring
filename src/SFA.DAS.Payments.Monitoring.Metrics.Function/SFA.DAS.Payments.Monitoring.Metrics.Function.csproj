@@ -12,7 +12,6 @@
     <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-13" />
   </ItemGroup>
   <ItemGroup>
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />-->
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
