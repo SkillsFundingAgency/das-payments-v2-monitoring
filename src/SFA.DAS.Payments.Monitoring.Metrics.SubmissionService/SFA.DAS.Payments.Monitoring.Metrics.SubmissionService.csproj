@@ -14,9 +14,7 @@
     <PackageReference Include="ESFA.DC.Logging" Version="0.1.4-beta0001" />
     <PackageReference Include="Microsoft.ServiceFabric" Version="10.0.1010" />
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="7.0.1001" />
-    
     <PackageReference Include="Microsoft.ServiceFabric.Data.Interfaces" Version="7.0.1010" />
-
     <PackageReference Include="Microsoft.ServiceFabric.Diagnostics.Internal" Version="7.0.1010" />
 
     <!--<PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.4.664" />-->
@@ -25,12 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />-->
-    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
+    <!--<ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />-->
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.DataMessages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj" />
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.ServiceFabric.Core\SFA.DAS.Payments.ServiceFabric.Core.csproj" />-->
   </ItemGroup>
 
 </Project>

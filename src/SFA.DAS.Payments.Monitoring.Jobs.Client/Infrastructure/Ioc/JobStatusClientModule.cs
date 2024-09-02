@@ -1,16 +1,14 @@
 ﻿using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Autofac;
-using Microsoft.ApplicationInsights.Channel;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NServiceBus;
+using NServiceBus.Faults;
 using NServiceBus.Features;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Data;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
 {
@@ -18,32 +16,33 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
     {
         protected override void Load(ContainerBuilder builder)
         {
+
             builder.Register((c, p) =>
-                {
-                    var configHelper = c.Resolve<IConfigurationHelper>();
-                    return new JobsDataContext(configHelper.GetConnectionString("PaymentsConnectionString"));
-                })
+            {
+                var configHelper = c.Resolve<IConfigurationHelper>();
+                return new JobsDataContext(configHelper.GetConnectionString("PaymentsConnectionString"));
+            })
                 .As<IJobsDataContext>()
                 .InstancePerDependency();
 
             builder.Register((c, p) =>
-                {
-                    var logger = c.Resolve<IPaymentLogger>();
-                    var endpointConfig = CreateEndpointConfiguration(c, logger);
-                    return new MonitoringMessageSessionFactory(endpointConfig);
-                })
+            {
+                var logger = c.Resolve<IPaymentLogger>();
+                var endpointConfig = CreateEndpointConfiguration(c, logger);
+                return new MonitoringMessageSessionFactory(endpointConfig);
+            })
                 .As<IMonitoringMessageSessionFactory>()
                 .SingleInstance();
 
             builder.Register((c, p) =>
-                {
-                    var logger = c.Resolve<IPaymentLogger>();
-                    var config = c.Resolve<IConfigurationHelper>();
-                    var factory = c.Resolve<IMonitoringMessageSessionFactory>();
-                    var dataContext = c.Resolve<IJobsDataContext>();
-                    //                    return new EarningsJobClient(logger, dataContext, c.Resolve<Application.Infrastructure.Telemetry.ITelemetry>());
-                    return new EarningsJobClient(factory.Create(), logger, config);
-                })
+            {
+                var logger = c.Resolve<IPaymentLogger>();
+                var config = c.Resolve<IConfigurationHelper>();
+                var factory = c.Resolve<IMonitoringMessageSessionFactory>();
+                var dataContext = c.Resolve<IJobsDataContext>();
+                //                    return new EarningsJobClient(logger, dataContext, c.Resolve<Application.Infrastructure.Telemetry.ITelemetry>());
+                return new EarningsJobClient(factory.Create(), logger, config);
+            })
                 .As<IEarningsJobClient>()
                 .InstancePerDependency();
 
@@ -56,12 +55,12 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
                 .SingleInstance();
 
             builder.Register((c, p) =>
-                {
-                    var config = c.Resolve<IConfigurationHelper>();
-                    var logger = c.Resolve<IPaymentLogger>();
-                    var factory = c.Resolve<IMonitoringMessageSessionFactory>();
-                    return new JobMessageClient(factory.Create(), logger,config);
-                })
+            {
+                var config = c.Resolve<IConfigurationHelper>();
+                var logger = c.Resolve<IPaymentLogger>();
+                var factory = c.Resolve<IMonitoringMessageSessionFactory>();
+                return new JobMessageClient(factory.Create(), logger, config);
+            })
                 .As<IJobMessageClient>()
                 .SingleInstance();
 
@@ -82,12 +81,19 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
                     "Job Status Incoming message behaviour");
                 endpointConfig.Pipeline.Register(typeof(JobStatusOutgoingMessageBehaviour),
                     "Job Status Outgoing message behaviour");
-                endpointConfig.Notifications.Errors.MessageSentToErrorQueue += (sender, failedMessage) =>
-                {
-                    var factory = c.Resolve<IJobMessageClientFactory>();
-                    var client = factory.Create();
-                    client.ProcessingFailedForJobMessage(failedMessage.Body).Wait(2000);
-                };
+
+                endpointConfig.Recoverability().Failed(
+                    failedMessage =>
+                    {
+                        failedMessage.OnMessageSentToErrorQueue((message, token) =>
+                        {
+                            var factory = c.Resolve<IJobMessageClientFactory>();
+                            var client = factory.Create();
+                            client.ProcessingFailedForJobMessage(message.Body.ToArray()).Wait(2000);
+                            return Task.CompletedTask;
+                        });
+                    }
+                );
             });
         }
 
@@ -105,16 +111,15 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
             var persistence = endpointConfiguration.UsePersistence<AzureStoragePersistence>();
             persistence.ConnectionString(config.StorageConnectionString);
 
-            endpointConfiguration.DisableFeature<TimeoutManager>();
             var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
             transport
                 .ConnectionString(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"))
                 .Transactions(TransportTransactionMode.ReceiveOnly)
-                .RuleNameShortener(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
+                .SubscriptionNamingConvention(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
 
             transport.Routing().RouteToEndpoint(typeof(RecordEarningsJob).Assembly, jobsEndpointName);
             endpointConfiguration.SendFailedMessagesTo(config.FailedMessagesQueue);
-            endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+            endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             endpointConfiguration.EnableInstallers();
 
             endpointConfiguration.RegisterComponents(cfg => cfg.RegisterSingleton(logger));
