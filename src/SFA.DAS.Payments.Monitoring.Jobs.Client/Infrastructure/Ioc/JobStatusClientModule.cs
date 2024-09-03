@@ -74,6 +74,14 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
             builder.RegisterType<JobStatusOutgoingMessageBehaviour>()
                 .SingleInstance();
 
+
+            builder.Register(c =>
+                {
+                    var appConfig = c.Resolve<IApplicationConfiguration>();
+                    return new EndpointConfiguration(appConfig.EndpointName);
+                }).As<EndpointConfiguration>()
+                .SingleInstance();
+
             builder.RegisterBuildCallback(c =>
             {
                 var endpointConfig = c.Resolve<EndpointConfiguration>();
