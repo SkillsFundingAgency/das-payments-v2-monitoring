@@ -108,7 +108,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
             conventions
                 .DefiningCommandsAs(t => t.IsAssignableTo<JobsCommand>());
 
-            var persistence = endpointConfiguration.UsePersistence<AzureStoragePersistence>();
+            var persistence = endpointConfiguration.UsePersistence<AzureTablePersistence>();
             persistence.ConnectionString(config.StorageConnectionString);
 
             var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();

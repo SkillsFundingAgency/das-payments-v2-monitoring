@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />-->
+    <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.DataMessages\SFA.DAS.Payments.Monitoring.Jobs.DataMessages.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Messages\SFA.DAS.Payments.Monitoring.Metrics.Messages.csproj" />
