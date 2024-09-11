@@ -1,7 +1,7 @@
 ﻿using System;
 using SFA.DAS.Payments.Messages.Common.Commands;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands
+namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands
 {
     public abstract class JobsCommand: JobsMessage, IPaymentsCommand
     {

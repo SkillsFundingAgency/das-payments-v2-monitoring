@@ -1,7 +1,7 @@
 ﻿using System;
 using SFA.DAS.Payments.Messages.Common.Events;
 
-namespace SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Events
+namespace SFA.DAS.Payments.Monitoring.Jobs.Messages.Events
 {
     public abstract class SubmissionJobFinishedEvent: IEvent
     {
