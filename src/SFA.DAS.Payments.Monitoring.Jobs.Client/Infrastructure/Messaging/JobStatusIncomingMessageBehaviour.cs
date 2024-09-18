@@ -4,6 +4,8 @@ using SFA.DAS.Payments.Monitoring.Jobs.DataMessages.Commands;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autofac;
+using SFA.DAS.Payments.Application.Infrastructure.Ioc;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging
 {
