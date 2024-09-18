@@ -73,8 +73,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
 
             builder.RegisterType<JobStatusOutgoingMessageBehaviour>()
                 .SingleInstance();
-
-
+            
             builder.Register(c =>
                 {
                     var appConfig = c.Resolve<IApplicationConfiguration>();
@@ -82,27 +81,27 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
                 }).As<EndpointConfiguration>()
                 .SingleInstance();
 
-            builder.RegisterBuildCallback(c =>
-            {
-                var endpointConfig = c.Resolve<EndpointConfiguration>();
-                //endpointConfig.Pipeline.Register(typeof(JobStatusIncomingMessageBehaviour),
-                //    "Job Status Incoming message behaviour");
-                //endpointConfig.Pipeline.Register(typeof(JobStatusOutgoingMessageBehaviour),
-                //    "Job Status Outgoing message behaviour");
+            //builder.RegisterBuildCallback(c =>
+            //{
+            //    var endpointConfig = c.Resolve<EndpointConfiguration>();
+            //    //endpointConfig.Pipeline.Register(typeof(JobStatusIncomingMessageBehaviour),
+            //    //    "Job Status Incoming message behaviour");
+            //    //endpointConfig.Pipeline.Register(typeof(JobStatusOutgoingMessageBehaviour),
+            //    //    "Job Status Outgoing message behaviour");
 
-                //endpointConfig.Recoverability().Failed(
-                //    failedMessage =>
-                //    {
-                //        failedMessage.OnMessageSentToErrorQueue((message, token) =>
-                //        {
-                //            var factory = c.Resolve<IJobMessageClientFactory>();
-                //            var client = factory.Create();
-                //            client.ProcessingFailedForJobMessage(message.Body.ToArray()).Wait(2000);
-                //            return Task.CompletedTask;
-                //        });
-                //    }
-                //);
-            });
+            //    endpointConfig.Recoverability().Failed(
+            //        failedMessage =>
+            //        {
+            //            failedMessage.OnMessageSentToErrorQueue((message, token) =>
+            //            {
+            //                var factory = c.Resolve<IJobMessageClientFactory>();
+            //                var client = factory.Create();
+            //                client.ProcessingFailedForJobMessage(message.Body.ToArray()).Wait(2000);
+            //                return Task.CompletedTask;
+            //            });
+            //        }
+            //    );
+            //});
         }
 
         private EndpointConfiguration CreateEndpointConfiguration(IComponentContext container, IPaymentLogger logger)
