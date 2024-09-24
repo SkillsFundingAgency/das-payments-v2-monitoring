@@ -33,7 +33,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
 
         public async Task StartJob(long jobId, long ukprn, DateTime ilrSubmissionTime, short collectionYear, byte collectionPeriod, List<GeneratedMessage> generatedMessages, DateTimeOffset startTime)
         {
-            logger.LogVerbose($"Sending request to record start of earnings job. Job Id: {jobId}, Ukprn: {ukprn}");
+            logger.LogVerbose($".NET 6 Nuget - Sending request to record start of earnings job. Job Id: {jobId}, Ukprn: {ukprn}");
             try
             {
                 var batchSize = 1000; //TODO: this should come from config
@@ -50,7 +50,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                     LearnerCount = generatedMessages.Count
                 };
                 var partitionedEndpointName = GetMonitoringEndpointForJob(jobId, ukprn);
-                logger.LogVerbose($"Endpoint for RecordEarningsJob for Job Id {jobId} is `{partitionedEndpointName}`");
+                logger.LogVerbose($".NET 6 Nuget - Endpoint for RecordEarningsJob for Job Id {jobId} is `{partitionedEndpointName}`");
                 await messageSession.Send(partitionedEndpointName, providerEarningsEvent).ConfigureAwait(false);
 
                 var skip = batchSize;
@@ -65,11 +65,11 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                     };
                     await messageSession.Send(partitionedEndpointName, providerEarningsAdditionalMessages).ConfigureAwait(false);
                 }
-                logger.LogDebug($"Sent request(s) to record start of earnings job. Job Id: {jobId}, Ukprn: {ukprn}");
+                logger.LogDebug($".NET 6 Nuget - Sent request(s) to record start of earnings job. Job Id: {jobId}, Ukprn: {ukprn}");
             }
             catch (Exception ex)
             {
-                logger.LogWarning($"Failed to send the request to record the earnings job. Job: {jobId}, Error: {ex.Message}. {ex}");
+                logger.LogWarning($".NET 6 Nuget - Failed to send the request to record the earnings job. Job: {jobId}, Error: {ex.Message}. {ex}");
                 throw;
             }
         }
@@ -82,7 +82,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
 
         private async Task RecordJobStatus<T>(long jobId, long ukprn, DateTime ilrSubmissionTime, short collectionYear, byte collectionPeriod) where T : RecordEarningsJobStatus, new()
         {
-            logger.LogVerbose($"Sending record job failed request to monitoring service for job: {jobId}, ukprn: {ukprn}");
+            logger.LogVerbose($".NET 6 Nuget - Sending record job failed request to monitoring service for job: {jobId}, ukprn: {ukprn}");
             try
             {
                 RecordEarningsJobStatus recordJobStatus = new T
@@ -95,11 +95,11 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                 };
                 var partitionedEndpointName = GetMonitoringEndpointForJob(jobId, ukprn);
                 await messageSession.Send(partitionedEndpointName, recordJobStatus);
-                logger.LogDebug($"Sent record job status event for job: {jobId}, ukprn: {ukprn}. Status command: {typeof(T).Name}");
+                logger.LogDebug($".NET 6 Nuget - Sent record job status event for job: {jobId}, ukprn: {ukprn}. Status command: {typeof(T).Name}");
             }
             catch (Exception e)
             {
-                logger.LogWarning($"Failed to send the request to record the failed job '{jobId}'. Error: {e.Message}. {e}");
+                logger.LogWarning($".NET 6 Nuget - Failed to send the request to record the failed job '{jobId}'. Error: {e.Message}. {e}");
                 throw;
             }
         }
