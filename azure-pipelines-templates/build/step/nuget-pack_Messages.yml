@@ -26,5 +26,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: NuGetPackages'
   inputs:
-    ArtifactName: NuGetPackages-Messages
+    ArtifactName: NuGetPackages
     pathtoPublish: '$(build.artifactstagingdirectory)/NuGetPackages-Messages'

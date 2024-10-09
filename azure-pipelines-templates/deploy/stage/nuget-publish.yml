@@ -19,7 +19,6 @@ stages:
           steps:
           - download: current
             artifact: NuGetPackages
-            artifact: NuGetPackages-Messages
           - task: NuGetCommand@2
             displayName: NuGet push
             inputs:
@@ -33,7 +32,7 @@ stages:
             displayName: NuGet push Monitoring Messages
             inputs:
               command: push
-              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-Messages/*.symbols.nupkg'
+              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)//NuGetPackages/NuGetPackages-Messages/*.symbols.nupkg'
               allowPackageConflicts: true
               nuGetFeedType: external
               publishFeedCredentials: 'SFA NuGet'
