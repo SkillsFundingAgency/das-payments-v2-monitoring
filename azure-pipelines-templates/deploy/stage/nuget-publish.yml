@@ -19,6 +19,7 @@ stages:
           steps:
           - download: current
             artifact: NuGetPackages
+            artifact: NuGetPackages-Messages
           - task: NuGetCommand@2
             displayName: NuGet push
             inputs:
@@ -26,5 +27,15 @@ stages:
               packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages/*.symbols.nupkg'
               allowPackageConflicts: true
               nuGetFeedType: external
-              versioningScheme: 'off'
               publishFeedCredentials: 'Paymentsv2-Nuget'
+
+          - task: NuGetCommand@2
+            displayName: NuGet push Monitoring Messages
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-Messages/*.symbols.nupkg'
+              allowPackageConflicts: true
+              nuGetFeedType: external
+              publishFeedCredentials: 'SFA NuGet'
+
+        

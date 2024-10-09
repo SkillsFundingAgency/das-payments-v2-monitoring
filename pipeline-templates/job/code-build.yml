@@ -144,3 +144,16 @@ jobs:
         src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj;
         src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj;
         src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj;
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact - Monitoring Messages'
+    inputs:
+      targetPath: $(build.artifactstagingdirectory)
+      artifact: monitoring-drop
+      continueOnError: true
+
+  - template: /azure-pipelines-templates/build/step/nuget-pack_Messages.yml
+    parameters:
+      DotNetStandardPackagesToPack: |
+        src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;
+
