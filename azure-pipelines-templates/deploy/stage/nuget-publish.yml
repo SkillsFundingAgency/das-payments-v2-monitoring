@@ -28,6 +28,9 @@ stages:
               nuGetFeedType: external
               publishFeedCredentials: 'Paymentsv2-Nuget'
 
+          steps:
+          - download: current
+            artifact: NuGetPackages-Messages
           - task: NuGetCommand@2
             displayName: NuGet push Monitoring Messages
             inputs:
