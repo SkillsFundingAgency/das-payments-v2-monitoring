@@ -149,7 +149,7 @@ jobs:
     displayName: 'Publish Pipeline Artifact - Monitoring Messages'
     inputs:
       targetPath: $(build.artifactstagingdirectory)
-      artifact: monitoring-drop
+      artifact: monitoring-drop-Messages
       continueOnError: true
 
   - template: /azure-pipelines-templates/build/step/nuget-pack_Messages.yml

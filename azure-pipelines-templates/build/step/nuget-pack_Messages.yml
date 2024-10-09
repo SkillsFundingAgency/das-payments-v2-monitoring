@@ -23,8 +23,9 @@ steps:
     versioningScheme: byEnvVar
     versionEnvVar: NuGetPackageVersion
     packDirectory: $(build.artifactstagingdirectory)/NuGetPackages-Messages
+
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: NuGetPackages'
+  displayName: 'Publish Artifact: NuGetPackages-Messages'
   inputs:
-    ArtifactName: NuGetPackages
+    ArtifactName: NuGetPackages-Messages
     pathtoPublish: '$(build.artifactstagingdirectory)/NuGetPackages-Messages'
