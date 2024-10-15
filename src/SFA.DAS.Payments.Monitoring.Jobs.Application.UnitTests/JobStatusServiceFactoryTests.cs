@@ -2,6 +2,7 @@
 using Autofac.Extras.Moq;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using SFA.DAS.Payments.Application.Infrastructure.UnitOfWork;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing.Earnings;
@@ -33,7 +34,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
         {
             var service = factory.Create(mockScope.Object, JobType.EarningsJob);
             mockScope.Verify(scope => scope.Resolve<IEarningsJobStatusService>());
-            Assert.IsInstanceOf<IEarningsJobStatusService>(service);
+            ClassicAssert.IsInstanceOf<IEarningsJobStatusService>(service);
         }
 
         [TestCase(typeof(IEarningsJobStatusService),JobType.EarningsJob)]
@@ -46,7 +47,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
         public void Returns_Correct_Job_Status_Service_For_Job_Type(Type jobServiceType, JobType jobType)
         {
             var service = factory.Create(mockScope.Object, jobType);
-            Assert.IsInstanceOf(jobServiceType, service);
+            ClassicAssert.IsInstanceOf(jobServiceType, service);
         }
 
         [TestCase(JobType.PeriodEndSubmissionWindowValidationJob)]
