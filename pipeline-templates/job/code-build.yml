@@ -72,13 +72,12 @@ jobs:
       targetPath: '$(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
       artifact: MonitoringMetricsFunctionApp
       
-  # TODO - Uncomment when Monitoring fixed
-  # - task: DotNetCoreCLI@2
-  #   displayName: 'dotnet test UnitTest Projects'
-  #   inputs:
-  #     command: test
-  #     projects: '**/*unittest*.csproj'
-  #     arguments: '--filter FullyQualifiedName~UnitTests'
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet test UnitTest Projects'
+    inputs:
+      command: test
+      projects: '**/*unittest*.csproj'
+      arguments: '--filter FullyQualifiedName~UnitTests'
 
   - task: MSBuild@1
     displayName: 'Build solution'
