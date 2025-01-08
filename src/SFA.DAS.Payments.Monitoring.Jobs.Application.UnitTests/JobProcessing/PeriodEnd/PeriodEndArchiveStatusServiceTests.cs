@@ -20,17 +20,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
     [TestFixture]
     public class PeriodEndArchiveStatusServiceTests
     {
-        private Fixture _fixture;
-        
-        private Mock<IPeriodEndArchiveConfiguration> _periodEndArchiveConfiguration;
-        private Mock<IJobServiceConfiguration> _jobServiceConfiguration;
-        private Mock<IJobStorageService> _jobStorageService;
-        private Mock<IPaymentLogger> _logger;
-        private Mock<ITelemetry> _telemetry;
-        private Mock<IPeriodEndArchiveFunctionHttpClient> _httpClient;
-
-        private PeriodEndArchiveStatusService _sut;
-
         [SetUp]
         public void Setup()
         {
@@ -49,6 +38,17 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
             _sut = new PeriodEndArchiveStatusService(_jobStorageService.Object, _logger.Object, _telemetry.Object,
                 _jobServiceConfiguration.Object, _periodEndArchiveConfiguration.Object, _httpClient.Object);
         }
+
+        private Fixture _fixture;
+
+        private Mock<IPeriodEndArchiveConfiguration> _periodEndArchiveConfiguration;
+        private Mock<IJobServiceConfiguration> _jobServiceConfiguration;
+        private Mock<IJobStorageService> _jobStorageService;
+        private Mock<IPaymentLogger> _logger;
+        private Mock<ITelemetry> _telemetry;
+        private Mock<IPeriodEndArchiveFunctionHttpClient> _httpClient;
+
+        private PeriodEndArchiveStatusService _sut;
 
         [Test]
         public async Task Service_Waits_For_Job_To_Complete()
@@ -113,7 +113,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
             result.Should().BeTrue();
             _jobServiceConfiguration.Verify(x => x.TimeToWaitForPeriodEndArchiveJobToComplete, Times.Once);
             _jobStorageService.Verify(
-                x => x.SaveJobStatus(jobId, JobStatus.Completed, It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()),
+                x => x.SaveJobStatus(jobId, JobStatus.Completed, It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -148,7 +149,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
             result.Should().BeTrue();
             _jobServiceConfiguration.Verify(x => x.TimeToWaitForPeriodEndArchiveJobToComplete, Times.Once);
             _jobStorageService.Verify(
-                x => x.SaveJobStatus(jobId, JobStatus.PaymentsTaskFailed, It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()),
+                x => x.SaveJobStatus(jobId, JobStatus.PaymentsTaskFailed, It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -177,7 +179,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
             result.Should().BeTrue();
             _jobServiceConfiguration.Verify(x => x.TimeToWaitForPeriodEndArchiveJobToComplete, Times.Once);
             _jobStorageService.Verify(
-                x => x.SaveJobStatus(jobId, JobStatus.PaymentsTaskFailed, It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()),
+                x => x.SaveJobStatus(jobId, JobStatus.PaymentsTaskFailed, It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
 
@@ -208,7 +211,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobProcessing.P
             result.Should().BeTrue();
             _jobServiceConfiguration.Verify(x => x.TimeToWaitForPeriodEndArchiveJobToComplete, Times.Once);
             _jobStorageService.Verify(
-                x => x.SaveJobStatus(jobId, JobStatus.TimedOut, It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()),
+                x => x.SaveJobStatus(jobId, JobStatus.TimedOut, It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()),
                 Times.Once);
         }
     }
