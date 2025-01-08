@@ -1,0 +1,24 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "main"
+
+variables:
+- name: BuildPlatform
+  value : 'x64'
+- name: BuildConfiguration
+  value: 'release'
+
+resources:
+  repositories:
+    - repository: das-payments-v2-monitoring
+      type: github
+      name: SkillsFundingAgency/das-payments-v2-monitoring
+      endpoint: SkillsFundingAgency
+
+stages:
+- stage: Build
+  jobs:
+  - template: pipeline-templates/job/code-build.yml
+- template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
