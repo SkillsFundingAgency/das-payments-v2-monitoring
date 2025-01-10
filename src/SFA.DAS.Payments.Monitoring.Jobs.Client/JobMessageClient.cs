@@ -34,8 +34,9 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
         {
             try
             {
-                logger.LogVerbose($".NET 6 Nuget - Sending request to record successful processing of event. Job Id: {jobId}, Event: id: {messageId} ");
-               
+                logger.LogVerbose(
+                    $"Sending request to record successful processing of event. Job Id: {jobId}, Event: id: {messageId} ");
+
                 var batchSize = 1000; //TODO: this should come from config
                 List<GeneratedMessage> batch;
                 
@@ -63,12 +64,14 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                     };
                     await messageSession.Send(partitionedEndpointName, providerEarningsAdditionalMessages).ConfigureAwait(false);
                 }
+
                 logger.LogDebug(
-                    $".NET 6 Nuget - Sent request to record successful processing of event. Job Id: {jobId}, Event: id: {messageId} ");
+                    $"Sent request to record successful processing of event. Job Id: {jobId}, Event: id: {messageId} ");
             }
             catch (Exception ex)
             {
-                logger.LogWarning($".NET 6 Nuget - Failed to send the job status message. Job: {jobId}, Message: {messageId}, {messageName}, Error: {ex.Message}, {ex}");
+                logger.LogWarning(
+                    $"Failed to send the job status message. Job: {jobId}, Message: {messageId}, {messageName}, Error: {ex.Message}, {ex}");
             }
         }
 
@@ -81,19 +84,19 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                 var messageId = message.ContainsKey("EventId") ? (string)message["EventId"] : message.ContainsKey("CommandId") ? (string)message["CommandId"] : (string)null;
                 if (messageId == null)
                 {
-                    logger.LogVerbose(".NET 6 Nuget - No message id found on the message.");
+                    logger.LogVerbose("No message id found on the message.");
                     return;
                 }
                 var job = message.ContainsKey("JobId") ? (string)message["JobId"] : (string)null;
                 if (job == null)
                 {
-                    logger.LogVerbose(".NET 6 Nuget - No job id found on the message.");
+                    logger.LogVerbose("No job id found on the message.");
                     return;
                 }
 
                 if (!long.TryParse(job, out long jobId))
                 {
-                    logger.LogVerbose($".NET 6 Nuget - No job id found on the message {messageId}.");
+                    logger.LogVerbose($"No job id found on the message {messageId}.");
                     return;
                 }
 
@@ -110,12 +113,11 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                 var partitionedEndpointName = config.GetMonitoringEndpointName(jobId);
                 await messageSession.Send(partitionedEndpointName, itemProcessedEvent).ConfigureAwait(false);
                 logger.LogDebug(
-                    $".NET 6 Nuget - Sent request to record failed processing of event. Job Id: {jobId}, Event: id: {messageId} ");
-
+                    $"Sent request to record failed processing of event. Job Id: {jobId}, Event: id: {messageId} ");
             }
             catch (Exception ex)
             {
-                logger.LogWarning($".NET 6 Nuget - Couldn't generate the job message failed message for monitoring.  {ex.Message}");
+                logger.LogWarning($"Couldn't generate the job message failed message for monitoring.  {ex.Message}");
             }
         }
     }

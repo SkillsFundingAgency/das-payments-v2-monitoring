@@ -1,10 +1,10 @@
-﻿using NServiceBus;
+﻿using System;
+using System.Threading.Tasks;
+using NServiceBus;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
-using System;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Client
 {
@@ -30,15 +30,18 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
         {
             var jobName = periodEndJob.GetType().Name;
 
-            logger.LogDebug($".NET 6 Nuget - Sending request to record start of {jobName}. Job Id: {periodEndJob.JobId}, collection period: {periodEndJob.CollectionYear}-{periodEndJob.CollectionPeriod}");
+            logger.LogDebug(
+                $"Sending request to record start of {jobName}. Job Id: {periodEndJob.JobId}, collection period: {periodEndJob.CollectionYear}-{periodEndJob.CollectionPeriod}");
 
             var partitionedEndpointName = config.GetMonitoringEndpointName(periodEndJob.JobId);
 
-            logger.LogVerbose($".NET 6 Nuget - Endpoint for PeriodEndJobClient for {jobName} with Job Id {periodEndJob.JobId} is `{partitionedEndpointName}`");
+            logger.LogVerbose(
+                $"Endpoint for PeriodEndJobClient for {jobName} with Job Id {periodEndJob.JobId} is `{partitionedEndpointName}`");
 
             await messageSession.Send(partitionedEndpointName, periodEndJob).ConfigureAwait(false);
 
-            logger.LogInfo($".NET 6 Nuget - Sent request to record period end job: {jobName}. Job Id: {periodEndJob.JobId}, collection period: {periodEndJob.CollectionYear}-{periodEndJob.CollectionPeriod}");
+            logger.LogInfo(
+                $"Sent request to record period end job: {jobName}. Job Id: {periodEndJob.JobId}, collection period: {periodEndJob.CollectionYear}-{periodEndJob.CollectionPeriod}");
         }
     }
 }
