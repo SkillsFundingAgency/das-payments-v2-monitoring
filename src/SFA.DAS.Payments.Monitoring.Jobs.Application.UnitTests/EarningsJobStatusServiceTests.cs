@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Extras.Moq;
@@ -10,8 +9,6 @@ using NUnit.Framework;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing.Earnings;
-using SFA.DAS.Payments.Monitoring.Jobs.Data;
-using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
 using SFA.DAS.Payments.Monitoring.Jobs.Model;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
@@ -299,35 +296,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests
                         It.Is<DateTimeOffset>(endTime => endTime == job.StartTime),
                         It.IsAny<CancellationToken>()), Times.Once());
         }
-
-
-        //[Test]
-        //public async Task Does_Not_record_Job_As_Completed_If_No_Learners_And_Not_Earnings_Job()
-        //{
-        //    var jobId = 99;
-        //    job.LearnerCount = 0;
-        //    job.JobType = JobType.PeriodEndRunJob;
-        //    var completedMessage = new CompletedMessage
-        //    {
-        //        MessageId = Guid.NewGuid(),
-        //        JobId = job.Id,
-        //        Succeeded = true,
-        //        CompletedTime = DateTimeOffset.UtcNow
-        //    };
-        //    var inProgressMessage = new InProgressMessage { MessageId = completedMessage.MessageId, MessageName = "Message" };
-        //    inProgressMessages.Add(inProgressMessage);
-        //    inProgressMessages.Add(new InProgressMessage { MessageId = Guid.NewGuid(), MessageName = "Message" });
-        //    completedMessages.Add(completedMessage);
-
-        //    var service = mocker.Create<EarningsJobStatusService>();
-        //    await service.ManageStatus(jobId, CancellationToken.None).ConfigureAwait(false);
-        //    mocker.Mock<IJobStorageService>()
-        //        .Verify(
-        //            x => x.SaveJobStatus(It.IsAny<long>(),
-        //                It.IsAny<JobStatus>(),
-        //                It.IsAny<DateTimeOffset>(),
-        //                It.IsAny<CancellationToken>()), Times.Never);
-        //}
 
         [Test]
         public async Task Publishes_JobFinished_When_Job_Finished_And_Recorded_DC_Completion()
