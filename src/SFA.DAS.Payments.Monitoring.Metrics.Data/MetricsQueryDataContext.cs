@@ -5,7 +5,6 @@ using SFA.DAS.Payments.Model.Core;
 using SFA.DAS.Payments.Model.Core.Audit;
 using SFA.DAS.Payments.Model.Core.Entities;
 using SFA.DAS.Payments.Monitoring.Metrics.Model;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -224,6 +223,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 				    and dle.IsPayable = 0	
 				    and p.collectionperiod < dle.CollectionPeriod
                     and p.ContractType = 1
+                    and p.FundingPlatformType not in (2)
 			";
             var result = new SqlParameter("@result", SqlDbType.Decimal) { Direction = ParameterDirection.Output };
             await Database.ExecuteSqlRawAsync(sql, new[] { new SqlParameter("@jobid", jobId), new SqlParameter("@ukprn", ukprn), result }, cancellationToken);

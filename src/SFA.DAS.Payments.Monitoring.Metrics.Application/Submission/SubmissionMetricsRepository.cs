@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -164,14 +163,15 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                     .ToListAsync(cancellationToken);
 
                 var clawBackFundingSource = new List<FundingSourceType> { FundingSourceType.CoInvestedEmployer, FundingSourceType.CoInvestedSfa, FundingSourceType.FullyFundedSfa };
-                
+
                 var clawBackTransactionAmounts = await QueryDataContext.Payments
                     .AsNoTracking()
-                    .Where(rp => rp.Ukprn == ukprn && 
-                                 rp.JobId == jobId && 
-                                 rp.ClawbackSourcePaymentEventId != Guid.Empty && 
-                                 rp.ClawbackSourcePaymentEventId != null && 
-                                 clawBackFundingSource.Contains(rp.FundingSource))
+                    .Where(rp => rp.Ukprn == ukprn &&
+                                 rp.JobId == jobId &&
+                                 rp.ClawbackSourcePaymentEventId != Guid.Empty &&
+                                 rp.ClawbackSourcePaymentEventId != null &&
+                                 clawBackFundingSource.Contains(rp.FundingSource) &&
+                                 rp.FundingPlatformType != FundingPlatformType.DigitalApprenticeshipService)
                     .GroupBy(rp => new { rp.ContractType, rp.TransactionType })
                     .Select(group => new
                     {
@@ -224,7 +224,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                     .AsNoTracking()
                     .Where(p => p.Ukprn == ukprn &&
                                 p.CollectionPeriod.AcademicYear == academicYear &&
-                                p.CollectionPeriod.Period < currentCollectionPeriod)
+                                p.CollectionPeriod.Period < currentCollectionPeriod &&
+                                p.FundingPlatformType != FundingPlatformType.DigitalApprenticeshipService)
                     .GroupBy(p => p.ContractType)
                     .Select(g => new { ContractType = g.Key, Amount = g.Sum(p => p.Amount) })
                     .ToListAsync(cancellationToken)

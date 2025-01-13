@@ -151,6 +151,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 LearnerReferenceNumber = "123",
                 ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData
             });
 
             await inMemoryMetricsQueryDataContext.Payments.AddAsync(new PaymentModel
@@ -170,6 +171,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 LearnerReferenceNumber = "123",
                 ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData
             });
 
             await inMemoryMetricsQueryDataContext.Payments.AddAsync(new PaymentModel
@@ -189,6 +191,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 LearnerReferenceNumber = "123",
                 ReportingAimFundingLineType = "some-reporting-aim-funding-line-type",
                 ClawbackSourcePaymentEventId = Guid.NewGuid(),
+                FundingPlatformType = FundingPlatformType.SubmitLearnerData
             });
 
             await inMemoryMetricsQueryDataContext.SaveChangesAsync();
