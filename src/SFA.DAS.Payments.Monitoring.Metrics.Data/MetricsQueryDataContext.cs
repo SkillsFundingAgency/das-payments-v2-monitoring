@@ -145,13 +145,14 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 		            and npp.Amount <> 0
 		            and dle.IsPayable = 0	
 		            and p.collectionperiod < dle.CollectionPeriod
-                and p.ContractType = 1)
+                and p.ContractType = 1
+                and p.FundingPlatformType not in (2))
 					SELECT Ukprn,
 					SUM(unGroupedAmounts.FundingLineType16To18Amount) AS FundingLineType16To18Amount, 
 					SUM(unGroupedAmounts.FundingLineType19PlusAmount) AS FundingLineType19PlusAmount,
 					SUM(unGroupedAmounts.Total) AS Total
 					FROM unGroupedAmounts
-					GROUP BY unGroupedAmounts.Ukprn";
+					GROUP BY unGroupedAmounts.Ukprn"; 
 
             return await AlreadyPaidDataLockProviderTotals.FromSqlRaw(sql, new SqlParameter("@academicYear", academicYear), new SqlParameter("@collectionPeriod", collectionPeriod)).ToListAsync(cancellationToken);
         }
