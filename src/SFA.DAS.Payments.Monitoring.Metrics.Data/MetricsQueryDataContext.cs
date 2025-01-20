@@ -223,7 +223,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 				    and dle.IsPayable = 0	
 				    and p.collectionperiod < dle.CollectionPeriod
                     and p.ContractType = 1
-                    and p.FundingPlatformType not in (2)
+                    and isnull(p.FundingPlatformType,1) not in (2)
 			";
             var result = new SqlParameter("@result", SqlDbType.Decimal) { Direction = ParameterDirection.Output };
             await Database.ExecuteSqlRawAsync(sql, new[] { new SqlParameter("@jobid", jobId), new SqlParameter("@ukprn", ukprn), result }, cancellationToken);
