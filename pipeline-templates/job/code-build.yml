@@ -50,6 +50,28 @@ jobs:
     inputs:
       command: build
       projects: '**/*unittest*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      projects: ${{ parameters.TargetProjects }}
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet publish'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Function/SFA.DAS.Payments.Monitoring.Metrics.Function.csproj
+      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
+      modifyOutputPath: false
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact'
+    inputs:
+      targetPath: '$(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
+      artifact: MonitoringMetricsFunctionApp
+      
   # TODO - Uncomment when Monitoring fixed
   # - task: DotNetCoreCLI@2
   #   displayName: 'dotnet test UnitTest Projects'

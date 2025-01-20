@@ -1,0 +1,29 @@
+parameters:
+  pool:
+  azureSubscription:
+  location: 'West Europe'
+  environmentName:
+  appName:
+  
+jobs:
+- deployment: DeployAzureFunctionApp
+  pool:
+    name: ${{ parameters.pool }}
+    demands:
+    - ReleaseEnvironment -equals ${{ parameters.environmentName }}
+    workspace:
+      clean: all
+  environment: ${{ parameters.environmentName }}
+  
+  
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: AzureFunctionApp@1
+          displayName: 'Azure Function App Deploy'
+          inputs:
+            azureSubscription: ${{ parameters.azureSubscription }}
+            appType: functionApp
+            appName: ${{ parameters.appName }}
+            package: '$(pipeline.workspace)/MonitoringMetricsFunctionApp/Monitoring-Metrics-FunctionApp.zip'

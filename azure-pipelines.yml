@@ -21,4 +21,19 @@ stages:
 - stage: Build
   jobs:
   - template: pipeline-templates/job/code-build.yml
-- template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
+  - template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
+
+- stage: Deploy_DST
+  displayName: 'Deploy to DST'
+  variables:
+  - name: tagEnvironment
+    value: Dev/Test
+  - group: DCOL-DST - Environment Key Vault Secrets
+
+  jobs:
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      pool: DCT
+      environmentName: DST
+      azureSubscription: DCT-VSO
+      appName: DCOL-DST-MetricsFunc-WEU
