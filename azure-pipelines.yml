@@ -42,3 +42,48 @@ stages:
       environmentName: DST
       azureSubscription: DCT-VSO
       appName: DCOL-DST-MetricsFunc-WEU
+
+- stage: Deploy_DAS
+  dependsOn: Deploy_DST
+  displayName: Deploy to DAS
+  variables:
+  - name: tagEnvironment
+    value: Dev/Test
+  - group: DCOL-DAS - Environment Key Vault Secrets
+  jobs:
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      pool: DCT
+      environmentName: DAS
+      azureSubscription: DCT-VSO
+      appName: DCOL-DAS-MetricsFunc-WEU
+
+- stage: Deploy_SIT
+  dependsOn: Deploy_DAS
+  displayName: Deploy to SIT
+  variables:
+  - name: tagEnvironment
+    value: Dev/Test
+  - group: DCOL-SIT - Environment Key Vault Secrets
+  jobs:
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      pool: DCT Build Pool
+      environmentName: SIT
+      azureSubscription: DCT-VSO
+      appName: DCOL-SIT-MonitoringAlerts1-WEU
+
+- stage: Deploy_SDW
+  dependsOn: Deploy_SIT
+  displayName: Deploy to SDW
+  variables:
+  - name: tagEnvironment
+    value: Dev/Test
+  - group: DCOL-SDW - Environment Key Vault Secrets
+  jobs:
+  - template: pipeline-templates/deploy.yml
+    parameters:
+      pool: DCT Build Pool
+      environmentName: SDW
+      azureSubscription: DCOL-Shadow
+      appName: DCOL-SDW-MonitoringAlerts1-WEU
