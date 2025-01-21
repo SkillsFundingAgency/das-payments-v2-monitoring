@@ -54,7 +54,7 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
     inputs:
-      projects: ${{ parameters.TargetProjects }}
+      projects: src/SFA.DAS.Payments.Monitoring.Metrics.Function/SFA.DAS.Payments.Monitoring.Metrics.Function.csproj
       arguments: '--configuration $(BuildConfiguration)'
 
   - task: DotNetCoreCLI@2
@@ -71,7 +71,7 @@ jobs:
     inputs:
       targetPath: '$(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
       artifact: MonitoringMetricsFunctionApp
-      
+
   # TODO - Uncomment when Monitoring fixed
   # - task: DotNetCoreCLI@2
   #   displayName: 'dotnet test UnitTest Projects'
