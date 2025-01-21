@@ -18,8 +18,9 @@ resources:
       endpoint: SkillsFundingAgency
 
 stages:
-  displayName: 'Code Build'
+  
 - stage: Code Build
+  displayName: 'Code Build'
   jobs:
   - template: pipeline-templates/job/code-build.yml
 - stage: Nuget Push
