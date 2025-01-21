@@ -1,22 +1,33 @@
 ﻿jobs:
-- job: CleanArtifacts
-  displayName: Clean artifacts directory
-  workspace:
-    clean: all
-- deployment: NuGetPush
-  dependsOn: CleanArtifacts
-  environment: Nuget
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - download: current
-          artifact: NuGetPackages
-        - task: NuGetCommand@2
-          displayName: NuGet push
-          inputs:
-            command: push
-            packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages/*.symbols.nupkg'
-            allowPackageConflicts: true
-            nuGetFeedType: external
-            publishFeedCredentials: 'SFA NuGet'
+  - job: CleanArtifacts
+    displayName: Clean artifacts directory
+    workspace:
+      clean: all
+  - deployment: NuGetPush
+    dependsOn: CleanArtifacts
+    environment: Nuget
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: NuGetPackages
+          - task: NuGetCommand@2
+            displayName: NuGet push
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages/*.symbols.nupkg'
+              allowPackageConflicts: true
+              nuGetFeedType: external
+              publishFeedCredentials: 'Paymentsv2-Nuget'
+
+          - download: current
+            artifact: NuGetPackages-Messages
+          - task: NuGetCommand@2
+            displayName: NuGet push Monitoring Messages
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages-Messages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-Messages/*.symbols.nupkg'
+              allowPackageConflicts: true
+              nuGetFeedType: external
+              publishFeedCredentials: 'SFA NuGet'
