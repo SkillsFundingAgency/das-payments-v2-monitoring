@@ -28,3 +28,4 @@ steps:
   inputs:
     ArtifactName: NuGetPackages
     pathtoPublish: '$(build.artifactstagingdirectory)/NuGetPackages'
+    targetPath: '$(Pipeline.Workspace)/NuGetPackages'
