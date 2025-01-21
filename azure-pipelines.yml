@@ -26,7 +26,6 @@ stages:
 - stage: Nuget Push
   displayName: 'Nuget Push'
   jobs:
-  dependsOn: Code Build
   - template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
 
 - stage: Deploy_DST
