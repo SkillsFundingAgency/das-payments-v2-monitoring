@@ -1,5 +1,4 @@
-﻿# this template expects packages to be built with azure-pipelines-templates/build/step/nuget-build.yml
-stages:
+﻿stages:
 - stage: NuGetPublish
   condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], 'refs/heads/main')))
   displayName: Publish NuGet Package
