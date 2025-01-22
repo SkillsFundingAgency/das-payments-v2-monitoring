@@ -23,7 +23,7 @@ stages:
   displayName: 'Code Build'
   jobs:
   - template: pipeline-templates/job/code-build.yml
-- stage: Nuget_Push
-  displayName: 'Nuget Push'
-  jobs:
-  - template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
+#- stage: Nuget_Push
+  #displayName: 'Nuget Push'
+  #jobs:
+  #- template: azure-pipelines-templates/deploy/stage/nuget-publish.yml
