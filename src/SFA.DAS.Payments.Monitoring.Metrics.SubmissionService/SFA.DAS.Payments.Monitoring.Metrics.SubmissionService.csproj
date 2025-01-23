@@ -18,8 +18,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Diagnostics.Internal" Version="7.0.1010" />
 
     <!--<PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.4.664" />-->
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-21" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.4-prerelease-8" />
   </ItemGroup>
 
   <ItemGroup>

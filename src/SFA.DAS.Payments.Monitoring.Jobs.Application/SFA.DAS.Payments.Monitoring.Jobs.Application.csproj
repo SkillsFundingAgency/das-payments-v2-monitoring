@@ -9,13 +9,13 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
     <PackageReference Include="NServiceBus" Version="8.1.1" />
-	<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-21" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.6-prerelease-21" />
-    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.6-prerelease-21" />
-    <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="0.1.137-prerelease-46" />
-    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.0-prerelease-4" />
-    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="2.0.0-prerelease-4" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
+	<PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.6-prerelease-31" />
+    <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="0.2.0-prerelease-47" />
+    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="0.1.10-prerelease-753" />
+    <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="0.1.10-prerelease-753" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.4-prerelease-8" />
   </ItemGroup>
 
   <ItemGroup>

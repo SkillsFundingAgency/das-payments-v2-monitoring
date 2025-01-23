@@ -14,7 +14,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="1.1.1-prerelease-3" />
+    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="0.1.39-prerelease-19" />
   </ItemGroup>
 
   <ItemGroup>
