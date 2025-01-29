@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SFA.DAS.Payments.Application.Data.Configurations;
+using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Model;
 
 
@@ -244,6 +246,18 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
         public DcMetricsDataContext(DbContextOptions contextOptions) : base(contextOptions)
         { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("Payments2");
+            modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderTransactionTypeAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionTypeAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new TransactionTypeAmountsByContractTypeConfiguration());
+
+
+        }
 
         public DbSet<TransactionTypeAmounts> Earnings { get; set; }
 

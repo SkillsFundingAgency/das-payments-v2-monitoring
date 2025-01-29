@@ -1,18 +1,17 @@
+using System.Collections.Generic;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using SFA.DAS.Payments.Application.Data.Configurations;
 using SFA.DAS.Payments.Model.Core;
 using SFA.DAS.Payments.Model.Core.Audit;
 using SFA.DAS.Payments.Model.Core.Entities;
-using SFA.DAS.Payments.Monitoring.Metrics.Model;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
+using SFA.DAS.Payments.Monitoring.Metrics.Model;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 {

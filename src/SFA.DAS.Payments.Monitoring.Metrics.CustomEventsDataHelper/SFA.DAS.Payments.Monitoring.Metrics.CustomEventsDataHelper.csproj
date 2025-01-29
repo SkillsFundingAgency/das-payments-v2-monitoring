@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageReference Include="AzureFunctions.Autofac" Version="4.0.3" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.8.1" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" Version="3.0.6" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
   </ItemGroup>
   <ItemGroup>
