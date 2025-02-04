@@ -83,10 +83,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
 
         private void SendTelemetry(SubmissionsSummaryModel metrics, long reportGenerationDuration)
         {
-            if (metrics == null) return;
-
             var isEstimatingMetrics = metrics.JobId == 0;
             var logMessage = isEstimatingMetrics ? "Estimating" : "Generating";
+
+            if (metrics == null) return;
 
             var properties = new Dictionary<string, string>
             {
