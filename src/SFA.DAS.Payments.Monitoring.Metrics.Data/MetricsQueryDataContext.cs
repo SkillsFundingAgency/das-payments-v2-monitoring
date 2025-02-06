@@ -1,18 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using SFA.DAS.Payments.Application.Data.Configurations;
-using SFA.DAS.Payments.Model.Core;
-using SFA.DAS.Payments.Model.Core.Audit;
-using SFA.DAS.Payments.Model.Core.Entities;
-using SFA.DAS.Payments.Monitoring.Metrics.Model;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using SFA.DAS.Payments.Application.Data.Configurations;
+using SFA.DAS.Payments.Model.Core;
+using SFA.DAS.Payments.Model.Core.Audit;
+using SFA.DAS.Payments.Model.Core.Entities;
 using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
+using SFA.DAS.Payments.Monitoring.Metrics.Model;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 {
@@ -80,6 +79,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             modelBuilder.ApplyConfiguration(new PeriodEndDataLockCountConfiguration());
             modelBuilder.ApplyConfiguration(new ProviderFundingLineTypeAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
         }
 
         public string GetDataLockedEarningsTotalsSqlQuery(bool shouldGroupByLearner = false) => $@";WITH unGroupedEarnings AS 
