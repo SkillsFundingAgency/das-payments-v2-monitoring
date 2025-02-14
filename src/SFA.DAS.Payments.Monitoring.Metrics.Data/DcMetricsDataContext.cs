@@ -252,6 +252,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema("Payments2");
             modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderTransactionTypeAmountsConfiguration());
+
         }
 
         public DbSet<TransactionTypeAmounts> Earnings { get; set; }
