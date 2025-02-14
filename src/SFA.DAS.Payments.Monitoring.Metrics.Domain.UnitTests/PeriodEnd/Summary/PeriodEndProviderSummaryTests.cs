@@ -17,8 +17,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.PeriodEnd.Summary
     {
         private Fixture fixture;
         private Random random;
-        private List<TransactionTypeAmountsByContractType> defaultDcEarnings;
-        private List<TransactionTypeAmountsByContractType> paymentTransactionTypes;
+        private List<TransactionTypeAmounts> defaultDcEarnings;
+        private List<TransactionTypeAmounts> paymentTransactionTypes;
         private List<ProviderFundingSourceAmounts> paymentFundingSources;
         private List<ProviderNegativeEarningsLearnerDcEarningAmounts> providerLearnerNegativeEarnings;
         private List<ProviderNegativeEarningsLearnerContractTypeAmounts> providerLearnerPayments;

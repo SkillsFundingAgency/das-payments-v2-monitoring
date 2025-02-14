@@ -21,10 +21,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.PeriodEnd.Summary
         public static ProviderFundingLineTypeAmounts DefaultDataLockedTotal => new ProviderFundingLineTypeAmounts{ FundingLineType19PlusAmount = 1000, FundingLineType16To18Amount = 3000, Ukprn = DefaultPeriodEndProviderSummary.Ukprn, Total = 4000 };
         public static ProviderFundingLineTypeAmounts AlreadyPaidDataLockedEarnings => new ProviderFundingLineTypeAmounts{ FundingLineType16To18Amount = 400, Ukprn = DefaultPeriodEndProviderSummary.Ukprn, FundingLineType19PlusAmount = 600, Total = 1000 };
 
-        public static List<TransactionTypeAmountsByContractType> GetDefaultDcEarnings =>
-            new List<TransactionTypeAmountsByContractType>
+        public static List<TransactionTypeAmounts> GetDefaultDcEarnings =>
+            new List<TransactionTypeAmounts>
             {
-                new TransactionTypeAmountsByContractType
+                new TransactionTypeAmounts
                 {
                     ContractType = ContractType.Act1,
                     TransactionType1 = 49000,
@@ -44,7 +44,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.PeriodEnd.Summary
                     TransactionType15 = 200,
                     TransactionType16 = 200,
                 },
-                new TransactionTypeAmountsByContractType
+                new TransactionTypeAmounts
                 {
                     ContractType = ContractType.Act2,
                     TransactionType1 = 48000,
@@ -91,10 +91,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.PeriodEnd.Summary
                 DataLock12 = 12
             };
 
-        public static List<TransactionTypeAmountsByContractType> GetPaymentTransactionTypes =>
-            new List<TransactionTypeAmountsByContractType>
+        public static List<TransactionTypeAmounts> GetPaymentTransactionTypes =>
+            new List<TransactionTypeAmounts>
             {
-                new TransactionTypeAmountsByContractType
+                new TransactionTypeAmounts
                 {
                     ContractType = ContractType.Act1,
                     TransactionType1 = 24000,
@@ -114,7 +114,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Domain.UnitTests.PeriodEnd.Summary
                     TransactionType15 = 200,
                     TransactionType16 = 200,
                 },
-                new TransactionTypeAmountsByContractType
+                new TransactionTypeAmounts
                 {
                     ContractType = ContractType.Act2,
                     TransactionType1 = 24000,
