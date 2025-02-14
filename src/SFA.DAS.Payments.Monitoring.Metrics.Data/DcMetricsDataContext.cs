@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SFA.DAS.Payments.Application.Data.Configurations;
+using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Model;
 
 
@@ -244,6 +246,13 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
         public DcMetricsDataContext(DbContextOptions contextOptions) : base(contextOptions)
         { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("Payments2");
+            modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
+        }
 
         public DbSet<TransactionTypeAmounts> Earnings { get; set; }
 
