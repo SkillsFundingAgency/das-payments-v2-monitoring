@@ -1,14 +1,17 @@
 ﻿using Autofac;
+using NServiceBus;
 using SFA.DAS.Payments.Application.Infrastructure.Ioc;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
+using SFA.DAS.Payments.Application.Infrastructure.Telemetry;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Core.Configuration;
+using SFA.DAS.Payments.Messaging.Serialization;
+using SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.Submission;
 using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
 using SFA.DAS.Payments.ServiceFabric.Core;
-using NServiceBus;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
 {
@@ -16,17 +19,34 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
     {
         protected override void Load(ContainerBuilder builder)
         {
+            //builder.Register(c =>
+            //    {
+            //        var appConfig = c.Resolve<IApplicationConfiguration>();
+            //        var configHelper = c.Resolve<IConfigurationHelper>();
+            //        return new  ServiceBusBatchCommunicationListener(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"),
+            //            appConfig.EndpointName,
+            //            appConfig.FailedMessagesQueue, 
+            //            c.Resolve<IPaymentLogger>(),
+            //            c.Resolve<IContainerScopeFactory>());
+            //    })
+            //    .As<IServiceBusBatchCommunicationListener>()
+            //    .SingleInstance();
+
             builder.Register(c =>
                 {
                     var appConfig = c.Resolve<IApplicationConfiguration>();
                     var configHelper = c.Resolve<IConfigurationHelper>();
-                    return new ServiceBusBatchCommunicationListener(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"),
+                    return new JobBatchCommunicationListener(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"),
                         appConfig.EndpointName,
                         appConfig.FailedMessagesQueue,
                         c.Resolve<IPaymentLogger>(),
-                        c.Resolve<IContainerScopeFactory>());
+                        c.Resolve<IContainerScopeFactory>(),
+                        c.Resolve<ITelemetry>(),
+                        c.Resolve<IMessageDeserializer>(),
+                        c.Resolve<IApplicationMessageModifier>()
+                    );
                 })
-                .As<IServiceBusBatchCommunicationListener>()
+                .As<IJobBatchCommunicationListener>()
                 .SingleInstance();
 
             builder.RegisterType<RecordJobMessageProcessingStatusBatchHandler>()

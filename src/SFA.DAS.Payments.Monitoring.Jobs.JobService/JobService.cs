@@ -11,6 +11,7 @@ using Microsoft.ServiceFabric.Services.Runtime;
 using NServiceBus;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Application.Messaging;
+using SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
 using SFA.DAS.Payments.ServiceFabric.Core;
 
@@ -40,7 +41,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService
             try
             {
                 partitionEndpointName = ((NamedPartitionInformation)Partition.PartitionInfo).Name;
-                var batchListener = lifetimeScope.Resolve<IServiceBusBatchCommunicationListener>();
+                var batchListener = lifetimeScope.Resolve<IJobBatchCommunicationListener>();
                 batchListener.EndpointName += partitionEndpointName;
                 var serviceListener = new ServiceReplicaListener(context => batchListener);
                 return new List<ServiceReplicaListener>
