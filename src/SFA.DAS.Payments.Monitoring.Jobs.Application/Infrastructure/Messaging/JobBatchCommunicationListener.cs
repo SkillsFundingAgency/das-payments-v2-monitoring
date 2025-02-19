@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.Amqp.Framing;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Management;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
@@ -66,7 +65,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
         protected virtual async Task ListenForMessages(CancellationToken cancellationToken)
         {
             await EnsureQueue(EndpointName).ConfigureAwait(false);
-            //await EnsureSubscriptions(EndpointName, cancellationToken).ConfigureAwait(false);
             await EnsureQueue(errorQueueName).ConfigureAwait(false);
             try
             {
@@ -75,38 +73,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
             catch (Exception ex)
             {
                 logger.LogFatal($"Encountered fatal error. Error: {ex.Message}", ex);
-            }
-        }
-
-        private async Task EnsureSubscriptions(string endpointName, CancellationToken cancellationToken)
-        {
-            try
-            {
-                //get class names that are subscribing to IHandleBatchMessages
-                List<Type> subscribedMessageTypes = GetBatchHandledMessageTypes();
-                if (!subscribedMessageTypes.Any()) return;
-
-                //GetCurrentSubscriptions
-                _ = await GetOrCreateSubscription(endpointName, cancellationToken);
-
-                var existingRules = await GetExistingRules(endpointName, cancellationToken);
-
-                foreach (var type in subscribedMessageTypes)
-                {
-                    if (!existingRules.Any(x => x.Name == type.Name))
-                    {
-                        CreateNewSubscriptionRule(type, endpointName, cancellationToken);
-                    }
-                }
-            }
-            catch (MessagingEntityAlreadyExistsException ex)
-            {
-                logger.LogInfo($"The message queue entity already exists: {ex.Message}. This could be because another instance of the service has already ensured the entity exists");
-            }
-            catch (Exception e)
-            {
-                logger.LogFatal($"Error ensuring subscription, or rule: {e.Message}.", e);
-                throw;
             }
         }
 
@@ -209,12 +175,11 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
 
         private async Task Listen(CancellationToken cancellationToken)
         {
-            //var connection = new ServiceBusConnection(connectionString);
             var client = new ServiceBusClient(connectionString);
             var messageReceivers = new List<BatchMessageReceiver>();
             messageReceivers.AddRange(Enumerable.Range(0, 3)
                 .Select(i => new BatchMessageReceiver(client, EndpointName)));
-            //var errorQueueSender = new MessageSender(connection, errorQueueName, RetryPolicy.Default);
+            
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -296,10 +261,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                     await ProcessMessages(jobId, messageBatch.Key, messageBatch.Select(received => received).ToList(),
                         cancellationToken);
                 }
-
-                //await Task.WhenAll(messagesByType.Select(type =>
-                //    ProcessMessages(jobId, type.Key, type.Select(received => received).ToList(), cancellationToken)));
-
+                
             }
             catch (Exception e)
             {
@@ -307,8 +269,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                 throw;
             }
         }
-
-
+        
         private void RecordProcessedBatchTelemetry(long elapsedMilliseconds, int count, string batchType)
         {
             RecordMetric("ProcessedBatch", elapsedMilliseconds, count, (properties, metrics) => properties.Add("MessageBatchType", batchType));
@@ -434,9 +395,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                             list.Clear();
                             list.Add(retryMessage.Message);
 
-                            //var handlerStopwatch = Stopwatch.StartNew();
                             await (Task)methodInfo.Invoke(handler, new object[] { list, cancellationToken });
-                            //RecordMetric($"{handler.GetType().FullName}:Single", handlerStopwatch.ElapsedMilliseconds, 1);
 
                             await unitOfWork.End();
                             await retryMessage.MessageReceiver.Complete(new List<string> { retryMessage.ReceivedMessage.LockToken });
@@ -457,28 +416,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                 }
             }
         }
-
-        //private string GetMessagePayload(Message receivedMessage)
-        //{
-        //    const string transportEncodingHeaderKey = "NServiceBus.Transport.Encoding";
-        //    var transportEncoding = receivedMessage.UserProperties.ContainsKey(transportEncodingHeaderKey)
-        //        ? (string)receivedMessage.UserProperties[transportEncodingHeaderKey]
-        //        : "application/octet-stream";
-        //    byte[] messageBody;
-        //    if (transportEncoding.Equals("wcf/byte-array", StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        var doc = receivedMessage.GetBody<XmlElement>();
-        //        messageBody = Convert.FromBase64String(doc.InnerText);
-        //    }
-        //    else
-        //        messageBody = receivedMessage.Body;
-
-        //    var monitoringMessageJson = Encoding.UTF8.GetString(messageBody);
-        //    var sanitisedMessageJson = monitoringMessageJson
-        //        .Trim(Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble())
-        //            .ToCharArray());
-        //    return sanitisedMessageJson;
-        //}
 
         public Task CloseAsync(CancellationToken cancellationToken)
         {

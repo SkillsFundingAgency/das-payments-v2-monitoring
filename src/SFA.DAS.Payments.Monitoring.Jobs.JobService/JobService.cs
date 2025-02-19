@@ -13,7 +13,6 @@ using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Application.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing;
-using SFA.DAS.Payments.ServiceFabric.Core;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService
 {
