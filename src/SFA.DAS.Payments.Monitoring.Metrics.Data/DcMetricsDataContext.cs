@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using SFA.DAS.Payments.Application.Data.Configurations;
 using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Model;
+using System.Linq;
 
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data
@@ -255,7 +256,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             /*modelBuilder.ApplyConfiguration(new ProviderTransactionTypeAmountsConfiguration());*/
             modelBuilder.ApplyConfiguration(new TransactionTypeAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionTypeAmountsByContractTypeConfiguration());
-
+            modelBuilder.Entity<TransactionTypeAmounts>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ProviderTransactionTypeAmounts>().HasNoKey();
 
         }
 
@@ -276,7 +278,17 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             using (await BeginTransaction(cancellationToken))
             {
-                return await AllProviderEarnings.FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+
+                //IQueryable<ProviderTransactionTypeAmounts> query = AllProviderEarnings
+                //    .FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod));
+
+                //var response = await query.ToListAsync(cancellationToken);
+
+                var result = await AllProviderEarnings
+                    .FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod))
+                    .ToListAsync(cancellationToken);
+
+                return response;
             }
         }
 

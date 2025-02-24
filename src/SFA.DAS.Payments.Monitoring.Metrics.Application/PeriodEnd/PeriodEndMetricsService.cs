@@ -111,8 +111,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
                 {
                     var providerSummary = periodEndSummaryFactory.CreatePeriodEndProviderSummary(ukprn, jobId, collectionPeriod, academicYear);
 
-                    providerSummary.AddDcEarnings(dcEarningsTask.Result.Where(x => x.Ukprn == ukprn));
-                    providerSummary.AddTransactionTypes(currentPaymentsTask.Result.Where(x => x.Ukprn == ukprn));
+                    providerSummary.AddDcEarnings((IEnumerable<TransactionTypeAmounts>)dcEarningsTask.Result.Where(x => x.Ukprn == ukprn));
+                    providerSummary.AddTransactionTypes((IEnumerable<TransactionTypeAmounts>)currentPaymentsTask.Result.Where(x => x.Ukprn == ukprn));
                     providerSummary.AddFundingSourceAmounts(fundingSourceTask.Result.Where(x => x.Ukprn == ukprn));
                     providerSummary.AddPaymentsYearToDate(yearToDatePaymentsTask.Result.FirstOrDefault(x => x.Ukprn == ukprn) ?? new ProviderContractTypeAmounts());
                     providerSummary.AddDataLockedEarnings(dataLockedEarningsTask.Result.FirstOrDefault(x => x.Ukprn == ukprn) ?? new ProviderFundingLineTypeAmounts());
