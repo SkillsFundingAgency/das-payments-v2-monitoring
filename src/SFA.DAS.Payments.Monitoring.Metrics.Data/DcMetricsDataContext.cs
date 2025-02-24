@@ -288,7 +288,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     .FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod))
                     .ToListAsync(cancellationToken);
 
-                return response;
+                return result;
             }
         }
 
