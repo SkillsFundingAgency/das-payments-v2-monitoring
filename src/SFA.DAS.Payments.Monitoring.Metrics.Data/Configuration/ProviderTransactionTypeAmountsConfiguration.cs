@@ -5,7 +5,7 @@ using SFA.DAS.Payments.Monitoring.Metrics.Model;
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
 {
 
-    /*public class
+    public class
         ProviderTransactionTypeAmountsConfiguration : IEntityTypeConfiguration<
         ProviderTransactionTypeAmounts>
     {
@@ -13,5 +13,5 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
         {
             builder.HasNoKey();
         }
-    }*/
+    }
 }

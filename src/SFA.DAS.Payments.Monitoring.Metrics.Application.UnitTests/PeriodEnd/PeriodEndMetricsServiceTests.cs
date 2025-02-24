@@ -539,10 +539,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.PeriodEnd
                 return new ProviderPeriodEndSummaryModel();
             }
 
-            public void AddDcEarnings(IEnumerable<TransactionTypeAmounts> source)
+            public void AddDcEarnings(IEnumerable<TransactionTypeAmountsByContractType> source)
             { AddDcEarningsCalled = true; }
 
-            public void AddTransactionTypes(IEnumerable<TransactionTypeAmounts> transactionTypes)
+            public void AddTransactionTypes(IEnumerable<TransactionTypeAmountsByContractType> transactionTypes)
             { AddTransactionTypesCalled = true; }
 
             public void AddFundingSourceAmounts(IEnumerable<ProviderFundingSourceAmounts> fundingSourceAmounts)
