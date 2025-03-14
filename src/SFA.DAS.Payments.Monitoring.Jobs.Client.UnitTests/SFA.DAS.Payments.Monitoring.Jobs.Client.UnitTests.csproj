@@ -14,6 +14,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.7-prerelease-34" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.7-prerelease-34" />
+    <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.7-prerelease-34" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.7-prerelease-34" />
     <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="0.1.55" />
   </ItemGroup>
 
