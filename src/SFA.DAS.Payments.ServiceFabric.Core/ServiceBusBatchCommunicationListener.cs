@@ -108,6 +108,7 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
                             {
                                 var applicationMessage = DeserializeMessage(message);
                                 var key = applicationMessage.GetType();
+                                logger.LogInfo($".NET 6: MessageType {key}");
                                 var applicationMessages = groupedMessages.ContainsKey(key)
                                     ? groupedMessages[key]
                                     : groupedMessages[key] = new List<(string, int, object)>();
@@ -116,6 +117,7 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
                             }
                             catch (Exception e)
                             {
+                                logger.LogInfo($".NET 6: Error deserialising {e}");
                                 logger.LogError($"Error deserialising the message. Error: {e.Message}", e);
                                 //TODO: should use the error queue instead of dead letter queue
                                 await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken)
@@ -183,11 +185,15 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
 
         private object DeserializeMessage(Message message)
         {
+            logger.LogInfo($".NET 6 DeserializeMessage Message: {message}");
             if (!message.UserProperties.ContainsKey(NServiceBus.Headers.EnclosedMessageTypes))
                 throw new InvalidOperationException($"Cannot deserialise the message, no 'enclosed message types' header was found. Message id: {message.MessageId}, label: {message.Label}");
 
             var enclosedTypes = (string)message.UserProperties[NServiceBus.Headers.EnclosedMessageTypes];
             var typeName = enclosedTypes.Split(';').FirstOrDefault();
+
+            logger.LogInfo($".NET 6 DeserializeMessage enclosedTypes: {enclosedTypes}");
+            logger.LogInfo($".NET 6 DeserializeMessage typeName: {typeName}");
 
             if (string.IsNullOrEmpty(typeName))
                 throw new InvalidOperationException($"Message type not found when trying to deserialise the message.  Message id: {message.MessageId}, label: {message.Label}");
@@ -196,6 +202,9 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
             var sanitisedMessageJson = GetMessagePayload(message);
             var deserialisedMessage = JsonConvert.DeserializeObject(sanitisedMessageJson, messageType);
 
+            logger.LogInfo($".NET 6 DeserializeMessage messageType: {messageType}");
+            logger.LogInfo($".NET 6 DeserializeMessage sanitisedMessageJson: {sanitisedMessageJson}");
+            logger.LogInfo($".NET 6 DeserializeMessage deserialisedMessage: {deserialisedMessage}");
             return deserialisedMessage;
         }
 
