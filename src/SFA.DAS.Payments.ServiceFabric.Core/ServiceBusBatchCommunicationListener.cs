@@ -210,8 +210,16 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
                     try
                     {
                         await unitOfWork.Begin().ConfigureAwait(false);
-                        logger.LogError($".NET 6: {groupType}");
-                        logger.LogError($".NET 6: {groupType.FullName}");
+                        logger.LogInfo($".NET 6: {groupType}");
+                        logger.LogInfo($".NET 6: {groupType.FullName}");
+                        logger.LogInfo($".NET 6: {receiver.Path}");
+                        logger.LogInfo($".NET 6: {receiver.ServiceBusConnection}");
+                        foreach (var message in messages)
+                        {
+                            logger.LogInfo($".NET 6 Item 1: {message.Item1}");
+                            logger.LogInfo($".NET 6 Item 2: {message.Item2}");
+                            logger.LogInfo($".NET 6 Item 3: {message.Item3}");
+                        }
                         if (!containerScope.TryResolve(typeof(IHandleMessageBatches<>).MakeGenericType(groupType), out var handler))
                         {
                             logger.LogError($"No handler found for message: {groupType.FullName}");
