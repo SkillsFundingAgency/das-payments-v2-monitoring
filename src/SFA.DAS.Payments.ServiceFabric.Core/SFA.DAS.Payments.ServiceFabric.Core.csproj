@@ -44,10 +44,10 @@
     <PackageReference Include="NServiceBus" Version="8.1.1" />
 
     <PackageReference Include="SFA.DAS.Payments.Core" Version="2.0.7-prerelease-34" />
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.0.7-prerelease-34" />
     <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.7-prerelease-34" />
     <PackageReference Include="SFA.DAS.Payments.Messaging" Version="2.0.7-prerelease-34" />
     <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.7-prerelease-34" />
+    <ProjectReference Include="..\SFA.DAS.Payments.Application\SFA.DAS.Payments.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

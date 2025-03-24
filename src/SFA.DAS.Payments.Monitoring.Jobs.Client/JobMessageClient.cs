@@ -36,10 +36,18 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
             {
                 logger.LogVerbose(
                     $"Sending request to record successful processing of event. Job Id: {jobId}, Event: id: {messageId} ");
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - {jobId}.");
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - {messageId}.");
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - {messageName}.");
+                foreach (var generatedMessage in generatedMessages)
+                {
+                    logger.LogError($".NET 6: Tracing message processing - JobMessageClient - GeneratedMessage {generatedMessage}.");
+                }
 
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - {jobId}.");
                 var batchSize = 1000; //TODO: this should come from config
                 List<GeneratedMessage> batch;
-                
+                logger.LogError($".NET 6: Tracing message processing - Line 42 JobMessageClient.");
                 var itemProcessedEvent = new RecordJobMessageProcessingStatus
                 {
                     JobId = jobId,
@@ -49,8 +57,9 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                     GeneratedMessages = generatedMessages.Take(batchSize).ToList() ?? new List<GeneratedMessage>(),
                     Succeeded = true,
                 };
-
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - ItemProcessedEvent {itemProcessedEvent}.");
                 var partitionedEndpointName = config.GetMonitoringEndpointName(jobId);
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - partitionedEndpointName {partitionedEndpointName}.");
                 await messageSession.Send(partitionedEndpointName, itemProcessedEvent).ConfigureAwait(false);
             
                 var skip = batchSize;
@@ -70,6 +79,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
             }
             catch (Exception ex)
             {
+                logger.LogError($".NET 6: Tracing message processing - JobMessageClient - Error {ex}.");
                 logger.LogWarning(
                     $"Failed to send the job status message. Job: {jobId}, Message: {messageId}, {messageName}, Error: {ex.Message}, {ex}");
             }
@@ -79,7 +89,9 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
         {
             try
             {
+
                 var messageJson = Encoding.UTF8.GetString(failedMessageBody).Trim(Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble()).ToCharArray());
+                logger.LogVerbose($".NET 6: Failed job: {messageJson}.");
                 var message = JObject.Parse(messageJson);
                 var messageId = message.ContainsKey("EventId") ? (string)message["EventId"] : message.ContainsKey("CommandId") ? (string)message["CommandId"] : (string)null;
                 if (messageId == null)

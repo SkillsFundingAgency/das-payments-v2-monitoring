@@ -214,6 +214,7 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
                         logger.LogInfo($".NET 6: {groupType.FullName}");
                         logger.LogInfo($".NET 6: {receiver.Path}");
                         logger.LogInfo($".NET 6: {receiver.ServiceBusConnection}");
+
                         foreach (var message in messages)
                         {
                             logger.LogInfo($".NET 6 Item 1: {message.Item1}");
