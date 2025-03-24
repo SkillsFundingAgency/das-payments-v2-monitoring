@@ -21,12 +21,12 @@
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="0.1.127" />
     <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.0.7-prerelease-34" />
     <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.7-prerelease-34" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.4-prerelease-10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Application\SFA.DAS.Payments.Monitoring.Jobs.Application.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />
+    <ProjectReference Include="..\SFA.DAS.Payments.ServiceFabric.Core\SFA.DAS.Payments.ServiceFabric.Core.csproj" />
   </ItemGroup>
 
 </Project>
