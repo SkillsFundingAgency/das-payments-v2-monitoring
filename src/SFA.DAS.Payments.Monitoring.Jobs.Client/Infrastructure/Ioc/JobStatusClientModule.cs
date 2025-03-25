@@ -98,7 +98,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
                 .Transactions(TransportTransactionMode.ReceiveOnly)
                 .SubscriptionNamingConvention(ruleName => ruleName.Split('.').LastOrDefault() ?? ruleName);
 
-            transport.Routing().RouteToEndpoint(typeof(RecordEarningsJob).Assembly, jobsEndpointName);
+            transport.Routing().RouteToEndpoint(typeof(RecordEarningsJob), jobsEndpointName);
             endpointConfiguration.SendFailedMessagesTo(config.FailedMessagesQueue);
             endpointConfiguration.UseSerialization<NewtonsoftJsonSerializer>();
             endpointConfiguration.EnableInstallers();
