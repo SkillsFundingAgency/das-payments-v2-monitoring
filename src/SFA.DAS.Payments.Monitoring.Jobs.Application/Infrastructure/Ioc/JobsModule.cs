@@ -106,7 +106,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Ioc
                 var config = c.Resolve<IApplicationConfiguration>();
                 EndpointConfigurationEvents.ConfiguringTransport += (sender, e) =>
                 {
-                    e.Routing().RouteToEndpoint(typeof(RecordEarningsJob).Assembly, config.EndpointName);
+                    e.Routing().RouteToEndpoint(typeof(RecordEarningsJob), config.EndpointName);
                 };
             });
 
