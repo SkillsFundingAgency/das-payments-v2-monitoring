@@ -199,6 +199,16 @@ namespace SFA.DAS.Payments.ServiceFabric.Core
                 throw new InvalidOperationException($"Message type not found when trying to deserialise the message.  Message id: {message.MessageId}, label: {message.Label}");
 
             var messageType = Type.GetType(typeName);
+
+            if (messageType == null || messageType?.FullName == string.Empty)
+            {
+                logger.LogInfo($".NET 6 DeserializeMessage messageType is null: {messageType}");
+            }
+
+            if (messageType?.Name == "RecordEarningsJobSucceeded")
+            {
+                logger.LogInfo($".NET 6 DeserializeMessage RecordEarningsJobSucceeded type: {messageType}");
+            }
             var sanitisedMessageJson = GetMessagePayload(message);
             var deserialisedMessage = JsonConvert.DeserializeObject(sanitisedMessageJson, messageType);
 
