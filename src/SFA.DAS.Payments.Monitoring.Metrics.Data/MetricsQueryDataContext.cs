@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,7 +79,6 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             modelBuilder.ApplyConfiguration(new PeriodEndDataLockCountConfiguration());
             modelBuilder.ApplyConfiguration(new ProviderFundingLineTypeAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDataLockFundingLineTypeAmountsConfiguration());
-            modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
         }
 
         public string GetDataLockedEarningsTotalsSqlQuery(bool shouldGroupByLearner = false) => $@";WITH unGroupedEarnings AS 

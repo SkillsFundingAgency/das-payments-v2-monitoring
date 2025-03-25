@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Autofac.Extras.Moq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
