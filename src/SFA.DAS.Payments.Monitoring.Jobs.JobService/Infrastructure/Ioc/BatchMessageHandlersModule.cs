@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Azure.ServiceBus.Management;
 using NServiceBus;
 using SFA.DAS.Payments.Application.Infrastructure.Ioc;
 using SFA.DAS.Payments.Application.Infrastructure.Logging;
@@ -11,7 +12,6 @@ using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Jobs.JobService.Handlers.Submission;
 using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
-using SFA.DAS.Payments.ServiceFabric.Core;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
 {
@@ -23,14 +23,15 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
                 {
                     var appConfig = c.Resolve<IApplicationConfiguration>();
                     var configHelper = c.Resolve<IConfigurationHelper>();
-                    return new JobBatchCommunicationListener(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"),
-                        appConfig.EndpointName,
+                    return new JobBatchCommunicationListener(appConfig.EndpointName,
                         appConfig.FailedMessagesQueue,
                         c.Resolve<IPaymentLogger>(),
                         c.Resolve<IContainerScopeFactory>(),
                         c.Resolve<ITelemetry>(),
                         c.Resolve<IMessageDeserializer>(),
-                        c.Resolve<IApplicationMessageModifier>()
+                        c.Resolve<IApplicationMessageModifier>(),
+                        new ManagementClientFactory(configHelper.GetConnectionString("MonitoringServiceBusConnectionString")),
+                        new ServiceBusClientFactory(configHelper.GetConnectionString("MonitoringServiceBusConnectionString"))
                     );
                 })
                 .As<IJobBatchCommunicationListener>()

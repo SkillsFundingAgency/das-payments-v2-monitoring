@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Management;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using SFA.DAS.Payments.Application.Infrastructure.Ioc;
@@ -34,7 +33,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
         private readonly ITelemetry telemetry;
         private readonly IMessageDeserializer messageDeserializer;
         private readonly IApplicationMessageModifier messageModifier;
-        private readonly string connectionString;
+        private readonly IManagementClientFactory managementClientFactory;
+        private readonly IServiceBusClientFactory serviceBusClientFactory;
         public string EndpointName { get; set; }
         private readonly string errorQueueName;
         private CancellationToken startingCancellationToken;
@@ -42,15 +42,17 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
 
         private const string TopicPath = "bundle-1";
 
-        public JobBatchCommunicationListener(string connectionString, string endpointName, string errorQueueName, IPaymentLogger logger,
-            IContainerScopeFactory scopeFactory, ITelemetry telemetry, IMessageDeserializer messageDeserializer, IApplicationMessageModifier messageModifier)
+        public JobBatchCommunicationListener(string endpointName, string errorQueueName, IPaymentLogger logger,
+            IContainerScopeFactory scopeFactory, ITelemetry telemetry, IMessageDeserializer messageDeserializer, IApplicationMessageModifier messageModifier,
+            IManagementClientFactory managementClientFactory, IServiceBusClientFactory serviceBusClientFactory)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
             this.telemetry = telemetry ?? throw new ArgumentNullException(nameof(telemetry));
             this.messageDeserializer = messageDeserializer ?? throw new ArgumentNullException(nameof(messageDeserializer));
             this.messageModifier = messageModifier ?? throw new ArgumentNullException(nameof(messageModifier));
-            this.connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+            this.managementClientFactory = managementClientFactory ?? throw new ArgumentNullException(nameof(managementClientFactory));
+            this.serviceBusClientFactory = serviceBusClientFactory ?? throw new ArgumentNullException(nameof(serviceBusClientFactory));
             EndpointName = endpointName ?? throw new ArgumentNullException(nameof(endpointName));
             this.errorQueueName = errorQueueName ?? endpointName + "-Errors";
         }
@@ -74,75 +76,6 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
             {
                 logger.LogFatal($"Encountered fatal error. Error: {ex.Message}", ex);
             }
-        }
-
-        private void CreateNewSubscriptionRule(Type type, string endpointName, CancellationToken cancellationToken)
-        {
-            var manageClient = new ManagementClient(connectionString);
-            var ruleDescription = new RuleDescription
-            {
-                Filter = new SqlFilter($"[NServiceBus.EnclosedMessageTypes] LIKE '%{type.FullName}%'"),
-                Name = type.Name
-            };
-
-            manageClient.CreateRuleAsync(TopicPath, endpointName, ruleDescription, cancellationToken);
-        }
-
-        private async Task<IList<RuleDescription>> GetExistingRules(string subscriptionName, CancellationToken cancellationToken)
-        {
-            var manageClient = new ManagementClient(connectionString);
-            return await manageClient.GetRulesAsync(TopicPath, subscriptionName, cancellationToken: cancellationToken);
-        }
-
-        private async Task<SubscriptionDescription> GetOrCreateSubscription(string endpointName, CancellationToken cancellationToken)
-        {
-            var manageClient = new ManagementClient(connectionString);
-
-            SubscriptionDescription subscriptionDescription;
-            if (!await manageClient.SubscriptionExistsAsync(TopicPath, endpointName, cancellationToken))
-            {
-                subscriptionDescription = new SubscriptionDescription(TopicPath, endpointName)
-                {
-                    ForwardTo = endpointName,
-                    UserMetadata = endpointName,
-                    EnableBatchedOperations = true,
-                    MaxDeliveryCount = Int32.MaxValue,
-                    EnableDeadLetteringOnFilterEvaluationExceptions = false,
-                    LockDuration = TimeSpan.FromMinutes(5)
-                };
-                var defaultRule = new RuleDescription("$default") { Filter = new SqlFilter("1=0") };
-                await manageClient.CreateSubscriptionAsync(
-                   subscriptionDescription, defaultRule, cancellationToken);
-            }
-            else
-            {
-                subscriptionDescription =
-                    await manageClient.GetSubscriptionAsync(TopicPath, endpointName, cancellationToken);
-            }
-
-            return subscriptionDescription;
-        }
-
-        private List<Type> GetBatchHandledMessageTypes()
-        {
-            List<Type> genericTypes = new List<Type>();
-
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes());
-
-            foreach (var type in types)
-            {
-                foreach (Type intType in type.GetInterfaces())
-                {
-                    if (intType.IsGenericType && intType.GetGenericTypeDefinition()
-                        == typeof(IHandleMessageBatches<>))
-                    {
-                        genericTypes.Add(intType.GetGenericArguments()[0]);
-                    }
-                }
-            }
-
-            return genericTypes;
         }
 
         private async Task<List<(Object Message, BatchMessageReceiver Receiver, ServiceBusReceivedMessage ReceivedMessage)>> ReceiveMessages(BatchMessageReceiver messageReceiver, CancellationToken cancellationToken)
@@ -171,11 +104,10 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
 
             return applicationMessages;
         }
-
-
+        
         private async Task Listen(CancellationToken cancellationToken)
         {
-            var client = new ServiceBusClient(connectionString);
+            var client = serviceBusClientFactory.GetServiceBusClient();
             var messageReceivers = new List<BatchMessageReceiver>();
             messageReceivers.AddRange(Enumerable.Range(0, 3)
                 .Select(i => new BatchMessageReceiver(client, EndpointName)));
@@ -432,8 +364,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
         {
             try
             {
-                var manageClient = new ManagementClient(connectionString);
-                if (await manageClient.QueueExistsAsync(queuePath, startingCancellationToken).ConfigureAwait(false))
+                var managementClient = managementClientFactory.GetManagementClient();
+                if (await managementClient.QueueExistsAsync(queuePath, startingCancellationToken).ConfigureAwait(false))
                 {
                     logger.LogInfo($"Queue '{queuePath}' already exists, skipping queue creation.");
                     return;
@@ -451,7 +383,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                     Path = queuePath
                 };
 
-                await manageClient.CreateQueueAsync(queueDescription, startingCancellationToken).ConfigureAwait(false);
+                await managementClient.CreateQueueAsync(queueDescription, startingCancellationToken).ConfigureAwait(false);
             }
             catch (MessagingEntityAlreadyExistsException ex)
             {
