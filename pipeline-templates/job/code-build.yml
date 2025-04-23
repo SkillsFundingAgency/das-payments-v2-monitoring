@@ -144,3 +144,4 @@ jobs:
         src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj;
         src/SFA.DAS.Payments.Monitoring.Metrics.Data/SFA.DAS.Payments.Monitoring.Metrics.Data.csproj;
         src/SFA.DAS.Payments.Monitoring.Metrics.Model/SFA.DAS.Payments.Monitoring.Metrics.Model.csproj;
+        src/SFA.DAS.Payments.Monitoring.Metrics.Domain/SFA.DAS.Payments.Monitoring.Metrics.Domain.csproj;
