@@ -53,9 +53,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submissions", "Submissions"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{187A6DD7-7655-476D-A007-A162BDBF8C42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.DataMessages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{466B1CB6-8104-4090-A117-B1AB89464796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Payments.Monitoring.Jobs.Messages", "SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj", "{466B1CB6-8104-4090-A117-B1AB89464796}"
 EndProject
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "SFA.DAS.Payments.Monitoring.ServiceFabric", "SFA.DAS.Payments.Monitoring.ServiceFabric\SFA.DAS.Payments.Monitoring.ServiceFabric.sfproj", "{C7D441B0-203C-433A-890B-1DF14576C203}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{704B2B6D-B9B3-4B6B-8C36-C3BC3BCF6A00}"
+	ProjectSection(SolutionItems) = preProject
+		..\as-manifest.yml = ..\as-manifest.yml
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\GitVersion.yml = ..\GitVersion.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
