@@ -26,4 +26,4 @@ stages:
               packagesToPush: '$(Pipeline.Workspace)/NuGetPackages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages/*.symbols.nupkg'
               allowPackageConflicts: true
               nuGetFeedType: external
-              publishFeedCredentials: 'SFA NuGet'
+              publishFeedCredentials: 'Paymentsv2-Nuget'
