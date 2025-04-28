@@ -15,8 +15,16 @@
     <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="2.0.0-prerelease-7" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.0-prerelease-4" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="2.0.0-prerelease-4" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
   </ItemGroup>
+
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug' ">
+		<ProjectReference Include="..\..\..\das-payments-v2-common-servicefabric\src\SFA.DAS.Payments.ServiceFabric.Core\SFA.DAS.Payments.ServiceFabric.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' != 'Debug' ">
+		<PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />

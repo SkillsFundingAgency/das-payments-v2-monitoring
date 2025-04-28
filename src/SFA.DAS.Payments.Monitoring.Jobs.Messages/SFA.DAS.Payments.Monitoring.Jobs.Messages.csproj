@@ -2,7 +2,10 @@
 
   <PropertyGroup>
 	  <TargetFrameworks>net472;net6</TargetFrameworks>
+	  <FileVersion></FileVersion>
+	  <AssemblyVersion>1.0.0.0</AssemblyVersion>
   </PropertyGroup>
+
 
   <ItemGroup>
 	  <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.0.6-prerelease-13" />
