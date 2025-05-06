@@ -11,6 +11,11 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
     {
         private readonly string serviceBusConnectionString;
 
+        public ServiceBusClientFactory()
+        {
+
+        }
+
         public ServiceBusClientFactory(string serviceBusConnectionString)
         {
             this.serviceBusConnectionString = serviceBusConnectionString;

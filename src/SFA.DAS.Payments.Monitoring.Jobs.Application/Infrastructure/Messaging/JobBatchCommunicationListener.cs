@@ -248,6 +248,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging
                 using (var containerScope = scopeFactory.CreateScope())
                 {
                     var unitOfWork = containerScope.Resolve<IStateManagerUnitOfWork>();
+                    
                     try
                     {
                         await unitOfWork.Begin();

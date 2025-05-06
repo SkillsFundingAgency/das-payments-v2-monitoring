@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac.Core;
-using Autofac.Core.Registration;
+using Autofac;
+using Autofac.Extras.Moq;
 using Azure.Messaging.ServiceBus;
 using FluentAssertions;
+using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.ServiceBus.Management;
 using Moq;
 using NUnit.Framework;
@@ -15,6 +16,7 @@ using SFA.DAS.Payments.Application.Infrastructure.Telemetry;
 using SFA.DAS.Payments.Messaging.Serialization;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.Infrastructure.Messaging;
 using SFA.DAS.Payments.Monitoring.Jobs.Messages.Commands;
+using SFA.DAS.Payments.ServiceFabric.Core.Infrastructure.UnitOfWork;
 
 namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.Messaging
 {
@@ -29,6 +31,9 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.Messaging
         private Mock<IManagementClientFactory> managementClientFactory;
         private Mock<IServiceBusClientFactory> serviceBusClientFactory;
         private Mock<TestManagementClient> managementClient;
+        private Mock<ILifetimeScope> lifetimeScope;
+        private Mock<IStateManagerUnitOfWork> unitOfWork;
+        private AutoMock mocker;
         private JobBatchCommunicationListener listener;
         private const string EndpointName = "endpoint";
 
@@ -43,6 +48,8 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.Messaging
             managementClientFactory = new Mock<IManagementClientFactory>();
             serviceBusClientFactory = new Mock<IServiceBusClientFactory>();
             managementClient = new Mock<TestManagementClient>();
+            unitOfWork = new Mock<IStateManagerUnitOfWork>();
+            mocker = AutoMock.GetLoose();
         }
 
 
@@ -385,35 +392,64 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.Messaging
         {
             // Arrange
             SetupServiceBusQueues();
+            //move out to helper method
+            
+            /*             lifetimeScope = new Mock<ILifetimeScope>();
+               lifetimeScope.Setup(x => x.Resolve(typeof(IStateManagerUnitOfWork))).Returns(unitOfWork.Object);
+               containerScopeFactory.Setup(x => x.CreateScope()).Returns(lifetimeScope.Object);
+             *
+             *
+             *
+             */
 
-            var serviceBusClient = new Mock<ServiceBusClient>();
-            var messageReceiver = new Mock<ServiceBusReceiver>();
+            //mocker.Mock<IStateManagerUnitOfWork>();
+            //mocker.Mock<ILifetimeScope>()
+            //    .Setup(x => x.Resolve<IStateManagerUnitOfWork>()).Returns(mocker.Create<IStateManagerUnitOfWork>());
+            //mocker.Mock<IContainerScopeFactory>().Setup(x => x.CreateScope()).Returns(mocker.Create<ILifetimeScope>());
+
+            //var serviceBusClient = new Mock<ServiceBusClient>();
+            //var messageReceiver = new Mock<ServiceBusReceiver>();
             var message = new RecordEarningsJob();
             var messages = new List<ServiceBusReceivedMessage>
             {
                 ServiceBusModelFactory.ServiceBusReceivedMessage(BinaryData.FromObjectAsJson(message), correlationId: Guid.NewGuid().ToString(), lockTokenGuid: Guid.NewGuid())
             };
 
-            messageReceiver.Setup(x =>
-                    x.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            mocker.Mock<ServiceBusReceiver>()
+                .Setup(x => x.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(messages);
-            serviceBusClient.Setup(x => x.CreateReceiver(It.IsAny<string>())).Returns(messageReceiver.Object);
-            serviceBusClientFactory.Setup(x => x.GetServiceBusClient()).Returns(serviceBusClient.Object);
+            
+            mocker.Mock<ServiceBusClient>().Setup(x => x.CreateReceiver(It.IsAny<string>())).Returns(mocker.Create<ServiceBusReceiver>());
+            var serviceBusClient = mocker.Create<ServiceBusClient>(new NamedParameter("connectionString", "Endpoint="));
 
-            messageDeserializer.Setup(x => x.DeserializeMessage(It.IsAny<ServiceBusReceivedMessage>()))
+            mocker.Mock<IServiceBusClientFactory>().Setup(x => x.GetServiceBusClient()).Returns(serviceBusClient);
+
+            mocker.Mock<IMessageDeserializer>().Setup(x => x.DeserializeMessage(It.IsAny<ServiceBusReceivedMessage>()))
                 .Returns(message);
-            applicationMessageModifier.Setup(x => x.Modify(It.IsAny<RecordEarningsJob>())).Returns(message);
+            mocker.Mock<IApplicationMessageModifier>().Setup(x => x.Modify(It.IsAny<RecordEarningsJob>())).Returns(message);
+
+            mocker.Mock<IManagementClientFactory>().Setup(x => x.GetManagementClient()).Returns(managementClient.Object);
+
+            mocker.Mock<ILifetimeScope>().Setup(x => x.Resolve<IStateManagerUnitOfWork>())
+                .Returns(mocker.Create<IStateManagerUnitOfWork>());
+
+            mocker.Mock<IContainerScopeFactory>().Setup(x => x.CreateScope()).Returns(mocker.Create<ILifetimeScope>());
+
+            mocker.Mock<IStateManagerUnitOfWork>().Setup(x => x.Begin()).Returns(Task.CompletedTask);
 
             // Act
-            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(5)); //CancellationTokenSource(TimeSpan.FromMilliseconds(100));
-            listener = new JobBatchCommunicationListener(EndpointName, null, logger.Object,
-                containerScopeFactory.Object, telemetry.Object, messageDeserializer.Object,
-                applicationMessageModifier.Object, managementClientFactory.Object, serviceBusClientFactory.Object);
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromMinutes(5)); //TimeSpan.FromMilliseconds(100));
+            //listener = new JobBatchCommunicationListener(EndpointName, null, logger.Object,
+            //    containerScopeFactory.Object, telemetry.Object, messageDeserializer.Object,
+            //    applicationMessageModifier.Object, managementClientFactory.Object, serviceBusClientFactory.Object);
+            listener = mocker.Create<JobBatchCommunicationListener>(
+                new NamedParameter("endpointName", EndpointName),
+                new NamedParameter("errorQueueName", null));
             await listener.OpenAsync(cancellationTokenSource.Token);
-            
+
             // Assert
-            messageReceiver.Verify(x => x.ReceiveMessagesAsync(200, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
-            messageReceiver.Verify(x => x.CompleteMessageAsync(It.Is<ServiceBusReceivedMessage>(x => x.LockToken == messages[0].LockToken),
+            mocker.Mock<ServiceBusReceiver>().Verify(x => x.ReceiveMessagesAsync(200, It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
+            mocker.Mock<ServiceBusReceiver>().Verify(x => x.CompleteMessageAsync(It.Is<ServiceBusReceivedMessage>(x => x.LockToken == messages[0].LockToken),
                 It.IsAny<CancellationToken>()), Times.AtLeastOnce);
         }
 
