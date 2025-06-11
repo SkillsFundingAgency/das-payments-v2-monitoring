@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using SFA.DAS.Payments.Application.Data.Configurations;
 using SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Model;
+using SFA.DAS.Payments.Monitoring.Metrics.Model.Submission;
 
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data
@@ -253,9 +254,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             modelBuilder.HasDefaultSchema("Payments2");
             modelBuilder.ApplyConfiguration(new ProviderNegativeEarningsLearnerDcEarningAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new ProviderTransactionTypeAmountsConfiguration());
+            modelBuilder.ApplyConfiguration(new ContractTypeAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionTypeAmountsConfiguration());
-            modelBuilder.ApplyConfiguration(new TransactionTypeAmountsByContractTypeConfiguration());
 
+  
 
         }
 
