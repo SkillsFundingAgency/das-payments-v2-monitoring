@@ -50,11 +50,37 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     COALESCE(APEP.PriceEpisodeFirstProv1618Pay, 0) [TransactionType05],
                     COALESCE(APEP.PriceEpisodeSecondEmp1618Pay, 0) [TransactionType06],
                     COALESCE(APEP.PriceEpisodeSecondProv1618Pay, 0) [TransactionType07],
-                    COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftOnProgPayment, 0) [TransactionType08],
-                    COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftCompletionPayment, 0) [TransactionType09],
-                    COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftBalancing, 0) [TransactionType10],
-                    COALESCE(APEP.PriceEpisodeFirstDisadvantagePayment, 0) [TransactionType11],
-                    COALESCE(APEP.PriceEpisodeSecondDisadvantagePayment, 0) [TransactionType12],
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftOnProgPayment, 0)
+                                        ELSE 0
+                                        END
+                                        [TransactionType08],
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftCompletionPayment, 0) 
+                                        ELSE 0
+                                        END
+                                        [TransactionType09],
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftBalancing, 0) 
+                                        ELSE 0
+                                        END
+                                        [TransactionType10],
+                     
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(APEP.PriceEpisodeFirstDisadvantagePayment, 0) 
+                                        ELSE 0
+                                        END
+                                        [TransactionType11],
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(APEP.PriceEpisodeSecondDisadvantagePayment, 0) 
+                                        ELSE 0
+                                        END
+                                        [TransactionType12],
+                  
                     0 [TransactionType13],
                     0 [TransactionType14],
                     COALESCE(APEP.PriceEpisodeLSFCash, 0) [TransactionType15],
@@ -102,8 +128,21 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     LDP.[Period],
                     L.ULN,
                     COALESCE(LD.ProgType, 0) [ProgrammeType],
-                    COALESCE(LD.FworkCode, 0) [FrameworkCode],
-                    COALESCE(LD.PwayCode, 0) [PathwayCode],
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(LD.FworkCode, 0)
+                                        ELSE 0
+                                        END
+                                        [FrameworkCode],
+
+
+                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                                        COALESCE(LD.PwayCode, 0)
+                                        ELSE 0
+                                        END
+                                        [PathwayCode],
+
+                   
                     COALESCE(LD.StdCode, 0) [StandardCode],
                     COALESCE(LDP.[LearnDelESFAContribPct], 0) [SfaContributionPercentage],
                     LDP.FundLineType [FundingLineType],
