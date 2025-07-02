@@ -51,31 +51,31 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     COALESCE(APEP.PriceEpisodeSecondEmp1618Pay, 0) [TransactionType06],
                     COALESCE(APEP.PriceEpisodeSecondProv1618Pay, 0) [TransactionType07],
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftOnProgPayment, 0)
                                         ELSE 0
                                         END
                                         [TransactionType08],
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftCompletionPayment, 0) 
                                         ELSE 0
                                         END
                                         [TransactionType09],
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(APEP.PriceEpisodeApplic1618FrameworkUpliftBalancing, 0) 
                                         ELSE 0
                                         END
                                         [TransactionType10],
                      
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(APEP.PriceEpisodeFirstDisadvantagePayment, 0) 
                                         ELSE 0
                                         END
                                         [TransactionType11],
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(APEP.PriceEpisodeSecondDisadvantagePayment, 0) 
                                         ELSE 0
                                         END
@@ -129,14 +129,14 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                     L.ULN,
                     COALESCE(LD.ProgType, 0) [ProgrammeType],
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(LD.FworkCode, 0)
                                         ELSE 0
                                         END
                                         [FrameworkCode],
 
 
-                    CASE WHEN DB_NAME = 'ILR2425DataStore' THEN
+                    CASE WHEN DB_NAME() = 'ILR2425DataStore' THEN
                                         COALESCE(LD.PwayCode, 0)
                                         ELSE 0
                                         END
