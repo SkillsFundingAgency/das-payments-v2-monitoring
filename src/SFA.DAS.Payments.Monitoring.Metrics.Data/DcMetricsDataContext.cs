@@ -151,7 +151,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 SELECT * 
                 FROM RawEarningsMathsAndEnglish
             )";
-        private static string BaseDcEarningsQuery2526 = @"
+        private static string UpdatedBaseDcEarningsQuery = @"
        ;WITH 
        RawEarnings AS (
            SELECT
@@ -390,11 +390,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
         public async Task<List<TransactionTypeAmounts>> GetEarnings(long ukprn, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
-            if (academicYear == 2526)
+            if (academicYear >= 2526)
             {
                 using (await BeginTransaction(cancellationToken))
                 {
-                    return await Earnings.FromSqlRaw(BaseDcEarningsQuery2526 + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                    return await Earnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
                 }
             }
 
@@ -407,11 +407,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
         public async Task<List<ProviderTransactionTypeAmounts>> GetEarnings(short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
-            if (academicYear == 2526)
+            if (academicYear >= 2526)
             {
                 using (await BeginTransaction(cancellationToken))
                 {
-                    return await AllProviderEarnings.FromSqlRaw(BaseDcEarningsQuery2526 + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                    return await AllProviderEarnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
                 }
             }
             using (await BeginTransaction(cancellationToken))
@@ -425,9 +425,9 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             using (await BeginTransaction(cancellationToken))
             {
                 var result = new List<ProviderNegativeEarningsLearnerDcEarningAmounts>();
-                if (academicYear == 2526)
+                if (academicYear >= 2526)
                 {
-                    result = await AllNegativeEarnings.FromSqlRaw(BaseDcEarningsQuery2526 + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                    result = await AllNegativeEarnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
                 }
                 else
                 {
