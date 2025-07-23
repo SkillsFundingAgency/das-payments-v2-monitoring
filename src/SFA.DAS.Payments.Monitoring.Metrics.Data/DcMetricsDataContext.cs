@@ -151,7 +151,129 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
                 SELECT * 
                 FROM RawEarningsMathsAndEnglish
             )";
-
+        private static string UpdatedBaseDcEarningsQuery = @"
+       ;WITH 
+       RawEarnings AS (
+           SELECT
+               APEP.LearnRefNumber,
+               APEP.Ukprn,
+               APE.PriceEpisodeAimSeqNumber [AimSeqNumber],
+               APEP.PriceEpisodeIdentifier,
+               APE.EpisodeStartDate,
+               APE.EpisodeEffectiveTNPStartDate,
+               APEP.[Period],
+               L.ULN,
+               COALESCE(LD.ProgType, 0) [ProgrammeType],
+               0 [FrameworkCode],
+               0 [PathwayCode],
+               COALESCE(LD.StdCode, 0) [StandardCode],
+               COALESCE(APEP.PriceEpisodeESFAContribPct, 0) [SfaContributionPercentage],
+               APE.PriceEpisodeFundLineType [FundingLineType],
+               LD.LearnAimRef,
+               LD.LearnStartDate [LearningStartDate],
+               COALESCE(APEP.PriceEpisodeOnProgPayment, 0) [TransactionType01],
+               COALESCE(APEP.PriceEpisodeCompletionPayment, 0) [TransactionType02],
+               COALESCE(APEP.PriceEpisodeBalancePayment, 0) [TransactionType03],
+               COALESCE(APEP.PriceEpisodeFirstEmp1618Pay, 0) [TransactionType04],
+               COALESCE(APEP.PriceEpisodeFirstProv1618Pay, 0) [TransactionType05],
+               COALESCE(APEP.PriceEpisodeSecondEmp1618Pay, 0) [TransactionType06],
+               COALESCE(APEP.PriceEpisodeSecondProv1618Pay, 0) [TransactionType07],
+               0.0 [TransactionType08],
+               0.0 [TransactionType09],
+               0.0 [TransactionType10],
+               0.0 [TransactionType11],
+               0.0 [TransactionType12],
+               0.0 [TransactionType13],
+               0.0 [TransactionType14],
+               COALESCE(APEP.PriceEpisodeLSFCash, 0) [TransactionType15],
+               COALESCE([APEP].[PriceEpisodeLearnerAdditionalPayment], 0) [TransactionType16],
+    	            CASE WHEN [APE].[PriceEpisodeContractType] = 'Levy Contract' THEN 1 WHEN [APE].[PriceEpisodeContractType] = 'Contract for services with the employer' THEN 1 WHEN [APE].[PriceEpisodeContractType] = 'None' THEN 0 WHEN [APE].[PriceEpisodeContractType] = 'Non-Levy Contract' THEN 2 WHEN [APE].[PriceEpisodeContractType] = 'Contract for services with the ESFA' THEN 2 ELSE -1 END [ApprenticeshipContractType],
+               PriceEpisodeTotalTNPPrice [TotalPrice],
+               0 [MathsAndEnglish]
+           FROM Rulebase.AEC_ApprenticeshipPriceEpisode_Period APEP
+           INNER JOIN Rulebase.AEC_ApprenticeshipPriceEpisode APE
+               on APEP.UKPRN = APE.UKPRN
+               and APEP.LearnRefNumber = APE.LearnRefNumber
+               and APEP.PriceEpisodeIdentifier = APE.PriceEpisodeIdentifier
+           JOIN Valid.Learner L
+               on L.UKPRN = APEP.Ukprn
+               and L.LearnRefNumber = APEP.LearnRefNumber
+           JOIN Valid.LearningDelivery LD
+               on LD.UKPRN = APEP.Ukprn
+               and LD.LearnRefNumber = APEP.LearnRefNumber
+               and LD.AimSeqNumber = APE.PriceEpisodeAimSeqNumber
+           where (
+               APEP.PriceEpisodeOnProgPayment != 0
+               or APEP.PriceEpisodeCompletionPayment != 0
+               or APEP.PriceEpisodeBalancePayment != 0
+               or APEP.PriceEpisodeFirstEmp1618Pay != 0
+               or APEP.PriceEpisodeFirstProv1618Pay != 0
+               or APEP.PriceEpisodeSecondEmp1618Pay != 0
+               or APEP.PriceEpisodeSecondProv1618Pay != 0
+               or APEP.PriceEpisodeLSFCash != 0
+               )
+               AND APEP.Period <= @collectionperiod
+       )
+       , RawEarningsMathsAndEnglish AS (
+           select 
+               LDP.LearnRefNumber,
+               LDP.Ukprn,
+               LDP.AimSeqNumber,
+               NULL [PriceEpisodeIdentifier],
+               NULL [EpisodeStartDate],
+               NULL [EpisodeEffectiveTNPStartDate],
+               LDP.[Period],
+               L.ULN,
+               COALESCE(LD.ProgType, 0) [ProgrammeType],
+               0 [FrameworkCode],
+               0 [PathwayCode],
+               COALESCE(LD.StdCode, 0) [StandardCode],
+               COALESCE(LDP.[LearnDelESFAContribPct], 0) [SfaContributionPercentage],
+               LDP.FundLineType [FundingLineType],
+               LD.LearnAimRef,
+               LD.LearnStartDate [LearningStartDate],
+               0 [TransactionType01],
+               0 [TransactionType02],
+               0 [TransactionType03],
+               0 [TransactionType04],
+               0 [TransactionType05],
+               0 [TransactionType06],
+               0 [TransactionType07],
+               0 [TransactionType08],
+               0 [TransactionType09],
+               0 [TransactionType10],
+               0 [TransactionType11],
+               0 [TransactionType12],
+               COALESCE(MathEngOnProgPayment, 0) [TransactionType13],
+               COALESCE(MathEngBalPayment, 0) [TransactionType14],
+               COALESCE(LearnSuppFundCash, 0) [TransactionType15],
+               0 [TransactionType16],
+	            CASE WHEN LDP.LearnDelContType = 'Levy Contract' THEN 1 WHEN LDP.LearnDelContType = 'Contract for services with the employer' THEN 1 WHEN LDP.LearnDelContType = 'None' THEN 0 WHEN LDP.LearnDelContType = 'Non-Levy Contract' THEN 2 WHEN LDP.LearnDelContType = 'Contract for services with the ESFA' THEN 2 ELSE -1 END [ApprenticeshipContractType],
+               0 [TotalPrice],
+               1 [MathsAndEnglish]
+           FROM Rulebase.AEC_LearningDelivery_Period LDP
+           INNER JOIN Valid.LearningDelivery LD
+               on LD.UKPRN = LDP.UKPRN
+               and LD.LearnRefNumber = LDP.LearnRefNumber
+               and LD.AimSeqNumber = LDP.AimSeqNumber
+           JOIN Valid.Learner L
+               on L.UKPRN = LD.Ukprn
+               and L.LearnRefNumber = LD.LearnRefNumber
+           where (
+               MathEngOnProgPayment != 0
+               or MathEngBalPayment != 0
+               or LearnSuppFundCash != 0
+               )
+               and LD.LearnAimRef != 'ZPROG001'
+               AND Period <= @collectionperiod
+       )
+       , AllEarnings AS (
+           SELECT * 
+           FROM RawEarnings
+           UNION
+           SELECT * 
+           FROM RawEarningsMathsAndEnglish
+       )";
         private static string UkprnFilterSelect =
             @"SELECT Cast([ApprenticeshipContractType] as TinyInt) as ContractType,
                 SUM(TransactionType01) [TransactionType1], 
@@ -257,7 +379,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
             modelBuilder.ApplyConfiguration(new ContractTypeAmountsConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionTypeAmountsConfiguration());
 
-  
+
 
         }
 
@@ -268,14 +390,30 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
         public async Task<List<TransactionTypeAmounts>> GetEarnings(long ukprn, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
+            if (academicYear >= 2526)
+            {
+                using (await BeginTransaction(cancellationToken))
+                {
+                    return await Earnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                }
+            }
+
             using (await BeginTransaction(cancellationToken))
             {
                 return await Earnings.FromSqlRaw(BaseDcEarningsQuery + UkprnFilterSelect, new SqlParameter("@ukprn", ukprn), new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
             }
+
         }
 
         public async Task<List<ProviderTransactionTypeAmounts>> GetEarnings(short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
+            if (academicYear >= 2526)
+            {
+                using (await BeginTransaction(cancellationToken))
+                {
+                    return await AllProviderEarnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                }
+            }
             using (await BeginTransaction(cancellationToken))
             {
                 return await AllProviderEarnings.FromSqlRaw(BaseDcEarningsQuery + UkprnGroupSelect, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
@@ -286,7 +424,16 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
         {
             using (await BeginTransaction(cancellationToken))
             {
-                var result = await AllNegativeEarnings.FromSqlRaw(BaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                var result = new List<ProviderNegativeEarningsLearnerDcEarningAmounts>();
+                if (academicYear >= 2526)
+                {
+                    result = await AllNegativeEarnings.FromSqlRaw(UpdatedBaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                }
+                else
+                {
+                    result = await AllNegativeEarnings.FromSqlRaw(BaseDcEarningsQuery + LearnerNegativeEarnings, new SqlParameter("@collectionperiod", collectionPeriod)).ToListAsync(cancellationToken);
+                }
+
 
                 result.ForEach(x => x.NegativeEarningsTotal = Math.Abs(x.NegativeEarningsTotal));
 
