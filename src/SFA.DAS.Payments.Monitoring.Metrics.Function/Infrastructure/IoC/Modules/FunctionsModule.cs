@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+using System.Configuration;
+using Autofac;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd;
@@ -80,9 +82,17 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
             builder.Register((c, p) =>
                 {
                     var configHelper = c.Resolve<IConfigurationHelper>();
-                    var dbContextOptions = new DbContextOptionsBuilder().UseSqlServer(
-                        configHelper.GetConnectionString("PaymentsMetricsConnectionString"),
-                        optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                    var dbContextOptions = new DbContextOptionsBuilder()
+                        .UseSqlServer(
+                            configHelper.GetConnectionString("PaymentsMetricsConnectionString"),
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    // consider making these configurable if it has the desired effect
+                                    maxRetryCount: 3, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null);
+
+                            }).Options;
                     return new MetricsQueryDataContext(dbContextOptions);
                 })
                 .As<IMetricsQueryDataContext>()
