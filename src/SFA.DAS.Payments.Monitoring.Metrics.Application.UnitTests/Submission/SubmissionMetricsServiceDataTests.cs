@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -61,26 +62,26 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             var jobsRepository = moqer.Mock<ISubmissionJobsRepository>();
 
             jobsRepository.Setup(x =>
-                    x.GetLatestSuccessfulJobForProvider(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
+                    x.GetLatestSuccessfulJobForProvider(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<Guid>()))
                 .ReturnsAsync(latestSuccessfulJob);
 
             moqer.Mock<ISubmissionJobsDataContext>();
 
             submissionMetricsRepository = moqer.Mock<ISubmissionMetricsRepository>();
 
-            submissionMetricsRepository.Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dasEarnings);
-            submissionMetricsRepository.Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dasEarnings);
-            submissionMetricsRepository.Setup(repo => repo.GetDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dataLocks);
-            submissionMetricsRepository.Setup(repo => repo.GetDataLockedEarningsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetDataLockedEarningsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultDataLockedTotal);
-            submissionMetricsRepository.Setup(repo => repo.GetAlreadyPaidDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetAlreadyPaidDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.AlreadyPaidDataLockedEarnings);
-            submissionMetricsRepository.Setup(repo => repo.GetHeldBackCompletionPaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetHeldBackCompletionPaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultHeldBackCompletionPayments);
-            submissionMetricsRepository.Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<CancellationToken>()))
+            submissionMetricsRepository.Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultYearToDateAmounts);
 
 
@@ -94,8 +95,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                 new AutowiringParameter());
 
             submissionMetricsRepository
-                .Setup(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .Returns(async (long ukprn, long jobId, CancellationToken cancellationToken) => await realSubmissionMetricsRepository.GetRequiredPayments(ukprn, jobId, cancellationToken));
+                .Setup(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
+                .Returns(async (long ukprn, long jobId, Guid correlationId, CancellationToken cancellationToken) => await realSubmissionMetricsRepository.GetRequiredPayments(ukprn, jobId, Guid.NewGuid(),  cancellationToken));
         }
 
         [Test]
@@ -231,7 +232,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             var jobsRepository = moqer.Mock<ISubmissionJobsRepository>();
 
             jobsRepository.Setup(x =>
-                    x.GetLatestSuccessfulJobForProvider(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
+                    x.GetLatestSuccessfulJobForProvider(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<Guid>()))
                 .ReturnsAsync(job);
 
             var service = moqer.Create<SubmissionMetricsService>();

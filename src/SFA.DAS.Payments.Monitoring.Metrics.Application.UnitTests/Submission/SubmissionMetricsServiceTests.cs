@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,28 +63,28 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                     factory.Create(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
                 .Returns(mockSubmissionSummary.Object);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dasEarnings);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dasEarnings);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dataLocks);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetDataLockedEarningsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetDataLockedEarningsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultDataLockedTotal);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetAlreadyPaidDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetAlreadyPaidDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.AlreadyPaidDataLockedEarnings);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(requiredPayments);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetHeldBackCompletionPaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetHeldBackCompletionPaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultHeldBackCompletionPayments);
             moqer.Mock<ISubmissionMetricsRepository>()
-                .Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<CancellationToken>()))
+                .Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<long>(),It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<Guid>(),It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultYearToDateAmounts);
         }
 

@@ -42,9 +42,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
 
         public async Task BuildMetrics(long ukprn, long jobId, short academicYear, byte collectionPeriod, CancellationToken cancellationToken)
         {
+            var correlationId = Guid.NewGuid();
+
             try
             {
-                var latestSuccessfulJob = await submissionJobsRepository.GetLatestSuccessfulJobForProvider(ukprn, academicYear, collectionPeriod);
+                var latestSuccessfulJob = await submissionJobsRepository.GetLatestSuccessfulJobForProvider(jobId, ukprn, academicYear, collectionPeriod, correlationId);
 
                 if (latestSuccessfulJob != null && latestSuccessfulJob.DcJobId != jobId)
                 {
@@ -57,13 +59,13 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                 var submissionSummary = submissionSummaryFactory.Create(ukprn, jobId, academicYear, collectionPeriod);
                 var dcEarningsTask = dcMetricsDataContextFactory.CreateContext(academicYear).GetEarnings(ukprn, academicYear, collectionPeriod, cancellationToken);
                 
-                var dasEarningsTask = submissionRepository.GetDasEarnings(ukprn, jobId, cancellationToken);
-                var dataLocksTask = submissionRepository.GetDataLockedEarnings(ukprn, jobId, cancellationToken);
-                var dataLocksTotalTask = submissionRepository.GetDataLockedEarningsTotal(ukprn, jobId, cancellationToken);
-                var dataLocksAlreadyPaid = submissionRepository.GetAlreadyPaidDataLockedEarnings(ukprn, jobId, cancellationToken);
-                var requiredPaymentsTask = submissionRepository.GetRequiredPayments(ukprn, jobId, cancellationToken);
-                var heldBackCompletionAmountsTask = submissionRepository.GetHeldBackCompletionPaymentsTotal(ukprn, jobId, cancellationToken);
-                var yearToDateAmountsTask = submissionRepository.GetYearToDatePaymentsTotal(ukprn, academicYear, collectionPeriod, cancellationToken);
+                var dasEarningsTask = submissionRepository.GetDasEarnings(ukprn, jobId, correlationId, cancellationToken);
+                var dataLocksTask = submissionRepository.GetDataLockedEarnings(ukprn, jobId, correlationId, cancellationToken);
+                var dataLocksTotalTask = submissionRepository.GetDataLockedEarningsTotal(ukprn, jobId, correlationId, cancellationToken);
+                var dataLocksAlreadyPaid = submissionRepository.GetAlreadyPaidDataLockedEarnings(ukprn, jobId, correlationId, cancellationToken);
+                var requiredPaymentsTask = submissionRepository.GetRequiredPayments(ukprn, jobId, correlationId, cancellationToken);
+                var heldBackCompletionAmountsTask = submissionRepository.GetHeldBackCompletionPaymentsTotal(ukprn, jobId, correlationId, cancellationToken);
+                var yearToDateAmountsTask = submissionRepository.GetYearToDatePaymentsTotal(ukprn, jobId, academicYear, collectionPeriod, correlationId, cancellationToken);
                 
                 var dataTask = Task.WhenAll(dcEarningsTask, dasEarningsTask, dataLocksTask, dataLocksTotalTask, dataLocksAlreadyPaid, requiredPaymentsTask, heldBackCompletionAmountsTask, yearToDateAmountsTask);
 
