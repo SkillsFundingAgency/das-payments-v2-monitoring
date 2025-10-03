@@ -2,7 +2,6 @@
 
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
-	  <!--<TargetFrameworks>net472;net6</TargetFrameworks>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,13 +13,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="1.1.1-prerelease-3" />
+    <PackageReference Include="SFA.DAS.Payments.PeriodEnd.Model" Version="0.1.55" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Client\SFA.DAS.Payments.Monitoring.Jobs.Client.csproj" />
     <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Jobs.Messages\SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj" />
-    <!--<ProjectReference Include="..\SFA.DAS.Payments.PeriodEnd.Model\SFA.DAS.Payments.PeriodEnd.Model.csproj" />-->
   </ItemGroup>
 
 </Project>
