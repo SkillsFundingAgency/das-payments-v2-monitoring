@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	  <TargetFrameworks>net6.0</TargetFrameworks>
-	  <FileVersion></FileVersion>
-	  <AssemblyVersion>1.0.0.0</AssemblyVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net472;net6</TargetFrameworks>
+		<FileVersion></FileVersion>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-	  <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.2.2" />
-	  <PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.2.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.2.2" />
+		<PackageReference Include="SFA.DAS.Payments.Messages.Common" Version="2.2.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="0.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="0.1.1" />
+	</ItemGroup>
 </Project>
