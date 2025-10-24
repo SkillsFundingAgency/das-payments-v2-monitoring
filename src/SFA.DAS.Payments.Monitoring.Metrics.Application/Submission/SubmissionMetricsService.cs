@@ -85,8 +85,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                 }
 
                 var dataDuration = stopwatch.ElapsedMilliseconds;
-
-                logger.LogDebug($"finished getting data from databases for job: {jobId}, ukprn: {ukprn}. Took: {dataDuration}ms.");
+                SendDatabaseQueriesCompletedTelemetry(ukprn, jobId, correlationId, dataDuration);
 
                 submissionSummary.AddEarnings(dcEarningsTask.Result, dasEarningsTask.Result);
                 submissionSummary.AddDataLockTypeCounts(dataLocksTotalTask.Result, dataLocksTask.Result, dataLocksAlreadyPaid.Result);
@@ -109,6 +108,19 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                 logger.LogWarning($"Error building the submission metrics report for job: {jobId}, ukprn: {ukprn}. Error: {e}");
                 throw;
             }
+        }
+
+        private void SendDatabaseQueriesCompletedTelemetry(long ukprn, long jobId, Guid correlationId, long elapsedMilliseconds)
+        {
+            var properties = new Dictionary<string, string>
+            {
+                { TelemetryKeys.JobId, jobId.ToString()},
+                { TelemetryKeys.Ukprn, ukprn.ToString()},
+            };
+
+            var logMessage = $"Finished getting data from databases for UKPRN {ukprn} correlation ID {correlationId} in {elapsedMilliseconds} milliseconds";
+
+            telemetry.TrackEvent(logMessage, properties, new Dictionary<string, double>());
         }
 
         private void SendMetricsTelemetry(SubmissionSummaryModel metrics, long reportGenerationDuration)
