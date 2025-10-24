@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using SFA.DAS.Payments.Application.Infrastructure.Telemetry;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.MetricsPersistenceDataContextTests
 {
@@ -50,6 +51,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.MetricsPersistenceD
         private readonly MetricsPersistenceDataContext persistenceDataContext;
         private readonly Mock<IMetricsQueryDataContextFactory> metricsQueryDataContextFactory;
         private readonly Mock<IPaymentLogger> logger;
+        private readonly Mock<ITelemetry> telemetry;
         private readonly SubmissionMetricsRepository sut;
 
         private readonly List<SubmissionSummaryModel> matchingSubmissionSummaries;
@@ -70,7 +72,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.UnitTests.MetricsPersistenceD
             persistenceDataContext = new InMemoryMetricsPersistenceDataContext();
             metricsQueryDataContextFactory = new Mock<IMetricsQueryDataContextFactory>();
             logger = new Mock<IPaymentLogger>();
-            sut = new SubmissionMetricsRepository(persistenceDataContext, metricsQueryDataContextFactory.Object, logger.Object);
+            telemetry = new Mock<ITelemetry>();
+            sut = new SubmissionMetricsRepository(persistenceDataContext, metricsQueryDataContextFactory.Object, logger.Object, telemetry.Object);
 
             matchingSubmissionSummaries = fixture.Create<List<SubmissionSummaryModel>>();
             nonMatchingSubmissionSummaries = fixture.Create<List<SubmissionSummaryModel>>();
