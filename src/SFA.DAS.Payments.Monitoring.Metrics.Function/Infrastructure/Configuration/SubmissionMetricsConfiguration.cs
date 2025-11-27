@@ -3,5 +3,7 @@
     public class SubmissionMetricsConfiguration : ISubmissionMetricsConfiguration
     {
         public string PaymentsConnectionString { get; set; }
+        public int SqlMaxRetryCount { get; set; }
+        public int SqlMaxRetryDelay { get; set; }
     }
 }

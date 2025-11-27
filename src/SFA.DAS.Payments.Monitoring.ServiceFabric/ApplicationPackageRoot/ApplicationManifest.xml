@@ -47,6 +47,8 @@
     <Parameter Name="ArchiveFunctionUrl" DefaultValue="" />
     <Parameter Name="ArchiveTimeout" DefaultValue="18000" />
     <Parameter Name="ArchiveApiKey" DefaultValue="" />
+    <Parameter Name="SqlMaxRetryCount" DefaultValue="0" />
+    <Parameter Name="SqlMaxRetryDelay" DefaultValue="0" />
   </Parameters>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="SFA.DAS.Payments.Monitoring.Metrics.SubmissionServicePkg" ServiceManifestVersion="1.0.0" />
@@ -80,6 +82,8 @@
             <Parameter Name="DelayedMessageRetryDelay" Value="[DelayedMessageRetryDelay]" />
             <Parameter Name="MetricsGenerationDelay" Value="[MetricsGenerationDelay]" />
             <Parameter Name="MetricsGenerationWaitTime" Value="[MetricsGenerationWaitTime]" />
+            <Parameter Name="SqlMaxRetryCount" Value="[SqlMaxRetryCount]" />
+            <Parameter Name="SqlMaxRetryDelay" Value="[SqlMaxRetryDelay]" />
           </Section>
         </Settings>
       </ConfigOverride>
@@ -119,6 +123,8 @@
             <Parameter Name="ArchiveFunctionUrl" Value="[ArchiveFunctionUrl]" />
             <Parameter Name="ArchiveTimeout" Value="[ArchiveTimeout]" />
             <Parameter Name="ArchiveApiKey" Value="[ArchiveApiKey]" />
+            <Parameter Name="SqlMaxRetryCount" Value="[SqlMaxRetryCount]" />
+            <Parameter Name="SqlMaxRetryDelay" Value="[SqlMaxRetryDelay]" />
           </Section>
         </Settings>
       </ConfigOverride>

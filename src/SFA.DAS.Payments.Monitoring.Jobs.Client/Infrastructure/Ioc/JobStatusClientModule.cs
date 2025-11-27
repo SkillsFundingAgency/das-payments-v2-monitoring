@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using NServiceBus.Faults;
 using NServiceBus.Features;
@@ -18,10 +20,21 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Ioc
         {
 
             builder.Register((c, p) =>
-            {
-                var configHelper = c.Resolve<IConfigurationHelper>();
-                return new JobsDataContext(configHelper.GetConnectionString("PaymentsConnectionString"));
-            })
+                {
+                    var configHelper = c.Resolve<IConfigurationHelper>();
+
+                    var dbContextOptions = new DbContextOptionsBuilder()
+                        .UseSqlServer(
+                            configHelper.GetConnectionString("PaymentsConnectionString"),
+                            sqlOptions =>
+                            {
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: int.Parse(configHelper.GetSetting("SqlMaxRetryCount")),
+                                    maxRetryDelay: TimeSpan.FromSeconds(int.Parse(configHelper.GetSetting("SqlMaxRetryDelay"))),
+                                    errorNumbersToAdd: null);
+                            }).Options;
+                    return new JobsDataContext(dbContextOptions);
+                })
                 .As<IJobsDataContext>()
                 .InstancePerDependency();
 

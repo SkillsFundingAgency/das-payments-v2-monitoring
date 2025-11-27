@@ -33,17 +33,14 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Data
 
     public class JobsDataContext : DbContext, IJobsDataContext
     {
-        private readonly string connectionString;
         public virtual DbSet<JobModel> Jobs { get; set; }
         public virtual DbSet<JobStepModel> JobSteps { get; set; }
         public virtual DbSet<SubmissionSummaryModel> SubmissionSummaries { get; set; }
 
         private const int ValidStartTimeOffsetMinutes = -150;
 
-        public JobsDataContext(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        public JobsDataContext(DbContextOptions contextOptions) : base(contextOptions)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,12 +53,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Data
             modelBuilder.ApplyConfiguration(new DataLockCountsModelConfiguration());
             modelBuilder.ApplyConfiguration(new EarningsModelConfiguration());
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-
+        
         public async Task SaveNewJob(JobModel jobDetails, CancellationToken cancellationToken = default(CancellationToken))
         {
             var job = await Jobs.AsNoTracking().FirstOrDefaultAsync(storedJob => storedJob.DcJobId == jobDetails.DcJobId, cancellationToken);

@@ -24,12 +24,38 @@ This repository also contains an Azure Function application that is responsible 
 
 Setup instructions: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/950927878/Development+Environment+-+Payments+V2+DAS+Space
 
-### Config
+### Monitoring ServiceFabric Config
 
 
 As detailed in: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/644972941/Developer+Configuration+Settings
 
 Select the configuration for the Monitoring application
+
+### SFA.DAS.Monitoring.Metrics.Function Config
+
+Add a local.settings.json file to the root folder, with the following content:
+
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+        "Version": "1.0",
+        "EnvironmentName": "LOCAL",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "FUNCTIONS_EXTENSION_VERSION ": "~4",
+        "AzureWebJobsStorage": "usedevelopmentstorage=true",
+        "EstimateSubmissionWindowMetricsSchedule": "0 0 8-18 * * *",
+        "ApplicationInsightsInstrumentationKey": "< your development Application Insights key >",
+        "PaymentsConnectionString": "< your local connection string for the DASPayments database >",
+        "PaymentsMetricsConnectionString": "< your local connection string for the DASPayments database >",        
+        "DcEarnings2425ConnectionString": "< your local connection string for the 2425 academic year ILR database >",
+        "DcEarnings2526ConnectionString": "< your local connection string for the 2526 academic year ILR database >",
+        "LogLevel": "Information",
+        "SqlMaxRetryCount": 0,
+        "SqlMaxRetryDelay": 0
+    }
+}
+```
 
 ## 🔗 External Dependencies
 
@@ -37,7 +63,7 @@ N/A
 
 ## Technologies
 
-* .NetCore 2.1/3.1/6
+* .Net6
 * Azure SQL Server
 * Azure Functions
 * Azure Service Bus
