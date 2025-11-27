@@ -1,5 +1,7 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
@@ -21,8 +23,15 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
                 {
                     var config = c.Resolve<ISubmissionMetricsConfiguration>();
                     var dbContextOptions = new DbContextOptionsBuilder()
-                        .UseSqlServer(config.PaymentsConnectionString, 
-                  optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                        .UseSqlServer(config.PaymentsConnectionString,
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: config.SqlMaxRetryCount,
+                                    maxRetryDelay: TimeSpan.FromSeconds(config.SqlMaxRetryDelay),
+                                    errorNumbersToAdd: null);
+                            }).Options;
                     return new MetricsPersistenceDataContext(dbContextOptions);
                 })
                 .As<IMetricsPersistenceDataContext>()
@@ -39,8 +48,15 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
                 {
                     var config = c.Resolve<ISubmissionMetricsConfiguration>();
                     var dbContextOptions = new DbContextOptionsBuilder()
-                        .UseSqlServer(config.PaymentsConnectionString, 
-                            optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                        .UseSqlServer(config.PaymentsConnectionString,
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: config.SqlMaxRetryCount,
+                                    maxRetryDelay: TimeSpan.FromSeconds(config.SqlMaxRetryDelay),
+                                    errorNumbersToAdd: null);
+                            }).Options;
                     return new SubmissionJobsDataContext(dbContextOptions);
                 })
                 .As<ISubmissionJobsDataContext>()
@@ -55,9 +71,16 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
                 {
                     var configHelper = c.Resolve<IConfigurationHelper>();
 
-                    var dbContextOptions = new DbContextOptionsBuilder().UseSqlServer(
-                        configHelper.GetConnectionString("DcEarnings2526ConnectionString"),
-                        optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                    var dbContextOptions = new DbContextOptionsBuilder()
+                        .UseSqlServer(configHelper.GetConnectionString("DcEarnings2526ConnectionString"),
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: int.Parse(configHelper.GetSetting("SqlMaxRetryCount")),
+                                    maxRetryDelay: TimeSpan.FromSeconds(int.Parse(configHelper.GetSetting("SqlMaxRetryDelay"))),
+                                    errorNumbersToAdd: null);
+                            }).Options;
 
                     return new DcMetricsDataContext(dbContextOptions);
                 })
@@ -68,9 +91,16 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
                 {
                     var configHelper = c.Resolve<IConfigurationHelper>();
 
-                    var dbContextOptions = new DbContextOptionsBuilder().UseSqlServer(
-                        configHelper.GetConnectionString("DcEarnings2425ConnectionString"),
-                        optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                    var dbContextOptions = new DbContextOptionsBuilder()
+                        .UseSqlServer(configHelper.GetConnectionString("DcEarnings2425ConnectionString"),
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: int.Parse(configHelper.GetSetting("SqlMaxRetryCount")),
+                                    maxRetryDelay: TimeSpan.FromSeconds(int.Parse(configHelper.GetSetting("SqlMaxRetryDelay"))),
+                                    errorNumbersToAdd: null);
+                            }).Options;
 
                     return new DcMetricsDataContext(dbContextOptions);
                 })
@@ -80,9 +110,16 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC.Module
             builder.Register((c, p) =>
                 {
                     var configHelper = c.Resolve<IConfigurationHelper>();
-                    var dbContextOptions = new DbContextOptionsBuilder().UseSqlServer(
-                        configHelper.GetConnectionString("PaymentsMetricsConnectionString"),
-                        optionsBuilder => optionsBuilder.CommandTimeout(270)).Options;
+                    var dbContextOptions = new DbContextOptionsBuilder()
+                        .UseSqlServer(configHelper.GetConnectionString("PaymentsMetricsConnectionString"),
+                            sqlOptions =>
+                            {
+                                sqlOptions.CommandTimeout(270);
+                                sqlOptions.EnableRetryOnFailure(
+                                    maxRetryCount: int.Parse(configHelper.GetSetting("SqlMaxRetryCount")),
+                                    maxRetryDelay: TimeSpan.FromSeconds(int.Parse(configHelper.GetSetting("SqlMaxRetryDelay"))),
+                                    errorNumbersToAdd: null);
+                            }).Options;
                     return new MetricsQueryDataContext(dbContextOptions);
                 })
                 .As<IMetricsQueryDataContext>()

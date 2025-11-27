@@ -42,5 +42,7 @@
     <Parameter Name="ArchiveFunctionUrl" Value="" />
     <Parameter Name="ArchiveTimeout" Value="18000" />
     <Parameter Name="ArchiveApiKey" Value="" />
+    <Parameter Name="SqlMaxRetryCount" Value="0" />
+    <Parameter Name="SqlMaxRetryDelay" Value="0" />
   </Section>
 </Settings>

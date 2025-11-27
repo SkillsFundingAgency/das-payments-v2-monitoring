@@ -34,5 +34,7 @@
     <Parameter Name="DasNServiceBusLicenseKey" Value=""/>
     <Parameter Name="MetricsGenerationDelay" Value="00:05:00"/>
     <Parameter Name="MetricsGenerationWaitTime" Value="00:04:30" />
+    <Parameter Name="SqlMaxRetryCount" Value="0" />
+    <Parameter Name="SqlMaxRetryDelay" Value="0" />
   </Section>
 </Settings>

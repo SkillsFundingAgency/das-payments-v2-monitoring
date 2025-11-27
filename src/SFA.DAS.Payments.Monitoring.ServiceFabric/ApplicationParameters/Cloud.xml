@@ -40,5 +40,7 @@
     <Parameter Name="ArchiveTimeout" Value="__ArchiveTimeout__" />
     <Parameter Name="ArchiveApiKey" Value="__ArchiveApiKey__" />
     <Parameter Name="MetricsGenerationWaitTime" Value="__MetricsGenerationWaitTime__" />
+    <Parameter Name="SqlMaxRetryCount" Value="__SqlMaxRetryCount__" />
+    <Parameter Name="SqlMaxRetryDelay" Value="__SqlMaxRetryDelay__" />
   </Parameters>
 </Application>

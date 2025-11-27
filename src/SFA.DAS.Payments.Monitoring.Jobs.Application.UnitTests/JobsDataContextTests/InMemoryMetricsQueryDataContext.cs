@@ -6,7 +6,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Application.UnitTests.JobsDataContext
 {
     class InMemoryMetricsQueryDataContext : JobsDataContext
     {
-        public InMemoryMetricsQueryDataContext() : base("")
+        public InMemoryMetricsQueryDataContext() : base(new DbContextOptionsBuilder().Options)
         {
         }
 
