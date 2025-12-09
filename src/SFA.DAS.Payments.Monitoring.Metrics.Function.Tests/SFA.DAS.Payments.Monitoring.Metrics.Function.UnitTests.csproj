@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentAssertions" Version="5.6.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+		<PackageReference Include="Moq" Version="4.10.0" />
+		<PackageReference Include="NUnit" Version="4.1.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Application\SFA.DAS.Payments.Monitoring.Metrics.Application.csproj" />
+	  <ProjectReference Include="..\SFA.DAS.Payments.Monitoring.Metrics.Function\SFA.DAS.Payments.Monitoring.Metrics.Function.csproj" />
+	</ItemGroup>
+
+</Project>
