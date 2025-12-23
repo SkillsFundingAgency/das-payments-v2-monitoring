@@ -15,7 +15,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
             builder.Property(x => x.AcademicYear).HasColumnName(@"AcademicYear");
             builder.Property(x => x.CollectionPeriod).HasColumnName(@"CollectionPeriod");
             builder.Property(x => x.JobId).HasColumnName(@"JobId");
-            builder.Property(x => x.Percentage).HasColumnName(@"Percentage");
+            builder.Property(x => x.Percentage).HasColumnName(@"Percentage").HasColumnType("decimal(15,5)");
             builder.Ignore(x => x.DataLockTypeCounts);
             builder.OwnsOne(x => x.PaymentMetrics, amounts =>
             {
@@ -23,8 +23,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
                 amounts.Property(x => x.ContractType2).HasColumnName(@"ContractType2");
                 amounts.Property(x => x.DifferenceContractType1).HasColumnName(@"DifferenceContractType1");
                 amounts.Property(x => x.DifferenceContractType2).HasColumnName(@"DifferenceContractType2");
-                amounts.Property(x => x.PercentageContractType1).HasColumnName(@"PercentageContractType1");
-                amounts.Property(x => x.PercentageContractType2).HasColumnName(@"PercentageContractType2");
+                amounts.Property(x => x.PercentageContractType1).HasColumnName(@"PercentageContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.PercentageContractType2).HasColumnName(@"PercentageContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.DifferenceTotal);
                 amounts.Ignore(x => x.Percentage);
                 amounts.Ignore(x => x.Total);
