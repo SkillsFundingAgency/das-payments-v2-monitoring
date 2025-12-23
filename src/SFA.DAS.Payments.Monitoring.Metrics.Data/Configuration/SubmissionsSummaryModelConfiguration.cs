@@ -68,6 +68,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
                 amounts.Ignore(x => x.Total);
             });
             builder.HasOne(x => x.DataLockMetricsTotals).WithOne(d => d.SubmissionsSummary).HasForeignKey<DataLockCountsTotalsModel>(d => d.SubmissionsSummaryId);
+
         }
     }
 }
