@@ -203,7 +203,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             byte collectionPeriod = 1;
             var successfulJob = new LatestSuccessfulJobModel
             {
-                JobId = 1234
+                DcJobId = 1234
             };
             moqer.Mock<ISubmissionJobsRepository>()
                 .Setup(repo => repo.GetLatestSuccessfulJobForProvider(ukprn, academicYear, collectionPeriod))
@@ -213,7 +213,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
 
             var result = await service.GetLatestSuccessfulJobIdForProvider(ukprn, academicYear, collectionPeriod);
 
-            result.Should().Be(successfulJob.JobId);
+            result.Should().Be(successfulJob.DcJobId);
         }
 
         [Test]
