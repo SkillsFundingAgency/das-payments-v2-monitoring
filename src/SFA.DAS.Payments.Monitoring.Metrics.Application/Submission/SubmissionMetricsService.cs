@@ -119,7 +119,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                     $"No successful jobs found for UKPRN {ukprn} Academic Year {academicYear} Collection Period {collectionPeriod}");
 
             }
-            return latestSuccessfulJob.JobId;
+            return latestSuccessfulJob.DcJobId;
         }
 
         private void SendMetricsTelemetry(SubmissionSummaryModel metrics, long reportGenerationDuration)
