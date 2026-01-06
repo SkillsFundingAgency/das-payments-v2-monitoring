@@ -22,12 +22,9 @@ This repository also contains an Azure Function application that is responsible 
 
 * An Azure DevBox configured for Payments V2 development
 
-Setup instructions: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/950927878/Development+Environment+-+Payments+V2+DAS+Space
+### Setup instructions: 
+https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/4948754681/DAS+Payments+-+Developer+Onboarding+2025
 
-### Config
-
-
-As detailed in: https://skillsfundingagency.atlassian.net/wiki/spaces/NDL/pages/644972941/Developer+Configuration+Settings
 
 Select the configuration for the Monitoring application
 
@@ -37,7 +34,7 @@ N/A
 
 ## Technologies
 
-* .NetCore 2.1/3.1/6
+* .NetCore 6
 * Azure SQL Server
 * Azure Functions
 * Azure Service Bus
@@ -45,4 +42,4 @@ N/A
 
 ## 🐛 Known Issues
 
-N/A 
+  N/A 
