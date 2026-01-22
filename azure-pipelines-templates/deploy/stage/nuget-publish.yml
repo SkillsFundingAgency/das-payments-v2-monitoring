@@ -10,8 +10,27 @@ stages:
     displayName: Clean artifacts directory
     workspace:
       clean: all
-  - deployment: NuGetPush
+
+  # Manual approval gate: the publish job will only run if someone explicitly approves.
+  # If rejected (or it times out), the stage fails and no NuGet push happens.
+  - job: AwaitPublishApproval
+    displayName: 'Manual approval: publish NuGet package'
     dependsOn: CleanArtifacts
+    pool: server
+    timeoutInMinutes: 1440
+    steps:
+    - task: ManualValidation@0
+      displayName: 'Approve or reject NuGet publish'
+      inputs:
+        instructions: |
+          Approve to publish the NuGet package(s) built by this run.
+
+          - Approve = proceeds with NuGet push
+          - Reject = stops the publish stage
+        onTimeout: 'reject'
+
+  - deployment: NuGetPush
+    dependsOn: AwaitPublishApproval
     environment: Nuget
     strategy:
       runOnce:
@@ -27,17 +46,5 @@ stages:
               allowPackageConflicts: true
               nuGetFeedType: external
               publishFeedCredentials: 'Paymentsv2-Nuget'
-
-          
-          - download: current
-            artifact: NuGetPackages-Messages
-          - task: NuGetCommand@2
-            displayName: NuGet push Monitoring Messages
-            inputs:
-              command: push
-              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages-Messages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-Messages/*.symbols.nupkg'
-              allowPackageConflicts: true
-              nuGetFeedType: external
-              publishFeedCredentials: 'SFA NuGet'
 
         
