@@ -1,17 +1,52 @@
-﻿# this template expects packages to be built with azure-pipelines-templates/build/step/nuget-build.yml
+﻿# nuget-publish.yml
+# This template expects packages to be built and published as a pipeline artifact named: NuGetPackages
+
 stages:
 - stage: NuGetPublish
-  condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], 'refs/heads/main')))
   displayName: Publish NuGet Package
+  condition: and(
+    succeeded(),
+    or(
+      eq(variables['Build.Reason'], 'Manual'),
+      eq(variables['Build.Reason'], 'PullRequest'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main')
+    )
+   )
+
   pool:
     name: SLD Build Pool
+
   jobs:
   - job: CleanArtifacts
     displayName: Clean artifacts directory
     workspace:
       clean: all
-  - deployment: NuGetPush
+
+  # Manual approval gate.
+  # If rejected, this job will be "Failed", but continueOnError keeps the stage/pipeline from failing.
+  - job: AwaitPublishApproval
+    displayName: 'Manual approval: publish NuGet package'
     dependsOn: CleanArtifacts
+    pool: server
+    timeoutInMinutes: 1440
+    continueOnError: true
+    steps:
+    - task: ManualValidation@0
+      displayName: 'Approve or reject NuGet publish'
+      inputs:
+        instructions: |
+          Approve to publish the NuGet package(s) produced by this run.
+
+          - Approve = proceeds with NuGet push
+          - Reject = skips NuGet push (pipeline continues so artifacts remain available)
+        onTimeout: 'reject'
+
+  # Only runs if the approval job succeeded (i.e., someone approved).
+  - deployment: NuGetPush
+    displayName: NuGet push
+    dependsOn: AwaitPublishApproval
+    condition: eq(dependencies.AwaitPublishApproval.result, 'Succeeded')
     environment: Nuget
     strategy:
       runOnce:
@@ -19,6 +54,7 @@ stages:
           steps:
           - download: current
             artifact: NuGetPackages
+
           - task: NuGetCommand@2
             displayName: NuGet push
             inputs:
@@ -27,17 +63,3 @@ stages:
               allowPackageConflicts: true
               nuGetFeedType: external
               publishFeedCredentials: 'Paymentsv2-Nuget'
-
-          
-          - download: current
-            artifact: NuGetPackages-Messages
-          - task: NuGetCommand@2
-            displayName: NuGet push Monitoring Messages
-            inputs:
-              command: push
-              packagesToPush: '$(Pipeline.Workspace)/NuGetPackages-Messages/*.nupkg;!$(Pipeline.Workspace)/NuGetPackages-Messages/*.symbols.nupkg'
-              allowPackageConflicts: true
-              nuGetFeedType: external
-              publishFeedCredentials: 'SFA NuGet'
-
-        
