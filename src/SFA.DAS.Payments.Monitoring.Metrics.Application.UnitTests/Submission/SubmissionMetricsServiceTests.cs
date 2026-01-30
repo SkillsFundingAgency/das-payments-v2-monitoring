@@ -85,6 +85,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             moqer.Mock<ISubmissionMetricsRepository>()
                 .Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultYearToDateAmounts);
+
+            moqer.Mock<ISubmissionMetricsFactory>()
+                .Setup(factory =>
+                    factory.Create())
+                .Returns(moqer.Mock<ISubmissionMetricsRepository>().Object);
         }
 
         [Test]
