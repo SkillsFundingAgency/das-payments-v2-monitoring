@@ -25,7 +25,6 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
         private readonly ISubmissionSummaryFactory submissionSummaryFactory;
         private readonly IDcMetricsDataContextFactory dcMetricsDataContextFactory;
         private readonly ISubmissionMetricsFactory submissionMetricsFactory;
-        private readonly ISubmissionMetricsRepository submissionRepository;
         private readonly ISubmissionJobsRepository submissionJobsRepository;
         private readonly ITelemetry telemetry;
         private readonly IConfigurationHelper configurationHelper;
@@ -36,7 +35,6 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
             this.submissionSummaryFactory = submissionSummaryFactory ?? throw new ArgumentNullException(nameof(submissionSummaryFactory));
             this.dcMetricsDataContextFactory = dcMetricsDataContextFactory ?? throw new ArgumentNullException(nameof(dcMetricsDataContextFactory));
             this.submissionMetricsFactory = submissionMetricsFactory ?? throw new ArgumentNullException(nameof(submissionMetricsFactory));
-            this.submissionRepository = submissionRepository ?? throw new ArgumentNullException(nameof(submissionRepository));
             this.telemetry = telemetry ?? throw new ArgumentNullException(nameof(telemetry));
             this.submissionJobsRepository = submissionJobsRepository ?? throw new ArgumentNullException(nameof(submissionJobsRepository));
             this.configurationHelper = configurationHelper ?? throw new ArgumentNullException(nameof(configurationHelper));
@@ -96,7 +94,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
 
                 var metrics = submissionSummary.GetMetrics();
 
-                await submissionRepository.SaveSubmissionMetrics(metrics, cancellationToken);
+                await submissionMetricsFactory.Create().SaveSubmissionMetrics(metrics, cancellationToken);
 
                 stopwatch.Stop();
 
