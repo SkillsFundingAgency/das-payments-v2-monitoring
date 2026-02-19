@@ -72,11 +72,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Infrastructure.Ioc
                 return new MetricsPersistenceDataContext(dbContextOptions);
             })
                 .As<IMetricsPersistenceDataContext>()
-                .InstancePerLifetimeScope();
+                .InstancePerDependency();
 
             builder.RegisterType<SubmissionMetricsRepository>()
                 .As<ISubmissionMetricsRepository>()
-                .InstancePerLifetimeScope();
+                .InstancePerDependency();
 
             builder.Register((c, p) =>
                 {
@@ -93,6 +93,10 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Infrastructure.Ioc
             builder
                 .RegisterType<SubmissionJobsRepository>()
                 .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<SubmissionMetricsFactory>()
+                .As<ISubmissionMetricsFactory>()
                 .InstancePerLifetimeScope();
         }
     }
