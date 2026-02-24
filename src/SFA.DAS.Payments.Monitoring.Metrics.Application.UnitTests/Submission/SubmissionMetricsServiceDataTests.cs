@@ -58,6 +58,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                     factory.Create(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>()))
                 .Returns((long ukprn, long jobId, short academicYear, byte collectionPeriod) => new SubmissionSummary(ukprn, jobId, collectionPeriod, academicYear));
 
+
             var jobsRepository = moqer.Mock<ISubmissionJobsRepository>();
 
             jobsRepository.Setup(x =>
@@ -96,6 +97,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             submissionMetricsRepository
                 .Setup(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
                 .Returns(async (long ukprn, long jobId, CancellationToken cancellationToken) => await realSubmissionMetricsRepository.GetRequiredPayments(ukprn, jobId, cancellationToken));
+
+            moqer.Mock<ISubmissionMetricsFactory>()
+                .Setup(factory =>
+                    factory.Create())
+                .Returns(submissionMetricsRepository.Object);
         }
 
         [Test]

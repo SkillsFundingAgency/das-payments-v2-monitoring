@@ -24,17 +24,17 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
         private readonly IPaymentLogger logger;
         private readonly ISubmissionSummaryFactory submissionSummaryFactory;
         private readonly IDcMetricsDataContextFactory dcMetricsDataContextFactory;
-        private readonly ISubmissionMetricsRepository submissionRepository;
+        private readonly ISubmissionMetricsFactory submissionMetricsFactory;
         private readonly ISubmissionJobsRepository submissionJobsRepository;
         private readonly ITelemetry telemetry;
         private readonly IConfigurationHelper configurationHelper;
 
-        public SubmissionMetricsService(IPaymentLogger logger, ISubmissionSummaryFactory submissionSummaryFactory, IDcMetricsDataContextFactory dcMetricsDataContextFactory, ISubmissionMetricsRepository submissionRepository, ITelemetry telemetry, ISubmissionJobsRepository submissionJobsRepository, IConfigurationHelper configurationHelper)
+        public SubmissionMetricsService(IPaymentLogger logger, ISubmissionSummaryFactory submissionSummaryFactory, IDcMetricsDataContextFactory dcMetricsDataContextFactory, ISubmissionMetricsFactory submissionMetricsFactory, ISubmissionMetricsRepository submissionRepository, ITelemetry telemetry, ISubmissionJobsRepository submissionJobsRepository, IConfigurationHelper configurationHelper)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.submissionSummaryFactory = submissionSummaryFactory ?? throw new ArgumentNullException(nameof(submissionSummaryFactory));
             this.dcMetricsDataContextFactory = dcMetricsDataContextFactory ?? throw new ArgumentNullException(nameof(dcMetricsDataContextFactory));
-            this.submissionRepository = submissionRepository ?? throw new ArgumentNullException(nameof(submissionRepository));
+            this.submissionMetricsFactory = submissionMetricsFactory ?? throw new ArgumentNullException(nameof(submissionMetricsFactory));
             this.telemetry = telemetry ?? throw new ArgumentNullException(nameof(telemetry));
             this.submissionJobsRepository = submissionJobsRepository ?? throw new ArgumentNullException(nameof(submissionJobsRepository));
             this.configurationHelper = configurationHelper ?? throw new ArgumentNullException(nameof(configurationHelper));
@@ -56,14 +56,14 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
                 var stopwatch = Stopwatch.StartNew();
                 var submissionSummary = submissionSummaryFactory.Create(ukprn, jobId, academicYear, collectionPeriod);
                 var dcEarningsTask = dcMetricsDataContextFactory.CreateContext(academicYear).GetEarnings(ukprn, academicYear, collectionPeriod, cancellationToken);
-                
-                var dasEarningsTask = submissionRepository.GetDasEarnings(ukprn, jobId, cancellationToken);
-                var dataLocksTask = submissionRepository.GetDataLockedEarnings(ukprn, jobId, cancellationToken);
-                var dataLocksTotalTask = submissionRepository.GetDataLockedEarningsTotal(ukprn, jobId, cancellationToken);
-                var dataLocksAlreadyPaid = submissionRepository.GetAlreadyPaidDataLockedEarnings(ukprn, jobId, cancellationToken);
-                var requiredPaymentsTask = submissionRepository.GetRequiredPayments(ukprn, jobId, cancellationToken);
-                var heldBackCompletionAmountsTask = submissionRepository.GetHeldBackCompletionPaymentsTotal(ukprn, jobId, cancellationToken);
-                var yearToDateAmountsTask = submissionRepository.GetYearToDatePaymentsTotal(ukprn, academicYear, collectionPeriod, cancellationToken);
+
+                var dasEarningsTask = submissionMetricsFactory.Create().GetDasEarnings(ukprn, jobId, cancellationToken);
+                var dataLocksTask = submissionMetricsFactory.Create().GetDataLockedEarnings(ukprn, jobId, cancellationToken);
+                var dataLocksTotalTask = submissionMetricsFactory.Create().GetDataLockedEarningsTotal(ukprn, jobId, cancellationToken);
+                var dataLocksAlreadyPaid = submissionMetricsFactory.Create().GetAlreadyPaidDataLockedEarnings(ukprn, jobId, cancellationToken);
+                var requiredPaymentsTask = submissionMetricsFactory.Create().GetRequiredPayments(ukprn, jobId, cancellationToken);
+                var heldBackCompletionAmountsTask = submissionMetricsFactory.Create().GetHeldBackCompletionPaymentsTotal(ukprn, jobId, cancellationToken);
+                var yearToDateAmountsTask = submissionMetricsFactory.Create().GetYearToDatePaymentsTotal(ukprn, academicYear, collectionPeriod, cancellationToken);
                 
                 var dataTask = Task.WhenAll(dcEarningsTask, dasEarningsTask, dataLocksTask, dataLocksTotalTask, dataLocksAlreadyPaid, requiredPaymentsTask, heldBackCompletionAmountsTask, yearToDateAmountsTask);
 
@@ -94,7 +94,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.Submission
 
                 var metrics = submissionSummary.GetMetrics();
 
-                await submissionRepository.SaveSubmissionMetrics(metrics, cancellationToken);
+                await submissionMetricsFactory.Create().SaveSubmissionMetrics(metrics, cancellationToken);
 
                 stopwatch.Stop();
 

@@ -85,6 +85,50 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
             moqer.Mock<ISubmissionMetricsRepository>()
                 .Setup(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(TestsHelper.DefaultYearToDateAmounts);
+
+            moqer.Mock<ISubmissionMetricsFactory>()
+                .Setup(factory =>
+                    factory.Create())
+                .Returns(moqer.Mock<ISubmissionMetricsRepository>().Object);
+        }
+
+        [Test]
+        public async Task Metrics_Factory_Creates_New_Instance_Amount()
+        {
+            var service = moqer.Create<SubmissionMetricsService>();
+            await service.BuildMetrics(1234, 123, 1920, 1, CancellationToken.None).ConfigureAwait(false);
+
+            moqer.Mock<ISubmissionMetricsFactory>()
+                .Verify(x => x.Create(), Times.Exactly(8));
+        }
+
+        [Test]
+        public async Task Metrics_Repository_Endpoints_Triggered()
+        {
+            var service = moqer.Create<SubmissionMetricsService>();
+            await service.BuildMetrics(1234, 123, 1920, 1, CancellationToken.None).ConfigureAwait(false);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetDasEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetDataLockedEarningsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetAlreadyPaidDataLockedEarnings(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetRequiredPayments(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetHeldBackCompletionPaymentsTotal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.GetYearToDatePaymentsTotal(It.IsAny<long>(), It.IsAny<short>(), It.IsAny<byte>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            moqer.Mock<ISubmissionMetricsRepository>()
+                .Verify(repo => repo.SaveSubmissionMetrics(It.IsAny<SubmissionSummaryModel>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
