@@ -15,59 +15,59 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data.Configuration
             builder.Property(x => x.AcademicYear).HasColumnName(@"AcademicYear");
             builder.Property(x => x.CollectionPeriod).HasColumnName(@"CollectionPeriod");
             builder.Property(x => x.JobId).HasColumnName(@"JobId");
-            builder.Property(x => x.Percentage).HasColumnName(@"Percentage");
+            builder.Property(x => x.Percentage).HasColumnName(@"Percentage").HasColumnType("decimal(15,5)");
             builder.Ignore(x => x.DataLockTypeCounts);
             builder.OwnsOne(x => x.PaymentMetrics, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"ContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"ContractType2");
-                amounts.Property(x => x.DifferenceContractType1).HasColumnName(@"DifferenceContractType1");
-                amounts.Property(x => x.DifferenceContractType2).HasColumnName(@"DifferenceContractType2");
-                amounts.Property(x => x.PercentageContractType1).HasColumnName(@"PercentageContractType1");
-                amounts.Property(x => x.PercentageContractType2).HasColumnName(@"PercentageContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"ContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"ContractType2").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.DifferenceContractType1).HasColumnName(@"DifferenceContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.DifferenceContractType2).HasColumnName(@"DifferenceContractType2").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.PercentageContractType1).HasColumnName(@"PercentageContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.PercentageContractType2).HasColumnName(@"PercentageContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.DifferenceTotal);
                 amounts.Ignore(x => x.Percentage);
                 amounts.Ignore(x => x.Total);
             });
             builder.OwnsOne(x => x.DcEarnings, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"EarningsDCContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"EarningsDCContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"EarningsDCContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"EarningsDCContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.Total);
             });
            
             builder.OwnsOne(x => x.Payments, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"PaymentsContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"PaymentsContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"PaymentsContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"PaymentsContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.Total);
             });
-            builder.Property(x => x.AdjustedDataLockedEarnings).HasColumnName(@"AdjustedDataLockedEarnings");
-            builder.Property(x => x.AdjustedDataLockedEarnings16To18).HasColumnName(@"AdjustedDataLockedEarnings16To18");
-            builder.Property(x => x.AdjustedDataLockedEarnings19Plus).HasColumnName(@"AdjustedDataLockedEarnings19Plus");
-            builder.Property(x => x.AlreadyPaidDataLockedEarnings).HasColumnName(@"AlreadyPaidDataLockedEarnings");
-            builder.Property(x => x.AlreadyPaidDataLockedEarnings16To18).HasColumnName(@"AlreadyPaidDataLockedEarnings16To18");
-            builder.Property(x => x.AlreadyPaidDataLockedEarnings19Plus).HasColumnName(@"AlreadyPaidDataLockedEarnings19Plus");
-            builder.Property(x => x.TotalDataLockedEarnings).HasColumnName(@"TotalDataLockedEarnings");
-            builder.Property(x => x.TotalDataLockedEarnings16To18).HasColumnName(@"TotalDataLockedEarnings16To18");
-            builder.Property(x => x.TotalDataLockedEarnings19Plus).HasColumnName(@"TotalDataLockedEarnings19Plus");
+            builder.Property(x => x.AdjustedDataLockedEarnings).HasColumnName(@"AdjustedDataLockedEarnings").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.AdjustedDataLockedEarnings16To18).HasColumnName(@"AdjustedDataLockedEarnings16To18").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.AdjustedDataLockedEarnings19Plus).HasColumnName(@"AdjustedDataLockedEarnings19Plus").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.AlreadyPaidDataLockedEarnings).HasColumnName(@"AlreadyPaidDataLockedEarnings").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.AlreadyPaidDataLockedEarnings16To18).HasColumnName(@"AlreadyPaidDataLockedEarnings16To18").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.AlreadyPaidDataLockedEarnings19Plus).HasColumnName(@"AlreadyPaidDataLockedEarnings19Plus").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.TotalDataLockedEarnings).HasColumnName(@"TotalDataLockedEarnings").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.TotalDataLockedEarnings16To18).HasColumnName(@"TotalDataLockedEarnings16To18").HasColumnType("decimal(15,5)");
+            builder.Property(x => x.TotalDataLockedEarnings19Plus).HasColumnName(@"TotalDataLockedEarnings19Plus").HasColumnType("decimal(15,5)");
             builder.OwnsOne(x => x.HeldBackCompletionPayments, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"HeldBackCompletionPaymentsContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"HeldBackCompletionPaymentsContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"HeldBackCompletionPaymentsContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"HeldBackCompletionPaymentsContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.Total);
             });
             builder.OwnsOne(x => x.YearToDatePayments, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"PaymentsYearToDateContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"PaymentsYearToDateContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"PaymentsYearToDateContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"PaymentsYearToDateContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.Total);
             });
             builder.Property(x => x.InLearning).HasColumnName(@"InLearning");
             builder.OwnsOne(x => x.NegativeEarnings, amounts =>
             {
-                amounts.Property(x => x.ContractType1).HasColumnName(@"NegativeEarningsContractType1");
-                amounts.Property(x => x.ContractType2).HasColumnName(@"NegativeEarningsContractType2");
+                amounts.Property(x => x.ContractType1).HasColumnName(@"NegativeEarningsContractType1").HasColumnType("decimal(15,5)");
+                amounts.Property(x => x.ContractType2).HasColumnName(@"NegativeEarningsContractType2").HasColumnType("decimal(15,5)");
                 amounts.Ignore(x => x.Total);
             });
         }
