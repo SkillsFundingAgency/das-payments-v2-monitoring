@@ -65,6 +65,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 		..\GitVersion.yml = ..\GitVersion.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests", "SFA.DAS.Payments.Monitoring.Metrics.Function.Tests\SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests.csproj", "{273784C1-C345-429E-ADE5-506DF4F3BB8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -245,6 +247,14 @@ Global
 		{C7D441B0-203C-433A-890B-1DF14576C203}.Release|x64.ActiveCfg = Release|x64
 		{C7D441B0-203C-433A-890B-1DF14576C203}.Release|x64.Build.0 = Release|x64
 		{C7D441B0-203C-433A-890B-1DF14576C203}.Release|x64.Deploy.0 = Release|x64
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Debug|x64.Build.0 = Debug|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Release|x64.ActiveCfg = Release|Any CPU
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -273,6 +283,7 @@ Global
 		{263CC69F-6A15-440A-9714-62EAF2B96B51} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
 		{187A6DD7-7655-476D-A007-A162BDBF8C42} = {40B19AB4-075D-4BC0-9C16-AA87C84D4640}
 		{466B1CB6-8104-4090-A117-B1AB89464796} = {3D4F5383-FE38-41FE-9A7D-C002800CEE11}
+		{273784C1-C345-429E-ADE5-506DF4F3BB8A} = {187A6DD7-7655-476D-A007-A162BDBF8C42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C30FFC58-B562-43C6-9B29-DDCB7800FC2F}

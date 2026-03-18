@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac.Extras.Moq;
+using AutoFixture;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.Payments.Application.Infrastructure.Telemetry;
+using SFA.DAS.Payments.Model.Core;
+using SFA.DAS.Payments.Model.Core.Entities;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
 using SFA.DAS.Payments.Monitoring.Metrics.Data;
 using SFA.DAS.Payments.Monitoring.Metrics.Domain.Submission;
@@ -233,6 +237,44 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
                     It.Is<string>(s => s == "Finished Generating Submission Metrics"),
                     It.IsAny<Dictionary<string, string>>(),
                     It.Is<Dictionary<string, double>>(dictionary => VerifySubmissionSummaryStats(dictionary))));
+        }
+
+        [Test]
+        public async Task Returns_Latest_Successful_JobId()
+        {
+            long ukprn = 10001234;
+            short academicYear = 2526;
+            byte collectionPeriod = 1;
+            var successfulJob = new LatestSuccessfulJobModel
+            {
+                DcJobId = 1234
+            };
+            moqer.Mock<ISubmissionJobsRepository>()
+                .Setup(repo => repo.GetLatestSuccessfulJobForProvider(ukprn, academicYear, collectionPeriod))
+                .ReturnsAsync(successfulJob);
+
+            var service = moqer.Create<SubmissionMetricsService>();
+
+            var result = await service.GetLatestSuccessfulJobIdForProvider(ukprn, academicYear, collectionPeriod);
+
+            result.Should().Be(successfulJob.DcJobId);
+        }
+
+        [Test]
+        public async Task Returns_Error_If_No_Successful_JobId_In_Collection_Period()
+        {
+            long ukprn = 10001234;
+            short academicYear = 2526;
+            byte collectionPeriod = 1;
+            LatestSuccessfulJobModel nullResult = null;
+            
+            moqer.Mock<ISubmissionJobsRepository>()
+                .Setup(repo => repo.GetLatestSuccessfulJobForProvider(ukprn, academicYear, collectionPeriod))
+                .ReturnsAsync(nullResult);
+
+            var service = moqer.Create<SubmissionMetricsService>();
+
+            Assert.ThrowsAsync<ArgumentException>(async () => { await service.GetLatestSuccessfulJobIdForProvider(ukprn, academicYear, collectionPeriod); });
         }
 
         private static bool VerifySubmissionSummaryStats(IDictionary<string, double> dictionary)
