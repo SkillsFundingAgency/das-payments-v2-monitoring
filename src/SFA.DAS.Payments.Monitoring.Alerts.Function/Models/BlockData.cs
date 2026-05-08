@@ -5,5 +5,6 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Models
     {
         public string Text { get; set; }
         public string Type { get; set; }
+        public string Style { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
 {
     public class AlertHelper : IAlertHelper
     {
-        public List<Block> BuildPayload(string alertEmoji,
+        public List<BlockData> BuildTeamsPayload(string alertEmoji,
                                               DateTime timestamp,
                                               string jobId,
                                               string academicYear,
@@ -18,37 +18,28 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
                                               string alertTitle,
                                               string appInsightsSearchResultsUiLink)
         {
-            var blocks = new List<Block>
+            var blocks = new List<BlockData>
             {
-                new Block
+                new BlockData
                 {
-                    Type = "header",
-                    Text = new BlockData
-                    {
-                        Type = "plain_text",
-                        Text = $"{alertEmoji} {alertTitle}."
-                    }
+                    Type = "TextBlock",
+                    Text = $"{alertEmoji} {alertTitle}.",
+                    Style = "heading"
                 },
-                new Block
+                new BlockData
                 {
-                    Type = "section",
-                    Text = new BlockData
-                    {
-                        Type = "mrkdwn",
-                        Text = $"<{appInsightsSearchResultsUiLink}|View in Azure App Insights>"
-                    },
-                    Fields = new List<BlockData>
-                    {
-                        new BlockData { Type = "mrkdwn", Text = "*Timestamp*" },
-                        new BlockData { Type = "mrkdwn", Text = "*Job*" },
-                        new BlockData { Type = "plain_text", Text = timestamp.ToString("f") },
-                        new BlockData { Type = "plain_text", Text = jobId },
-                        new BlockData { Type = "mrkdwn", Text = "*Academic Year*" },
-                        new BlockData { Type = "mrkdwn", Text = "*Collection Period*" },
-                        new BlockData { Type = "plain_text", Text = academicYear },
-                        new BlockData { Type = "plain_text", Text = collectionPeriod }
-                    }
-                }
+                    Type = "TextBlock",
+                    Text = $"<{appInsightsSearchResultsUiLink}|View in Azure App Insights>"
+                },
+new BlockData { Type = "TextBlock", Text = "*Timestamp*" },
+                        new BlockData { Type = "TextBlock", Text = "*Job*" },
+                        new BlockData { Type = "TextBlock", Text = timestamp.ToString("f") },
+                        new BlockData { Type = "TextBlock", Text = jobId },
+                        new BlockData { Type = "TextBlock", Text = "*Academic Year*" },
+                        new BlockData { Type = "TextBlock", Text = "*Collection Period*" },
+                        new BlockData { Type = "TextBlock", Text = academicYear },
+                        new BlockData { Type = "TextBlock", Text = collectionPeriod }
+                
             };
 
             if (!string.IsNullOrWhiteSpace(yearToDatePayments) 
@@ -56,37 +47,32 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
                 || !string.IsNullOrWhiteSpace(numberOfLearners)
                 || !string.IsNullOrWhiteSpace(accountedForPayments))
             {
-                var optionalBlock = AddOptionalBlockFields(collectionPeriodPayments, yearToDatePayments, numberOfLearners, accountedForPayments);
+                var optionalBlocks = AddOptionalBlockFields(collectionPeriodPayments, yearToDatePayments, numberOfLearners, accountedForPayments);
 
-                blocks.Add(optionalBlock);
+                blocks.AddRange(optionalBlocks);
             }
 
 
             return blocks;
         }
 
-        private static Block AddOptionalBlockFields(string collectionPeriodPayments, string yearToDatePayments, string numberOfLearners, string accountedForPayments)
+        private static List<BlockData> AddOptionalBlockFields(string collectionPeriodPayments, string yearToDatePayments, string numberOfLearners, string accountedForPayments)
         {
-            var optionalBlock = new Block
+            var optionalBlock = new List<Block>
             {
-                Type = "section",
-                Text = new BlockData
-                {
-                    Type = "mrkdwn",
+                Type = "TextBlock",
+        
                     Text = " "
-                },
-                Fields = new List<BlockData>()
+                
+                
             };
 
             if (!string.IsNullOrWhiteSpace(yearToDatePayments))
             {
-                optionalBlock.Fields.Add(new BlockData { Type = "mrkdwn", Text = "*Previous Payments Year To Date*" });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = "*Previous Payments Year To Date*" });
             }
 
-            if (!string.IsNullOrWhiteSpace(collectionPeriodPayments))
-            {
-                optionalBlock.Fields.Add(new BlockData { Type = "mrkdwn", Text = "*Collection Period Payments*" });
-            }
+
 
             if (!string.IsNullOrWhiteSpace(yearToDatePayments))
             {
@@ -100,7 +86,12 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
                 {
                     yearTodatePaymentsText = RemoveInvalidCharacters(yearToDatePayments);
                 }
-                optionalBlock.Fields.Add(new BlockData { Type = "plain_text", Text = $"£{yearTodatePaymentsText}" });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = $"£{yearTodatePaymentsText}" });
+            }
+            
+            if (!string.IsNullOrWhiteSpace(collectionPeriodPayments))
+            {
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = "*Collection Period Payments*" });
             }
 
             if (!string.IsNullOrWhiteSpace(collectionPeriodPayments))
@@ -115,22 +106,22 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
                 {
                     collectionPeriodPaymentsText = RemoveInvalidCharacters(collectionPeriodPayments);
                 }
-                optionalBlock.Fields.Add(new BlockData { Type = "plain_text", Text = $"£{collectionPeriodPaymentsText}" });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = $"£{collectionPeriodPaymentsText}" });
             }
 
             if (!string.IsNullOrEmpty(numberOfLearners))
             {
-                optionalBlock.Fields.Add(new BlockData { Type = "mrkdwn", Text = "*In Learning*" });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = "*In Learning*" });
+            }
+
+            if (!string.IsNullOrEmpty(numberOfLearners))
+            {
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = RemoveInvalidCharacters(numberOfLearners) });
             }
 
             if (!string.IsNullOrEmpty(accountedForPayments))
             {
-                optionalBlock.Fields.Add(new BlockData { Type = "mrkdwn", Text = "*Accounted For Payments*" });
-            }
-            
-            if (!string.IsNullOrEmpty(numberOfLearners))
-            {
-                optionalBlock.Fields.Add(new BlockData { Type = "plain_text", Text = RemoveInvalidCharacters(numberOfLearners) });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = "*Accounted For Payments*" });
             }
 
             if (!string.IsNullOrWhiteSpace(accountedForPayments))
@@ -145,7 +136,7 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Helpers
                 {
                     accountedForPaymentsText = RemoveInvalidCharacters(accountedForPayments);
                 }
-                optionalBlock.Fields.Add(new BlockData { Type = "plain_text", Text = $"£{accountedForPaymentsText}" });
+                optionalBlock.Fields.Add(new BlockData { Type = "TextBlock", Text = $"£{accountedForPaymentsText}" });
             }
 
             return optionalBlock;
