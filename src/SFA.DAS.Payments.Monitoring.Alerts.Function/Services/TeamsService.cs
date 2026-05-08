@@ -14,18 +14,18 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Services
     public class TeamsService : ITeamsService
     {
         private readonly IAppInsightsClient _appInsightsClient;
-        private readonly ISlackAlertHelper _slackAlertHelper;
+        private readonly IAlertHelper _alertHelper;
         private readonly ITeamsClient _teamsClient;
         private readonly IDynamicJsonDeserializer _deserializer;
         private ILogger _logger;
 
         public TeamsService(IDynamicJsonDeserializer deserializer,
-                            ISlackAlertHelper slackAlertHelper,
+                            IAlertHelper alertHelper,
                             ITeamsClient teamsClient,
                             IAppInsightsClient appInsightsClient)
         {
             _deserializer = deserializer;
-            alertHelper = alertHelper;
+            _alertHelper = alertHelper;
             _appInsightsClient = appInsightsClient;
             _teamsClient = teamsClient;
         }
@@ -53,13 +53,13 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Services
                     DateTime timestamp = DateTime.Parse(row[0]);
                     Dictionary<string,string> alertVariables = _alertHelper.ExtractAlertVariables(customMeasurements, customDimensions, timestamp);
                     string alertDescription = alert.data.essentials.description;
-                    await PostTeamsAlert(alertVariables, slackChannelUri, alertDescription, appInsightsSearchResultsUiLink, timestamp);
+                    await PostTeamsAlert(alertVariables, teamsWebhookUrl, alertDescription, appInsightsSearchResultsUiLink, timestamp);
                 }
             }
         }
 
         private async Task PostTeamsAlert(Dictionary<string, string> alertVariables,
-                                          string ChannelUri,
+                                          string chatUrl,
                                           string alertDescription,
                                           string appInsightsSearchResultsUiLink,
                                           DateTime timestamp)
@@ -68,7 +68,7 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Services
             
             var Payload = new Payload
             {
-                Blocks = _slackAlertHelper.BuildSlackPayload(alertEmoji,
+                Blocks = _alertHelper.BuildSlackPayload(alertEmoji,
                                        timestamp,
                                        alertVariables["JobId"],
                                        alertVariables["AcademicYear"],
@@ -88,9 +88,9 @@ namespace SFA.DAS.Payments.Monitoring.Alerts.Function.Services
             };
             var jsonData = JsonSerializer.Serialize(slackPayload, serializeOptions);
 
-            _logger.LogInformation($"JSON payload sending to Slack API: {jsonData} ");
+            _logger.LogInformation($"JSON payload sending to Teams Group Chat: {jsonData} ");
 
-            await _slackClient.PostAsJsonAsync(slackChannelUri, jsonData);
+            await _teamsClient.PostAsJsonAsync(chatUrl, jsonData);
         }
     }
 }
