@@ -3,7 +3,7 @@ parameters:
 jobs:
 - job: CodeBuild
   pool:
-    name: SLD Build pool
+    name: SLD Build pool - CD
     #demands: LATEST_DOTNET_VERSION
   variables:
   - group: BUILD Management Resources
