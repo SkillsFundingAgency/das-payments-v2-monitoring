@@ -4,7 +4,6 @@ jobs:
 - job: CodeBuild
   pool:
     name: SLD Build pool - CD
-    #demands: LATEST_DOTNET_VERSION
   variables:
   - group: BUILD Management Resources
   - name: SolutionBaseName
@@ -31,7 +30,7 @@ jobs:
       feedsToUse: 'select'
       vstsFeed: 'dct-pkg'
       includeNuGetOrg: true
-  
+
   - task: MSBuild@1
     displayName: 'Build solution'
     inputs:
@@ -56,7 +55,7 @@ jobs:
     inputs:
       projects: src/SFA.DAS.Payments.Monitoring.Metrics.Function/SFA.DAS.Payments.Monitoring.Metrics.Function.csproj
       arguments: '--configuration $(BuildConfiguration)'
-  
+
   - task: DotNetCoreCLI@2
     displayName: 'dotnet publish'
     inputs:
@@ -65,16 +64,14 @@ jobs:
       projects: src/SFA.DAS.Payments.Monitoring.Metrics.Function/SFA.DAS.Payments.Monitoring.Metrics.Function.csproj
       arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
       modifyOutputPath: false
-      # Must stay false: the Flex Consumption deploy needs host.json at the root of the
-      # zip, and the task default (true) would nest the publish output inside its own zip.
       zipAfterPublish: false
-  
+
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Pipeline Artifact'
     inputs:
       targetPath: '$(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
       artifact: MonitoringMetricsFunctionApp
-      
+
   - task: DotNetCoreCLI@2
     displayName: 'dotnet test UnitTest Projects'
     inputs:
@@ -112,14 +109,14 @@ jobs:
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       Contents: |
-        pipeline-templates/scripts/**    
+        pipeline-templates/scripts/**
       TargetFolder: '$(build.artifactstagingdirectory)/publish'
       OverWrite: true
       CleanTargetFolder: true
-      flattenFolders: true  
+      flattenFolders: true
       continueOnError: true
 
-  - task: CopyFiles@2 
+  - task: CopyFiles@2
     displayName: 'Copy Nuget Files to: Artifact Nuget Directory'
     inputs:
      Contents: |
@@ -162,7 +159,7 @@ jobs:
   - template: /azure-pipelines-templates/build/step/nuget-pack.yml
     parameters:
       DotNetStandardPackagesToPack: |
-        
+
         src/SFA.DAS.Payments.Monitoring.Jobs.Client/SFA.DAS.Payments.Monitoring.Jobs.Client.csproj;
         src/SFA.DAS.Payments.Monitoring.Jobs.Data/SFA.DAS.Payments.Monitoring.Jobs.Data.csproj;
         src/SFA.DAS.Payments.Monitoring.Jobs.Model/SFA.DAS.Payments.Monitoring.Jobs.Model.csproj;
@@ -180,4 +177,3 @@ jobs:
     parameters:
       DotNetStandardPackagesToPack: |
         src/SFA.DAS.Payments.Monitoring.Jobs.Messages/SFA.DAS.Payments.Monitoring.Jobs.Messages.csproj;
-
