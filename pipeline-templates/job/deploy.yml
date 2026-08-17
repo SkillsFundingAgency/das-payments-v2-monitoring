@@ -66,6 +66,20 @@ jobs:
               applicationInsightsInstrumentationKey: $(ApplicationInsightsInstrumentationKey)
               applicationInsightsConnectionString: $(ApplicationInsightsConnectionString)
 
+        - task: PowerShell@2
+          displayName: 'Verify ${{ parameters.ArtifactName }} has host.json at its root'
+          inputs:
+            targetType: inline
+            pwsh: true
+            script: |
+              $ErrorActionPreference = 'Stop'
+              $root = '$(Pipeline.Workspace)/${{ parameters.ArtifactName }}'
+
+              if (-not (Test-Path (Join-Path $root 'host.json'))) {
+                Get-ChildItem $root | Select-Object -ExpandProperty Name | Write-Host
+                throw "host.json not found at the root of $root. The Flex Consumption deploy will be rejected by Kudu. Check that the publish task sets zipAfterPublish: false."
+              }
+
         - task: ArchiveFiles@2
           displayName: 'Package ${{ parameters.ArtifactName }} for Flex Consumption deploy'
           inputs:
