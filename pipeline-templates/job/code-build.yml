@@ -65,6 +65,9 @@ jobs:
       projects: src/SFA.DAS.Payments.Monitoring.Metrics.Function/SFA.DAS.Payments.Monitoring.Metrics.Function.csproj
       arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)\Monitoring-Metrics-FunctionApp'
       modifyOutputPath: false
+      # Must stay false: the Flex Consumption deploy needs host.json at the root of the
+      # zip, and the task default (true) would nest the publish output inside its own zip.
+      zipAfterPublish: false
   
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Pipeline Artifact'
