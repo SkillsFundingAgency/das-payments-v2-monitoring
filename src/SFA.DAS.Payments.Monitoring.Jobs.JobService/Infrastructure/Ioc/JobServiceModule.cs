@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SFA.DAS.Payments.Application.Infrastructure.Logging;
 using SFA.DAS.Payments.Core.Configuration;
 using SFA.DAS.Payments.Monitoring.Jobs.Application;
 using SFA.DAS.Payments.Monitoring.Jobs.Application.JobProcessing.PeriodEnd;
@@ -25,8 +26,9 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.JobService.Infrastructure.Ioc
             builder.Register((c, p) =>
                 {
                     var configHelper = c.Resolve<IConfigurationHelper>();
-                    return new PeriodEndRequestReportsClient(configHelper.GetSetting("MetricsFunctionApiKey"),
-                        configHelper.GetSetting("MetricsFunctionBaseUrl"));
+                    var logger = c.Resolve<IPaymentLogger>();
+                    return new PeriodEndRequestReportsClient(
+                        configHelper.GetSetting("MetricsFunctionApiKey"), configHelper.GetSetting("MetricsFunctionBaseUrl"), logger);
                 })
                 .As<IPeriodEndRequestReportsClient>()
                 .InstancePerLifetimeScope();
