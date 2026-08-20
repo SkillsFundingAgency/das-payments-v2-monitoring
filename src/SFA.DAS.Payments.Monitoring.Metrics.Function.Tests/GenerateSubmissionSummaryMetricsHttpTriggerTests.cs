@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
@@ -14,6 +16,15 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
     [TestFixture]
     public class GenerateSubmissionSummaryMetricsHttpTriggerTests
     {
+        private static FunctionContext BuildContext(ISubmissionMetricsService service)
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton(service);
+            var context = new Mock<FunctionContext>();
+            context.Setup(x => x.InstanceServices).Returns(services.BuildServiceProvider());
+            return context.Object;
+        }
+
         [TestCase("")]
         [TestCase("A")]
         [TestCase("1a")]
@@ -25,7 +36,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
             var service = new Mock<ISubmissionMetricsService>();
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<BadRequestResult>();
@@ -43,7 +54,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
             var service = new Mock<ISubmissionMetricsService>();
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<BadRequestResult>();
@@ -64,7 +75,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
             var service = new Mock<ISubmissionMetricsService>();
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<BadRequestResult>();
@@ -86,7 +97,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
                 .Throws(new ArgumentException("Job not found"));
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<BadRequestResult>();
@@ -111,7 +122,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
                 It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<OkResult>();
@@ -145,7 +156,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Function.UnitTests
             }
 
             // Act
-            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, service.Object);
+            var result = await GenerateSubmissionSummaryMetricsHttpTrigger.Run(request.Object, BuildContext(service.Object));
 
             // Assert
             result.Should().BeAssignableTo<OkResult>();

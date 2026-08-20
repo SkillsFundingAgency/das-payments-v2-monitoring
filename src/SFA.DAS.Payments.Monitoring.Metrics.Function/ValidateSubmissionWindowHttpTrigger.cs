@@ -1,24 +1,23 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AzureFunctions.Autofac;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
-using SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Function
 {
-    [DependencyInjectionConfig(typeof(DependencyRegister))]
     public static class ValidateSubmissionWindowHttpTrigger
     {
-        [FunctionName("ValidateSubmissionWindow")]
+        [Function("ValidateSubmissionWindow")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [Inject] ISubmissionWindowValidationService submissionWindowValidationService)
+            FunctionContext context)
         {
+            var submissionWindowValidationService = context.InstanceServices.GetRequiredService<ISubmissionWindowValidationService>();
+
             long.TryParse(req.Query["jobId"], out var jobId);
             short.TryParse(req.Query["academicYear"], out var academicYear);
             byte.TryParse(req.Query["collectionPeriod"], out var collectionPeriod);
