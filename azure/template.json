@@ -17,6 +17,24 @@
         "description": "Name of the existing storage account used for the Flex Consumption deployment container"
       }
     },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "[concat('DCOL-', parameters('environmentName'), '-VNET-WEU')]",
+      "metadata": {
+        "description": "VNet holding the function app integration subnet. Defaults to the DCOL-<ENV>-VNET-WEU naming pattern; override for environments that don't follow it."
+      }
+    },
+    "vnetResourceGroupName": {
+      "type": "string",
+      "defaultValue": "[parameters('vnetName')]",
+      "metadata": {
+        "description": "Resource group holding the VNet. Defaults to the VNet name, which is the pattern used by every environment so far."
+      }
+    },
+    "functionAppSubnetName": {
+      "type": "string",
+      "defaultValue": "DCOL-FunctionApp-Integration-Subnet"
+    },
     "deploymentContainerName": {
       "type": "string",
       "defaultValue": "app-package"
@@ -88,8 +106,7 @@
   "variables": {
     "functionAppApiVersion": "2023-12-01",
     "deploymentStorageContainerUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/', parameters('deploymentContainerName'))]",
-    "vnetName": "[concat('DCOL-', parameters('environmentName'), '-VNET-WEU')]",
-    "functionAppSubnetId": "[resourceId(variables('vnetName'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'DCOL-FunctionApp-Integration-Subnet')]",
+    "functionAppSubnetId": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('functionAppSubnetName'))]",
     "appSettings": [
       {
         "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
