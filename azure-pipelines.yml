@@ -14,7 +14,7 @@ variables:
 - name: ArtifactName
   value: 'MonitoringMetricsFunctionApp'
 - group: Release Management Resources
-- group: RELEASE das-payments-v2-monitoringfunction
+- group: RELEASE das-payments-v2-metricsfunction
 
 resources:
   repositories:
