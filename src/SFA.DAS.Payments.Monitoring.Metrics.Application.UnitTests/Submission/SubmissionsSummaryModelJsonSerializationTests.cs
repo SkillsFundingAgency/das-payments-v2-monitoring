@@ -19,5 +19,19 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.Submission
 
             act.Should().NotThrow<JsonException>();
         }
+
+        [Test]
+        public void Serialize_ExcludesSubmissionsSummaryFromDataLockMetricsTotals()
+        {
+            var summary = new SubmissionsSummaryModel();
+            summary.DataLockMetricsTotals = new DataLockCountsTotalsModel { SubmissionsSummary = summary };
+
+            var json = JsonSerializer.Serialize(summary);
+            using var document = JsonDocument.Parse(json);
+
+            var dataLockMetricsTotals = document.RootElement.GetProperty("DataLockMetricsTotals");
+
+            dataLockMetricsTotals.TryGetProperty("SubmissionsSummary", out _).Should().BeFalse();
+        }
     }
 }
