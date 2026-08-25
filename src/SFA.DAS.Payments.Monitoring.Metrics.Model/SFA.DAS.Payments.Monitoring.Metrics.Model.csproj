@@ -10,6 +10,10 @@
     <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.2.2" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net6'">
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions">
       <Version>6.0.32</Version>
