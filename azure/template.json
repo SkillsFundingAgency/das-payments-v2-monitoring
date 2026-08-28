@@ -35,48 +35,6 @@
       "type": "string",
       "defaultValue": "DCOL-FunctionApp-Integration-Subnet"
     },
-    "privateEndpointSubnetName": {
-      "type": "string",
-      "defaultValue": "DCOL-PrivateEndpoint-Subnet",
-      "metadata": {
-        "description": "Subnet that hosts the SQL private endpoint. Must NOT be the function app integration subnet: that one is delegated to the Functions platform, and Azure does not permit private endpoints in a delegated subnet. Must also have privateEndpointNetworkPolicies disabled."
-      }
-    },
-    "privateEndpointName": {
-      "type": "string",
-      "defaultValue": "[concat(parameters('functionAppName'), '-ne-sql-pe')]",
-      "metadata": {
-        "description": "Name of the SQL private endpoint. Only used in MO and PD."
-      }
-    },
-    "sqlServerResourceId": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Full resource id of the target SQL server, e.g. /subscriptions/<sub>/resourceGroups/<rg>/providers/Microsoft.Sql/servers/<server>. The server may live in another region or subscription. Required in MO and PD."
-      }
-    },
-    "privateDnsZoneId": {
-      "type": "string",
-      "defaultValue": "",
-      "metadata": {
-        "description": "Full resource id of the privatelink.database.windows.net private DNS zone. The zone must already be linked to the function app's VNet. Leave empty to skip the DNS zone group and register DNS by hand."
-      }
-    },
-    "privateEndpointManualApproval": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Set true when the deploying service principal cannot auto-approve the connection on the target SQL server, e.g. when the server is in another subscription. The connection is then created in Pending and someone must approve it on the SQL server."
-      }
-    },
-    "templateBaseUri": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/",
-      "metadata": {
-        "description": "Base URI for shared das-platform-building-blocks templates. ARM fetches linked templates itself, so this must be publicly reachable."
-      }
-    },
     "deploymentContainerName": {
       "type": "string",
       "defaultValue": "app-package"
@@ -149,8 +107,6 @@
     "functionAppApiVersion": "2023-12-01",
     "deploymentStorageContainerUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/', parameters('deploymentContainerName'))]",
     "functionAppSubnetId": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('functionAppSubnetName'))]",
-    "privateEndpointSubnetId": "[resourceId(parameters('vnetResourceGroupName'), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('privateEndpointSubnetName'))]",
-    "deployPrivateEndpoint": "[or(equals(toUpper(parameters('environmentName')), 'MO'), equals(toUpper(parameters('environmentName')), 'PD'))]",
     "appSettings": [
       {
         "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -263,41 +219,6 @@
           "runtime": {
             "name": "dotnet-isolated",
             "version": "8.0"
-          }
-        }
-      }
-    },
-    {
-      "name": "[concat(parameters('privateEndpointName'), '-deployment')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2021-04-01",
-      "condition": "[variables('deployPrivateEndpoint')]",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('templateBaseUri'), 'templates/private-endpoint.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "privateEndpointName": {
-            "value": "[parameters('privateEndpointName')]"
-          },
-          "subnetId": {
-            "value": "[variables('privateEndpointSubnetId')]"
-          },
-          "privateLinkServiceId": {
-            "value": "[parameters('sqlServerResourceId')]"
-          },
-          "privateLinkGroupIds": {
-            "value": [
-              "sqlServer"
-            ]
-          },
-          "privateDnsZoneId": {
-            "value": "[parameters('privateDnsZoneId')]"
-          },
-          "manualApproval": {
-            "value": "[parameters('privateEndpointManualApproval')]"
           }
         }
       }
