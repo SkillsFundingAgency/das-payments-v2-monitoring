@@ -184,6 +184,11 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
                 .Where(x => x.TransactionTypeAmounts.ContractType == ContractType.Act2)
                 .ToList();
 
+            var accountedForPayments = overallMetrics.PaymentMetrics.Total 
+                                       + overallMetrics.YearToDatePayments.Total
+                                       + overallMetrics.TotalDataLockedEarnings
+                                       + overallMetrics.HeldBackCompletionPayments.Total;
+
             var stats = new Dictionary<string, double>
             {
                 { "Percentage",    (double) providerMetrics.PaymentMetrics.Percentage },
@@ -289,7 +294,8 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
                 {"ContractType2TransactionType15", (double) act2TransactionTypes.Sum(x => x.TransactionTypeAmounts.TransactionType15)},
                 {"ContractType2TransactionType16", (double) act2TransactionTypes.Sum(x => x.TransactionTypeAmounts.TransactionType16)},
 
-                { "InLearning", (double)providerMetrics.InLearning.GetValueOrDefault() }
+                { "InLearning", (double)providerMetrics.InLearning.GetValueOrDefault() },
+                { "AccountedForPayments", (double)accountedForPayments }
             };
 
             telemetry.TrackEvent($"Finished Generating Period End Metrics for Provider: {providerMetrics.Ukprn}", properties, stats);
