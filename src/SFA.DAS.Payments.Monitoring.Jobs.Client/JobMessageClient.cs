@@ -100,6 +100,12 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                     return;
                 }
 
+                if (jobId == 0)
+                {
+                    logger.LogVerbose($"Ignoring failed message {messageId} for job id 0 (DAS Funding platform).");
+                    return;
+                }
+
                 var itemProcessedEvent = new RecordJobMessageProcessingStatus
                 {
                     JobId = jobId,
