@@ -13,7 +13,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging
         {
             await next().ConfigureAwait(false);
 
-            if (context.Message.Instance is IMonitoredMessage &&
+            if (context.Message.Instance is IMonitoredMessage paymentMessage && paymentMessage.JobId != 0 &&
                 context.Extensions.TryGet(JobStatusBehaviourConstants.GeneratedMessagesKey, out List<GeneratedMessage> generatedMessages))
             {
                 generatedMessages.Add(new GeneratedMessage

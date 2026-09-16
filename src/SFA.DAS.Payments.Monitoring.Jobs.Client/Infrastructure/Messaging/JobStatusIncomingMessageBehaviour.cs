@@ -25,7 +25,7 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.Infrastructure.Messaging
 
             await next().ConfigureAwait(false);
 
-            if(context.Message.Instance is IMonitoredMessage paymentMessage)
+            if(context.Message.Instance is IMonitoredMessage paymentMessage && paymentMessage.JobId != 0)
             {
                 var jobStatusClient = factory.Create();
                 await jobStatusClient.ProcessedJobMessage(paymentMessage.JobId, context.GetMessageId(), context.GetMessageName(), generatedMessages);

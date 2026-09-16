@@ -32,6 +32,12 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
 
         public async Task ProcessedJobMessage(long jobId, Guid messageId, string messageName, List<GeneratedMessage> generatedMessages)
         {
+            if (jobId == 0)
+            {
+                logger.LogVerbose($"Ignoring processed message {messageId} for job id 0 (DAS Funding platform).");
+                return;
+            }
+
             try
             {
                 logger.LogVerbose(
@@ -97,6 +103,12 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client
                 if (!long.TryParse(job, out long jobId))
                 {
                     logger.LogVerbose($"No job id found on the message {messageId}.");
+                    return;
+                }
+
+                if (jobId == 0)
+                {
+                    logger.LogVerbose($"Ignoring failed message {messageId} for job id 0 (DAS Funding platform).");
                     return;
                 }
 
