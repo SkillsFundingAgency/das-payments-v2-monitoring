@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +55,26 @@ namespace SFA.DAS.Payments.Monitoring.Jobs.Client.UnitTests
 
             //Assert
             messageSessionMock.Verify(x => x.Send(It.IsAny<object>(), It.IsAny<SendOptions>(), CancellationToken.None), Times.Once());
+        }
+
+        [Test]
+        public async Task ProcessedJobMessage_WhenJobIdIsZero_DoesNotSendMessage()
+        {
+            //Act
+            await sut.ProcessedJobMessage(0, Guid.NewGuid(), "SomeMessage", new List<GeneratedMessage>());
+
+            //Assert
+            messageSessionMock.Verify(x => x.Send(It.IsAny<object>(), It.IsAny<SendOptions>(), CancellationToken.None), Times.Never());
+        }
+
+        [Test]
+        public async Task ProcessedJobMessage_WhenJobIdIsNonZero_SendsMessage()
+        {
+            //Act
+            await sut.ProcessedJobMessage(123, Guid.NewGuid(), "SomeMessage", new List<GeneratedMessage>());
+
+            //Assert
+            messageSessionMock.Verify(x => x.Send(It.Is<RecordJobMessageProcessingStatus>(m => m.JobId == 123), It.IsAny<SendOptions>(), CancellationToken.None), Times.Once());
         }
 
         private static byte[] BuildFailedMessageBody(Guid eventId, long jobId)
