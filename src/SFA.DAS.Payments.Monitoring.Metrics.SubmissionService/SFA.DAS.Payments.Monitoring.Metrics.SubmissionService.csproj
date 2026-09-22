@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-	<TargetFramework>net6.0</TargetFramework>
-    <IsServiceFabricServiceProject>True</IsServiceFabricServiceProject>
-    <ServerGarbageCollection>True</ServerGarbageCollection>
-    <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
-    <TargetLatestRuntimePatch>False</TargetLatestRuntimePatch>
+      <OutputType>Exe</OutputType>
+	  <TargetFramework>net8.0</TargetFramework>
+      <IsServiceFabricServiceProject>True</IsServiceFabricServiceProject>
+      <ServerGarbageCollection>True</ServerGarbageCollection>
+      <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+      <TargetLatestRuntimePatch>False</TargetLatestRuntimePatch>
+	  <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +18,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Data.Interfaces" Version="7.0.1010" />
     <PackageReference Include="Microsoft.ServiceFabric.Diagnostics.Internal" Version="7.0.1010" />
 
-    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.2.2" />
-    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.5" />
+    <PackageReference Include="SFA.DAS.Payments.Application" Version="2.5.1" />
+    <PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.9" />
   </ItemGroup>
 
   <ItemGroup>
