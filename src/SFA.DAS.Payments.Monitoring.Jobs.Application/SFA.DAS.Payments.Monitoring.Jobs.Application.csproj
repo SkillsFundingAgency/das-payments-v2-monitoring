@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
+	  <SelfContained>true</SelfContained>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,9 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
     <PackageReference Include="NServiceBus" Version="8.1.1" />
-	<PackageReference Include="SFA.DAS.Payments.Application" Version="2.2.2" />
-    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.2.2" />
-    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.2.2" />
+	<PackageReference Include="SFA.DAS.Payments.Application" Version="2.5.1" />
+    <PackageReference Include="SFA.DAS.Payments.Core" Version="2.5.1" />
+    <PackageReference Include="SFA.DAS.Payments.Model.Core" Version="2.5.1" />
     <PackageReference Include="SFA.DAS.Payments.DataLocks.Messages" Version="0.2.4" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages" Version="2.0.1" />
     <PackageReference Include="SFA.DAS.Payments.EarningEvents.Messages.Internal" Version="2.0.1" />
@@ -19,7 +20,7 @@
 
 
 	<ItemGroup>
-		<PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.3-prerelease-5" />
+		<PackageReference Include="SFA.DAS.Payments.ServiceFabric.Core" Version="2.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>

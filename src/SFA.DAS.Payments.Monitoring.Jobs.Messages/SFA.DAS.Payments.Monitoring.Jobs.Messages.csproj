@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net6.0</TargetFrameworks>
+		<TargetFrameworks>net472;net6.0;net8.0</TargetFrameworks>
 		<FileVersion></FileVersion>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 
 
