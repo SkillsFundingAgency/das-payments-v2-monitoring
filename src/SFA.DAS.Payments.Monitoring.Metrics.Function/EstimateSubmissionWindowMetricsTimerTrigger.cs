@@ -1,19 +1,19 @@
-﻿using System.Threading.Tasks;
-using AzureFunctions.Autofac;
-using Microsoft.Azure.WebJobs;
+using System.Threading.Tasks;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
-using SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Function
 {
-    [DependencyInjectionConfig(typeof(DependencyRegister))]
-    public class EstimateSubmissionWindowMetricsTimerTrigger
+    public static class EstimateSubmissionWindowMetricsTimerTrigger
     {
-        [FunctionName("EstimateSubmissionWindowMetrics")]
+        [Function("EstimateSubmissionWindowMetrics")]
         public static async Task RunOnTimer(
             [TimerTrigger("%EstimateSubmissionWindowMetricsSchedule%", RunOnStartup=false)]TimerInfo myTimer,
-            [Inject] ISubmissionWindowValidationService submissionWindowValidationService)
+            FunctionContext context)
         {
+            var submissionWindowValidationService = context.InstanceServices.GetRequiredService<ISubmissionWindowValidationService>();
+
             await submissionWindowValidationService.EstimateSubmissionWindowMetrics();
         }
     }

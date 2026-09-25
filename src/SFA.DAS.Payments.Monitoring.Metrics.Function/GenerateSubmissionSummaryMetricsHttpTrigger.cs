@@ -1,25 +1,24 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AzureFunctions.Autofac;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.Submission;
-using SFA.DAS.Payments.Monitoring.Metrics.Function.Infrastructure.IoC;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Function
 {
-    [DependencyInjectionConfig(typeof(DependencyRegister))]
     public static class GenerateSubmissionSummaryMetricsHttpTrigger
     {
-        [FunctionName("SubmissionRequestReports")]
+        [Function("SubmissionRequestReports")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [Inject] ISubmissionMetricsService submissionMetricsService)
+            FunctionContext context)
         {
+            var submissionMetricsService = context.InstanceServices.GetRequiredService<ISubmissionMetricsService>();
+
             var validAcademicYear = short.TryParse(req.Query["academicYear"], out var academicYear);
             var validCollectionPeriod = byte.TryParse(req.Query["collectionPeriod"], out var collectionPeriod);
             if (!validAcademicYear || !validCollectionPeriod)
