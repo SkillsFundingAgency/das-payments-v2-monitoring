@@ -104,7 +104,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 							{(shouldGroupByLearner ? "and dle.LearnerUln in ({0})" : "")}
                         )
                         SELECT Ukprn,
-						{(shouldGroupByLearner ? "LearnerUln," : "" )}
+						{(shouldGroupByLearner ? "LearnerUln," : "")}
 	                        SUM(unGroupedEarnings.FundingLineType16To18Amount) AS FundingLineType16To18Amount, 
 	                        SUM(unGroupedEarnings.FundingLineType19PlusAmount) AS FundingLineType19PlusAmount,
 	                        SUM(unGroupedEarnings.Total) AS Total
@@ -145,6 +145,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 		            and npp.Amount <> 0
 		            and dle.IsPayable = 0	
 		            and p.collectionperiod < dle.CollectionPeriod
+                    and (p.FundingPlatformType is null or p.FundingPlatformType = 1)
                 and p.ContractType = 1)
 					SELECT Ukprn,
 					SUM(unGroupedAmounts.FundingLineType16To18Amount) AS FundingLineType16To18Amount, 
@@ -198,7 +199,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Data
 
             return results;
         }
-
+        
         public async Task<decimal> GetAlreadyPaidDataLocksAmount(long ukprn, long jobId, CancellationToken cancellationToken)
         {
             var sql = @"
