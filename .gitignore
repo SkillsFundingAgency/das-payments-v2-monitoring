@@ -289,3 +289,5 @@ src/Directory.Build.targets
 /src/SFA.DAS.Payments.Monitoring.Jobs.Application/local.settings.json
 /src/SFA.DAS.Payments.sln.startup.json
 /src/.github/copilot-instructions.md
+src/SFA.DAS.Payments.Monitoring.Tests.Specs/appsettings.development.json
+/src/SFA.DAS.Payments.Monitoring.Tests.Specs/appsettings.development.json
