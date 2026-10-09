@@ -8,7 +8,11 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Data
     public class PaymentBuilder
     {
         private TransactionType transactionType = TransactionType.Learning;
-        private FundingPlatformType platform = FundingPlatformType.SubmitLearnerData;
+        private FundingPlatformType? platform = FundingPlatformType.SubmitLearnerData;
+        private CourseType courseType = CourseType.Apprenticeship;
+        private long learnerUln = TestData.LearnerUln;
+        private byte collectionPeriod = TestData.CollectionPeriod;
+        private decimal amount;
 
         public PaymentBuilder WithTransactionType(TransactionType value)
         {
@@ -16,9 +20,33 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Data
             return this;
         }
 
-        public PaymentBuilder WithPlatform(FundingPlatformType value)
+        public PaymentBuilder WithCourseType(CourseType value)
+        {
+            courseType = value;
+            return this;
+        }
+
+        public PaymentBuilder WithPlatform(FundingPlatformType? value)
         {
             platform = value;
+            return this;
+        }
+
+        public PaymentBuilder WithAmount(decimal value)
+        {
+            amount = value;
+            return this;
+        }
+
+        public PaymentBuilder WithLearnerUln(long value)
+        {
+            learnerUln = value;
+            return this;
+        }
+
+        public PaymentBuilder WithCollectionPeriod(byte value)
+        {
+            collectionPeriod = value;
             return this;
         }
 
@@ -29,9 +57,9 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Data
                 EventId = Guid.NewGuid(),
                 EventTime = DateTimeOffset.UtcNow,
                 Ukprn = TestData.Ukprn,
-                LearnerUln = TestData.LearnerUln,
-                CollectionPeriod = CollectionPeriodFactory.CreateFromAcademicYearAndPeriod(TestData.AcademicYear, TestData.CollectionPeriod),
-                DeliveryPeriod = TestData.CollectionPeriod,
+                LearnerUln = learnerUln,
+                CollectionPeriod = CollectionPeriodFactory.CreateFromAcademicYearAndPeriod(TestData.AcademicYear, collectionPeriod),
+                DeliveryPeriod = collectionPeriod,
                 LearnerReferenceNumber = "123",
                 LearningAimFundingLineType = "Abc",
                 LearningAimReference = "lar",
@@ -43,7 +71,8 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Data
                 FundingSource = FundingSourceType.Levy,
                 TransactionType = transactionType,
                 FundingPlatformType = platform,
-                Amount = platform == FundingPlatformType.SubmitLearnerData ? TestData.SldPaymentAmount : TestData.DasPaymentAmount
+                CourseType = courseType,
+                Amount = amount,
             };
         }
     }
