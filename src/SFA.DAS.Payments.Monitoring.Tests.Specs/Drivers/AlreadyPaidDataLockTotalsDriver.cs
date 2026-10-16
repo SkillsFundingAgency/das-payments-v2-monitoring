@@ -24,7 +24,6 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Drivers
             var jobId = successfulJobId.Value;
 
             var payment = CreateHistoricalPayment(platform, paymentAmount, jobId);
-            //Could be set up in the test data file
             var eventId = Guid.NewGuid();
             dataLockEventIds.Add(eventId);
 

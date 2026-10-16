@@ -15,6 +15,9 @@ using SFA.DAS.Payments.Model.Core.Factories;
 using SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd;
 using SFA.DAS.Payments.Monitoring.Metrics.Data;
 
+//GetAlreadyPaidDataLockedEarnings method is unable to be unit tested due to it running against raw SQL
+//Testing for this method is covered within the specs project of this repo
+
 namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.PeriodEnd
 {
     [TestFixture]
@@ -331,139 +334,6 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests.PeriodEnd
                 .Be(sldPayments.First(x => x.FundingSource == FundingSourceType.Transfer).Amount);
         }
 
-        [Ignore("Cannot run in memory unit tests against raw SQL")]
-        [TestCase("16 - 18 Apprenticeship(From May 2017) Non - Levy Contract(non - procured)")]
-        [TestCase("16-18 Apprenticeship Non-Levy Contract (procured)")]
-        [TestCase("16-18 Apprenticeship (Employer on App Service)")]
-        public async Task WhenCallingGetAlreadyPaidDataLockedEarnings_ThenDASPlatformPaymentsAreExcludedFor16To18FundingLines(string fundingLineType)
-        {
-            var ukprn = _fixture.Create<long>();
-            short academicYear = 2324;
-            byte collectionPeriod = 12;
-            var sldPayments = new List<PaymentModel>();
-            var dasPayments = new List<PaymentModel>();
-
-            for (byte period = 1; period <= 11; period++)
-            {
-                var payment = CreateDefaultPaymentValues(ukprn);
-                payment.TransactionType = TransactionType.Learning;
-                payment.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
-                payment.CollectionPeriod = new CollectionPeriod { AcademicYear = academicYear, Period = period };
-                payment.ContractType = ContractType.Act1;
-                payment.LearningAimFundingLineType = fundingLineType;
-                sldPayments.Add(payment);
-            }
-
-            for (byte period = 1; period <= 11; period++)
-            {
-                var payment = CreateDefaultPaymentValues(ukprn);
-                payment.TransactionType = TransactionType.Learning;
-                payment.FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService;
-                payment.CollectionPeriod = new CollectionPeriod { AcademicYear = academicYear, Period = period };
-                payment.ContractType = ContractType.Act1;
-                payment.LearningAimFundingLineType = fundingLineType;
-                dasPayments.Add(payment);
-            }
-
-            var job = new LatestSuccessfulJobModel
-            {
-                AcademicYear = academicYear,
-                CollectionPeriod = collectionPeriod,
-                DcJobId = _fixture.Create<long>(),
-                JobId = _fixture.Create<long>(),
-                Ukprn = ukprn
-            };
-
-            var sldEventId = Guid.NewGuid();
-            var dataLockedSldPayment = sldPayments.First();
-            var dasEventId = Guid.NewGuid();
-            var dataLockedDasPayment = dasPayments.First();
-
-            var sldDataLockEvent = CreateDataLockEventForPayment(sldEventId, dataLockedSldPayment, job.DcJobId, collectionPeriod);
-            var dasDataLockEvent = CreateDataLockEventForPayment(dasEventId, dataLockedDasPayment, job.DcJobId, collectionPeriod);
-
-            _dataContext.AddRange(sldPayments);
-            _dataContext.AddRange(dasPayments);
-            _dataContext.Add(job);
-            _dataContext.Add(sldDataLockEvent);
-            _dataContext.Add(dasDataLockEvent);
-            await _dataContext.SaveChangesAsync();
-
-            var providerFundingLineTypeAmounts = await _sut.GetAlreadyPaidDataLockedEarnings(academicYear, collectionPeriod, new CancellationToken());
-
-            var ukprnFundingLineAmounts = providerFundingLineTypeAmounts.First(x => x.Ukprn == ukprn);
-
-            ukprnFundingLineAmounts.FundingLineType16To18Amount.Should().Be(sldPayments.First().Amount);
-            ukprnFundingLineAmounts.FundingLineType19PlusAmount.Should().Be(0);
-            ukprnFundingLineAmounts.Total.Should().Be(sldPayments.First().Amount);
-        }
-
-        [Ignore("Cannot run in memory unit tests against raw SQL")]
-        [TestCase("19+ Apprenticeship (From May 2017) Non-Levy Contract (non-procured)")]
-        [TestCase("19+ Apprenticeship Non-Levy Contract (procured)")]
-        [TestCase("19+ Apprenticeship (Employer on App Service)")]
-        public async Task WhenCallingGetAlreadyPaidDataLockedEarnings_ThenDASPlatformPaymentsAreExcludedFor19PlusFundingLines(string fundingLineType)
-        {
-            var ukprn = _fixture.Create<long>();
-            short academicYear = 2324;
-            byte collectionPeriod = 12;
-            var sldPayments = new List<PaymentModel>();
-            var dasPayments = new List<PaymentModel>();
-
-            for (byte period = 1; period <= 11; period++)
-            {
-                var payment = CreateDefaultPaymentValues(ukprn);
-                payment.TransactionType = TransactionType.Learning;
-                payment.FundingPlatformType = FundingPlatformType.SubmitLearnerData;
-                payment.CollectionPeriod = new CollectionPeriod { AcademicYear = academicYear, Period = period };
-                payment.ContractType = ContractType.Act1;
-                payment.LearningAimFundingLineType = fundingLineType;
-                sldPayments.Add(payment);
-            }
-
-            for (byte period = 1; period <= 11; period++)
-            {
-                var payment = CreateDefaultPaymentValues(ukprn);
-                payment.TransactionType = TransactionType.Learning;
-                payment.FundingPlatformType = FundingPlatformType.DigitalApprenticeshipService;
-                payment.CollectionPeriod = new CollectionPeriod { AcademicYear = academicYear, Period = period };
-                payment.ContractType = ContractType.Act1;
-                payment.LearningAimFundingLineType = fundingLineType;
-                dasPayments.Add(payment);
-            }
-
-            var job = new LatestSuccessfulJobModel
-            {
-                AcademicYear = academicYear,
-                CollectionPeriod = collectionPeriod,
-                DcJobId = _fixture.Create<long>(),
-                JobId = _fixture.Create<long>(),
-                Ukprn = ukprn
-            };
-
-            var sldEventId = Guid.NewGuid();
-            var dataLockedSldPayment = sldPayments.First();
-            var dasEventId = Guid.NewGuid();
-            var dataLockedDasPayment = dasPayments.First();
-
-            var sldDataLockEvent = CreateDataLockEventForPayment(sldEventId, dataLockedSldPayment, job.DcJobId, collectionPeriod);
-            var dasDataLockEvent = CreateDataLockEventForPayment(dasEventId, dataLockedDasPayment, job.DcJobId, collectionPeriod);
-
-            _dataContext.AddRange(sldPayments);
-            _dataContext.AddRange(dasPayments);
-            _dataContext.Add(job);
-            _dataContext.Add(sldDataLockEvent);
-            _dataContext.Add(dasDataLockEvent);
-            await _dataContext.SaveChangesAsync();
-
-            var providerFundingLineTypeAmounts = await _sut.GetAlreadyPaidDataLockedEarnings(academicYear, collectionPeriod, new CancellationToken());
-
-            var ukprnFundingLineAmounts = providerFundingLineTypeAmounts.First(x => x.Ukprn == ukprn);
-
-            ukprnFundingLineAmounts.FundingLineType16To18Amount.Should().Be(0);
-            ukprnFundingLineAmounts.FundingLineType19PlusAmount.Should().Be(sldPayments.First().Amount);
-            ukprnFundingLineAmounts.Total.Should().Be(sldPayments.First().Amount);
-        }
 
         [Test]
         public async Task WhenCallingGetYearToDatePayments_ThenDASPlatformPaymentsAreExcluded()
