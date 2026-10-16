@@ -9,7 +9,6 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.StepDefinitions
     [Binding]
     public class PeriodEndMetricsExcludeDasEarningsSteps
     {
-        //Coursetype technically not needed but I think it helps clear things up, learning and milestone1 should be sufficient
 
         private readonly PeriodEndMetricsRepositoryDriver periodEndMetricsRepositoryDriver;
         private readonly AlreadyPaidDataLockTotalsDriver alreadyPaidDataLockTotalsDriver;
@@ -30,8 +29,7 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.StepDefinitions
         [Given("payments have been generated for Apprenticeship and GSO Short Course payments")]
         public async Task GivenPaymentsIncludeApprenticeshipAndGsoShortCoursePayments()
         {
-            //SLD never uses GSL, so it goes through DAS
-            //Put payment amounts in here, to eastablish expected amount more easily
+            //SLD never handles GSO payments
             await periodEndMetricsRepositoryDriver.AddPaymentForPlatform(
                 transactionType: TransactionType.Learning,
                 courseType: CourseType.Apprenticeship,
@@ -90,8 +88,6 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.StepDefinitions
         [Given("historical payments from SLD and DAS are associated with data-lock events")]
         public async Task GivenHistoricalPaymentsFromSldAndDasAreAssociatedWithDataLockEvents()
         {
-            //the 100m data-lock amount is arbitrary, just needs to be non-zero to test the logic
-            //The 3000m and 500m are the amounts that will be used to test the metrics total and already-paid data-lock earnings.
             await alreadyPaidDataLockTotalsDriver.AddHistoricalPaymentWithDataLockEvent(
                 platform: FundingPlatformType.SubmitLearnerData,
                 paymentAmount: 3000m,

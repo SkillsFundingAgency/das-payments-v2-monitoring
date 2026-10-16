@@ -47,8 +47,6 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Drivers
             await dataContext.AddAsync(payment);
         }
 
-        //Only works on the repository methods that are used to generate the metrics, not the generation of metrics as a whole
-        //Unsure if things should be renamed because of this
         public async Task GenerateMetrics()
         {
             await dataContext.SaveChangesAsync();
@@ -73,7 +71,6 @@ namespace SFA.DAS.Payments.Monitoring.Tests.Specs.Drivers
                 TestData.YearToDateCollectionPeriod,
                 CancellationToken.None);
 
-            // This directly tests the repository platform filter; it doesn't cover the negative earnings discovery logic, which is tested in the unit tests
             var negativeEarningsPaymentAmounts = await repository.GetPaymentAmountsForNegativeEarningsLearnersByContractType(
                 new List<long> { TestData.LearnerUln, TestData.DasLearnerUln },
                 TestData.AcademicYear,
