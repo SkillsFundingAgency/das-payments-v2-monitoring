@@ -1,21 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
 using SFA.DAS.Payments.Monitoring.Metrics.Data;
 
 namespace SFA.DAS.Payments.Monitoring.Metrics.Application.UnitTests
 {
     class InMemoryMetricsQueryDataContext : MetricsQueryDataContext
     {
-        public InMemoryMetricsQueryDataContext() : base(new DbContextOptionsBuilder().UseInMemoryDatabase("test", new InMemoryDatabaseRoot()).Options)
+        private readonly string databaseName = Guid.NewGuid().ToString();
+
+        public InMemoryMetricsQueryDataContext() : base(new DbContextOptionsBuilder().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options)
         {
 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("test", new InMemoryDatabaseRoot())
+            optionsBuilder.UseInMemoryDatabase(databaseName)
                 .ConfigureWarnings(builder => builder.Ignore(InMemoryEventId.TransactionIgnoredWarning));
         }
     }

@@ -49,7 +49,9 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
 
             using (await QueryDataContext.BeginTransaction(cancellationToken))
             {
-                var transactionAmounts = await QueryDataContext.Payments.Where(x => x.CollectionPeriod.AcademicYear == academicYear && x.CollectionPeriod.Period == collectionPeriod)
+                var transactionAmounts = await QueryDataContext.Payments
+                    .Where(x => x.CollectionPeriod.AcademicYear == academicYear && x.CollectionPeriod.Period == collectionPeriod)
+                    .Where(x => x.FundingPlatformType == null || x.FundingPlatformType == FundingPlatformType.SubmitLearnerData)
                     .GroupBy(p => new { p.Ukprn, p.ContractType, p.TransactionType })
                     .Select(group => new
                     {
@@ -104,6 +106,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
                     var amounts = await QueryDataContext.Payments
                         .AsNoTracking()
                         .Where(p => p.CollectionPeriod.AcademicYear == academicYear && batch.Contains(p.LearnerUln))
+                        .Where(p => p.FundingPlatformType == null || p.FundingPlatformType == FundingPlatformType.SubmitLearnerData)
                         .Select(x => new
                         {
                             x.Ukprn,
@@ -135,7 +138,9 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
 
             using (await QueryDataContext.BeginTransaction(cancellationToken))
             {
-                var transactionAmounts = await QueryDataContext.Payments.Where(x => x.CollectionPeriod.AcademicYear == academicYear && x.CollectionPeriod.Period == collectionPeriod)
+                var transactionAmounts = await QueryDataContext.Payments
+                    .Where(x => x.CollectionPeriod.AcademicYear == academicYear && x.CollectionPeriod.Period == collectionPeriod)
+                    .Where(x => x.FundingPlatformType == null || x.FundingPlatformType == FundingPlatformType.SubmitLearnerData)
                    .GroupBy(p => new { p.Ukprn, p.ContractType, p.FundingSource })
                    .Select(group => new
                    {
@@ -215,6 +220,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
                     .AsNoTracking()
                     .Where(p => p.CollectionPeriod.AcademicYear == academicYear &&
                                            p.CollectionPeriod.Period < collectionPeriod)
+                    .Where(p => p.FundingPlatformType == null || p.FundingPlatformType == FundingPlatformType.SubmitLearnerData)
                     .GroupBy(p => new { p.Ukprn, p.ContractType })
                     .Select(g => new
                     {
@@ -253,6 +259,7 @@ namespace SFA.DAS.Payments.Monitoring.Metrics.Application.PeriodEnd
         {
             return await QueryDataContext.Payments
                 .Where(x => x.CollectionPeriod.AcademicYear == academicYear && x.CollectionPeriod.Period == collectionPeriod && x.Amount > 0)
+                .Where(x => x.FundingPlatformType == null || x.FundingPlatformType == FundingPlatformType.SubmitLearnerData)
                 .Select(x => new { x.Ukprn, x.LearnerUln })
                 .Distinct()
                 .GroupBy(x => x.Ukprn)
